@@ -1,0 +1,78 @@
+.home-c {
+    .article-ul{
+        .article-li{
+            margin: 20px 0;
+            height: 176px;
+            padding: 10px;
+            background: #fff;
+            display: flex;
+
+            .ldd-img{
+                width: 220px;
+                height: 135px;
+                float: left;
+                margin: 10px;
+            }
+            .p-box{
+                padding-left: 10px;
+                position: relative;
+                div.tit {
+                    font-size: 20px;
+                    font-weight: 800;
+                    padding: 10px;
+                    padding-left: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                }
+                .dis{
+                    font-size: 14px;
+                    padding-right: 20px;
+                    line-height: 24px;
+                    color: #666;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+                .tag{
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    font-size: 14px;
+                    color: #666;
+                }
+                .times{
+                    position: absolute;
+                    bottom: 10px;
+                    right: 16px;
+                    font-size: 14px;
+                    color: #666;
+                }
+            }  
+
+        }
+    }
+     
+
+
+    .fenlei{
+        &.fixed{
+            position: fixed;
+            top: 50px;
+            width: 256px;
+        }
+        .ant-tag{
+            margin: 5px;
+            cursor: pointer;
+            &:hover{
+                border: 1px solid #007fff;
+                background-color: #007fff;
+                color: #fff;
+            }
+        }
+    }
+}

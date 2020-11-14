@@ -1,209 +1,95 @@
-import Head from 'next/head'
+import '@/styles/home.less'
+import Router from 'next/router'
+import axios from 'axios'
+import Layout from '@/components/layout'
+import { Row, Col, Card, Tag } from 'antd';
+import { useCallback } from 'react';
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const style = { background: '#0092ff', padding: '8px 0' };
+function Home () {
 
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    Router.events.on('routeChangeStart', (...args) => {
+        console.log('1.routeChangeStart->路由开始变化,参数为:', ...args)
+    })
+    const LiDate = useCallback((index) => {
+        return (
+            <li className='article-li' key={index}>
+                {
+                    index % 2 === 0 ?
+                        <img src="https://wipi.oss-cn-shanghai.aliyuncs.com/2020-07-12/search-engine-4.jpg" alt="" className="ldd-img" />
+                        : null
+                }
+                <div className="p-box">
+                    <div className="tit">这是标题阿迪斯发阿斯蒂芬</div>
+                    <div className="dis">这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要</div>
+                    <div className="tag">前端</div>
+                    <div className="times">2020-07-04 20:46:09</div>
+                </div>
+            </li>
+        )
+    })
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <Layout
+            className='home-c'
+            goTop
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+            <div className="ww"  >
+                <>
+                    <Row gutter={16}>
+                        <Col className="gutter-row" span={18}>
+                            <ul className='article-ul clearfix'>
+                                {
+                                    new Array(20).fill(0).map((item, index) => LiDate(index))
+                                }
+                            </ul>
 
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+                        </Col>
+                        <Col className="gutter-row" span={6}>
+                            <Card
+                                size="small" title="简介"
+                                extra={<a href="#">More</a>}
+                                style={{ height: 300, marginTop: '20px' }}
+                            >
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                            <Card
+                                size="small" title="标签"
+                                // extra={<a href="#">More</a>}
+                                className='fenlei'
+                                id='fenlei'
+                                style={{ height: 300, marginTop: '20px' }}
+                            >
+                                <Tag color="magenta">magenta</Tag>
+                                <Tag color="red">red</Tag>
+                                <Tag color="volcano">volcano</Tag>
+                                <Tag color="orange">orange</Tag>
+                                <Tag color="gold">gold</Tag>
+                                <Tag color="lime">lime</Tag>
+                                <Tag color="green">green</Tag>
+                                <Tag color="cyan">cyan</Tag>
+                                <Tag color="blue">blue</Tag>
+                                <Tag color="geekblue">geekblue</Tag>
+                                <Tag color="purple">purple</Tag>
+                            </Card>
+                        </Col>
 
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+                    </Row>
+                </>
+            </div>
 
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
 
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+        </Layout >
+    )
 }
+
+// Home.getInitialProps = async () => {
+//   let data = await axios.get("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js");
+//   return {
+//     hero: data.data.hero.slice(0, 1)
+//   }
+// };
+
+export default Home
