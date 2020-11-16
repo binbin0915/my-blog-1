@@ -1,11 +1,23 @@
 export default [
     {
-        path: '/article', title: '',
+        path: '/user',
         subs: [
-            { path: '/article/list', title: 'article-list', name: "ArticleList", component: 'ArticleList' },
-            { path: '/app/KeepAliveDemo', title: 'KeepAliveDemo', name: "KeepAliveDemo", component: 'KeepAliveDemo', cache: true },
+            { path: '/user/login', title: '登录', name: "login", component: 'Login' },
+            { path: '/user/regist', title: '注册', name: "regist", component: 'Regist' },
+            { path: '/user/info', title: '个人中心', name: "info", component: 'Info' },
+            { path: '/user/permissionMgt', title: '用户权限', name: "permissionMgt", component: 'PermissionMgt' },
+        ],
+    },
+    {
+        path: '/article',
+        subs: [
+            { path: '/article/list', title: '文章列表', name: "ArticleList", component: 'ArticleList' },
+            { path: '/article/tags', title: '标签管理', name: "ArticleTags", component: 'ArticleTags' },
+            { path: '/article/category', title: '分类管理', name: "ArticleCategory", component: 'ArticleCategory' },
         ],
     },
     { path: '/404', title: '404', name: "404", component: 'App404' },
 
-] 
+]
+
+export const whiteList = ['regist', 'login']

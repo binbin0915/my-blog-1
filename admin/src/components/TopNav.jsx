@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom'
-import '@/assets/style/topnav'
 import getRef from '@/utils/getRef'
 
 class NavBar extends React.Component {

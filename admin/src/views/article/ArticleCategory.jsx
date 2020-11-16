@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table, Tag, Space } from 'antd';
+import CustomLayout from '@/components/CustomLayout'
 const ArticleList = () => {
 
     const columns = [
@@ -76,9 +77,9 @@ const ArticleList = () => {
     ];
 
     return (
-        <>
+        <CustomLayout>
             <Table columns={columns} dataSource={data} />
-        </>
+        </CustomLayout>
     )
 
 }

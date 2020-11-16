@@ -1,0 +1,24 @@
+.regist-c{
+    width: 100%;
+    height: 100vh;
+    background: #ddd;
+    .content{
+        width: 500px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin: 0 auto;
+        position: absolute;
+        z-index: 1000;
+        top: 50%;
+        left: 50%;
+        margin-left: -250px;
+
+        margin-top: -200px;
+        
+    }
+    .user-form{
+        .ant-form-item{
+            margin-bottom: 10px!important;
+        }
+    }
+}

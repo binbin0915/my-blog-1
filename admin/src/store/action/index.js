@@ -1,6 +1,6 @@
 
 import * as type from '../actionTypes';
-import { getUseNameAjax } from '@/api'
+import { getUseInfo } from '@/api'
 import { setInfo } from '@/utils/auth'
 
 export const setUserInfo = (info) => {
@@ -11,8 +11,8 @@ export const setUserInfo = (info) => {
 }
 
 export const fetchUserInfo = () => async (dispatch) => {
-   // dispatch(setUserInfo({}))
-    let info = await getUseNameAjax();
+    // dispatch(setUserInfo({}))
+    let info = await getUseInfo();
     setInfo(JSON.stringify(info))
     dispatch(setUserInfo(info))
 }

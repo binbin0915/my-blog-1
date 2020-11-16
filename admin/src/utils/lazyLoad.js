@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-
+import { Spin, Space } from 'antd';
 export const lazyLoad = (Comp) =>
     (props) => (
-        <Suspense fallback={<div style={{fontSize:'80px'}}>loading....</div>}>
+        <Suspense fallback={<Spin style={{ position: 'fixed', top: "40%" }} size="large" />}>
             <Comp {...props} />
         </Suspense>
     )
