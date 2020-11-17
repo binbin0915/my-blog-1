@@ -1,5 +1,8 @@
 import request from './request'
-
+/**
+ * 
+ * @param {user} user 
+ */
 export function login (data) {
     return request({
         url: '/user/login',
@@ -28,14 +31,29 @@ export function updataInfo (data) {
     })
 }
 
-export function loginOut () {
+/**
+ * article
+ */
+
+export function articleList (data) {
     return request({
-        url: '/user/logout',
+        url: '/article/list',
         method: 'post',
-        data: {
-            body: ''
-        },
-        needNotToken: true,
+        data,
     })
 }
 
+export function articleAdd (data) {
+    return request({
+        url: '/article/add',
+        method: 'post',
+        data,
+    })
+}
+export function articlePublish (data) {
+    return request({
+        url: '/article/publish',
+        method: 'post',
+        data,
+    })
+}

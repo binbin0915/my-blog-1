@@ -27,7 +27,7 @@ const CustomLayout = (props) => {
         {
             title: '用户管理',
             key: "sub2",
-            icon: <LaptopOutlined />,
+            icon: <UserOutlined />,
             sub: [
                 { to: '/user/info', key: '11', text: "个人中心" },
                 { to: '/user/permissionMgt', key: '12', text: "权限管理" },

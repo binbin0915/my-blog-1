@@ -9,7 +9,6 @@ const request = function (params) {
 
     return new Promise((resolve, reject) => {
         axios(params).then((response) => {
-            console.log('axios--response', response)
             if (response && response.code) {
                 let code = response.code;
                 if (code === '0000') {
