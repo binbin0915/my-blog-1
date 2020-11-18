@@ -4,7 +4,7 @@ import { Drawer, Button, Form, Checkbox, Pagination, Alert, Spin } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
 import './article.scss'
-import { articleList, articleAdd, articlePublish } from '@/api'
+import { articleList, articleAdd, articlePublish, tagList, categoryList, articleUpdata } from '@/api'
 import { useCallback } from 'react';
 import dayjs from 'dayjs'
 import { Select, Switch } from 'antd';
@@ -23,6 +23,8 @@ const initArticle = {
 const ArticleList = () => {
 
     const [data, setData] = useState([]);
+    const [tag, setTagList] = useState([])
+    const [ca, setCa] = useState([])
     const [count, setCount] = useState(0);
     const [visible, setVisible] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
@@ -76,49 +78,64 @@ const ArticleList = () => {
             title: '类别',
             dataIndex: 'category',
             key: 'category',
-            render: (cate) => {
+            render: (cate, record) => {
+                const f = ca.find(d => d.id == cate)
                 return (
-                    <Select value="lucy" style={{ width: 120 }} onChange={handleChange}>
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="Yiminghe">yiminghe</Option>
+                    <Select
+                        value={f ? f.name : ""}
+                        style={{ width: 120 }}
+                        onChange={(e) => {
+                            let temp = data.slice()
+                            let f = temp.find(d => d.id == record.key);
+                            f.category_id = e
+                            setData(temp)
+                        }}>
+                        {
+                            ca.map(d => {
+                                return <Option value={d.id}>{d.name}</Option>
+                            })
+                        }
                     </Select>
                 )
             }
         },
         {
             title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    <Select
-                        mode="multiple"
-                        style={{ width: '100%' }}
-                        placeholder="select one country"
-                        defaultValue={['china']}
-                        onChange={handleChange}
-                        optionLabelProp="label"
-                    >
-                        <Option value="china" label="China">
-                            <div className="demo-option-label-item">
-                                <span role="img" aria-label="China">
-                                    🇨🇳
-                                </span>
-                                China (中国)
-                            </div>
-                        </Option>
-                        <Option value="usa" label="USA">
-                            <div className="demo-option-label-item">
-                                <span role="img" aria-label="USA">
-                                    🇺🇸
-                            </span>
-                            USA (美国)
-                        </div>
-                        </Option>
-                    </Select>
-                </>
-            ),
+            key: 'tag_ids',
+            dataIndex: 'tag_ids',
+            render: (tags, record) => {
+                return (
+                    <>
+                        <Select
+                            mode="multiple"
+                            style={{ width: '100%', minWidth: "50px" }}
+                            placeholder="select one country"
+                            value={tags.filter(Boolean)}
+                            onChange={(e) => {
+                                let temp = data.slice()
+                                let f = temp.find(d => d.id == record.key);
+                                f.tag_ids = e.join(',')
+                                setData(temp)
+                            }}
+                            optionLabelProp="label"
+                        >
+                            {
+                                tag.map(d => {
+                                    return (
+                                        <Option value={d.id + ''} label={d.name}>
+                                            <div className="demo-option-label-item">
+                                                <span role="img" aria-label="China">
+                                                    {d.name}
+                                                </span>
+                                            </div>
+                                        </Option>
+                                    )
+                                })
+                            }
+                        </Select>
+                    </>
+                )
+            },
         },
         {
             title: '发布时间',
@@ -133,6 +150,12 @@ const ArticleList = () => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    <Button type='primary' onClick={async () => {
+                        let a = data.find(d => d.id == record.key)
+                        console.log('a', a)
+                        let res = await articleUpdata(a)
+                        if (res.isOk) message.success('更新成功')
+                    }}>更新</Button>
                     <Button type="dashed" onClick={() => {
                         setIsAdd(false);
                         setVisible(true)
@@ -158,14 +181,28 @@ const ArticleList = () => {
                             category_id
                         })
                     }}>编辑</Button>
+
                     <Button danger>删除</Button>
                 </Space>
             ),
         },
     ];
-
+    async function taglist () {
+        let res = await tagList();
+        if (res) {
+            setTagList(res.rows)
+        }
+    }
+    async function caList () {
+        let res = await categoryList();
+        if (res) {
+            setCa(res.rows)
+        }
+    }
     useEffect(() => {
         getArticle(page, size)
+        taglist();
+        caList()
     }, [])
     const showDrawer = () => {
         setVisible(true);
@@ -276,12 +313,19 @@ const ArticleList = () => {
                         name="category"
                         style={{ textAlign: 'left' }}
                     >
-                        <Select value={article.category_id} style={{ width: 120 }} onChange={(value) => {
-                            setArticle({ category_id: value })
-                        }}>
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                        <Select
+                            value={article.category_id}
+                            style={{ width: 120 }}
+                            onChange={(value) => {
+                                setArticle({ category_id: value + '' })
+                            }}>
+                            {
+                                ca.map(d => {
+                                    return (
+                                        <Option value={d.id}>{d.name}</Option>
+                                    )
+                                })
+                            }
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -299,22 +343,19 @@ const ArticleList = () => {
                             }}
                             optionLabelProp="label"
                         >
-                            <Option value="china" label="China">
-                                <div className="demo-option-label-item">
-                                    <span role="img" aria-label="China">
-                                        🇨🇳
-                                </span>
-                                China (中国)
-                            </div>
-                            </Option>
-                            <Option value="usa" label="USA">
-                                <div className="demo-option-label-item">
-                                    <span role="img" aria-label="USA">
-                                        🇺🇸
-                            </span>
-                            USA (美国)
-                        </div>
-                            </Option>
+                            {
+                                tag.map(d => {
+                                    return (
+                                        <Option value={d.id} label={d.name}>
+                                            <div className="demo-option-label-item" >
+                                                <span role="img" aria-label="China">
+                                                    {d.name}
+                                                </span>
+                                            </div>
+                                        </Option>
+                                    )
+                                })
+                            }
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -383,8 +424,8 @@ const ArticleList = () => {
                             key: item.id,
                             title: item.title,
                             published: item.published,
-                            category: item.category,
-                            tag_ids: item.tag_ids,
+                            category: item.category_id,
+                            tag_ids: item.tag_ids.split(','),
                             publish_time: item.publish_time,
                         }
                     })}

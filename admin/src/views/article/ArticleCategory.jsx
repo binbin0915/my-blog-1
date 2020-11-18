@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Modal, Space, Input, Button, message, Form, Popconfirm } from 'antd';
+import { Table, Modal, Space, Input, Button, message, Form, Popconfirm, Spin } from 'antd';
 import { InputNumber } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import { categoryAdd, categoryDel, categoryList, categoryUpadata } from '@/api'
@@ -8,9 +8,11 @@ const initCate = {
     wight: ''
 }
 const ArticleList = () => {
-    const [cate, setCate] = useState(initCate);
+    const [form] = Form.useForm()
+    const [cate, setCate] = useState(initCate)
     const [visible, setVisible] = useState(false)
     const [data, setData] = useState([])
+    const [loading, setLoading] = useState(false)
     const updata = async (record) => {
         let res = await categoryUpadata(record);
         if (res.isOk) {
@@ -94,10 +96,18 @@ const ArticleList = () => {
         },
     ];
     async function list () {
-        let res = await categoryList();
-        if (res) {
-            setData(res.rows)
+        setLoading(true)
+        try {
+            let res = await categoryList();
+            if (res) {
+                setData(res.rows)
+            }
+        } catch (error) {
+
+        } finally {
+            setLoading(false)
         }
+
     }
     const add = async () => {
         if (!cate.name) {
@@ -119,6 +129,7 @@ const ArticleList = () => {
 
 
     }
+
     useEffect(() => {
         list()
     }, [])
@@ -129,6 +140,7 @@ const ArticleList = () => {
                 visible={visible}
                 onOk={add}
                 onCancel={() => {
+                    setCate(initCate)
                     setVisible(false)
                 }}
             >
@@ -138,13 +150,14 @@ const ArticleList = () => {
                         wrapperCol: { span: 16 },
                     }}
                     name="basic"
+                    form={form}
                 >
                     <Form.Item
                         label="类名"
                         name="name"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
-                        <Input value={cate.name} onChange={e => {
+                        <Input value={cate.name} defaultValue='' onChange={e => {
                             setCate(() => {
                                 return {
                                     ...cate,
@@ -180,16 +193,19 @@ const ArticleList = () => {
                     onClick={() => {
                         setVisible(true)
                         setCate(initCate)
+                        form.resetFields()
                     }}>新建分类</Button>
             </div>
-            <Table columns={columns} dataSource={data.map((item) => {
-                return {
-                    key: item.id,
-                    name: item.name,
-                    weight: item.weight
-                }
-            })} />
-
+            <Spin tip="Loading..." spinning={loading}>
+                <Table columns={columns} dataSource={
+                    data.map((item) => {
+                        return {
+                            key: item.id,
+                            name: item.name,
+                            weight: item.weight
+                        }
+                    })} />
+            </Spin>
         </CustomLayout>
     )
 

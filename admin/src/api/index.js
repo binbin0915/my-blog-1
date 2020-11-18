@@ -57,7 +57,13 @@ export function articlePublish (data) {
         data,
     })
 }
-
+export function articleUpdata (data) {
+    return request({
+        url: '/article/updata',
+        method: 'post',
+        data,
+    })
+}
 /**
  * category
  */
@@ -85,6 +91,37 @@ export function categoryDel (data) {
 export function categoryUpadata (data) {
     return request({
         url: '/category/updata',
+        method: 'post',
+        data,
+    })
+}
+/**
+ * tags
+ */
+export function tagList (data) {
+    return request({
+        url: '/tags/list',
+        method: 'post',
+        data,
+    })
+}
+export function tagAdd (data) {
+    return request({
+        url: '/tags/add',
+        method: 'post',
+        data,
+    })
+}
+export function tagDel (data) {
+    return request({
+        url: '/tags/del',
+        method: 'post',
+        data,
+    })
+}
+export function tagUpadata (data) {
+    return request({
+        url: '/tags/updata',
         method: 'post',
         data,
     })
