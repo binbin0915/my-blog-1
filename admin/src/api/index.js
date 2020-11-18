@@ -57,3 +57,35 @@ export function articlePublish (data) {
         data,
     })
 }
+
+/**
+ * category
+ */
+export function categoryList (data) {
+    return request({
+        url: '/category/list',
+        method: 'post',
+        data,
+    })
+}
+export function categoryAdd (data) {
+    return request({
+        url: '/category/add',
+        method: 'post',
+        data,
+    })
+}
+export function categoryDel (data) {
+    return request({
+        url: '/category/del',
+        method: 'post',
+        data,
+    })
+}
+export function categoryUpadata (data) {
+    return request({
+        url: '/category/updata',
+        method: 'post',
+        data,
+    })
+}

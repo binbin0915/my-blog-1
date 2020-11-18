@@ -1,84 +1,195 @@
-import React from 'react'
-import { Table, Tag, Space } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Table, Modal, Space, Input, Button, message, Form, Popconfirm } from 'antd';
+import { InputNumber } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
+import { categoryAdd, categoryDel, categoryList, categoryUpadata } from '@/api'
+const initCate = {
+    name: "",
+    wight: ''
+}
 const ArticleList = () => {
+    const [cate, setCate] = useState(initCate);
+    const [visible, setVisible] = useState(false)
+    const [data, setData] = useState([])
+    const updata = async (record) => {
+        let res = await categoryUpadata(record);
+        if (res.isOk) {
+            message.success('更新成功')
 
+        } else {
+            message.error(res.msg)
+        }
+        list()
+    }
+    const del = async (record) => {
+        let res = await categoryDel({ id: record.key })
+        if (res.isOk) {
+            message.success('删除成功！')
+        } else {
+            message.error(res.msg)
+        }
+        list()
+    }
     const columns = [
         {
-            title: 'Name',
+            title: '分类名',
             dataIndex: 'name',
             key: 'name',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
+            render: (text, record) => {
+                return (
+                    <Input value={text} style={{ width: '150px' }} onChange={(e) => {
+                        let v = e.target.value
+                        let temp = data.slice();
+                        let f = temp.find(d => d.id === record.key);
+                        if (f) {
+                            f.name = v
                         }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
+                        setData(temp)
+                    }} />
+                )
+            }
         },
         {
-            title: 'Action',
+            title: '权重',
+            dataIndex: 'weight',
+            key: 'weight',
+            render: (text, record) => {
+                return (
+                    <InputNumber min={1}
+                        style={{ width: '90px' }}
+                        value={text}
+                        onChange={(value) => {
+                            let v = value
+                            let temp = data.slice();
+                            let f = temp.find(d => d.id === record.key);
+                            if (f) {
+                                f.weight = v
+                            }
+                            setData(temp)
+                        }} />
+                )
+            }
+        },
+
+        {
+            title: '操作',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
+                    <a onClick={() => {
+                        updata(record)
+                    }}>更新</a>
+                    <Popconfirm
+                        title="Are you sure to delete this task?"
+                        onConfirm={() => del(record)}
+                        onCancel={() => { }}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a style={{ color: '#ff4d4f' }}>删除</a>
+                    </Popconfirm>
+
                 </Space>
             ),
         },
     ];
+    async function list () {
+        let res = await categoryList();
+        if (res) {
+            setData(res.rows)
+        }
+    }
+    const add = async () => {
+        if (!cate.name) {
+            message.error("类名不能为空！")
+            return
+        }
+        try {
+            let res = await categoryAdd(cate)
+            if (res.isOk) {
+                message.success('创建成功')
+                list()
+                setVisible(false)
+            } else {
+                message.error(res.msg)
+            }
+        } catch (err) {
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+        }
 
+
+    }
+    useEffect(() => {
+        list()
+    }, [])
     return (
         <CustomLayout>
-            <Table columns={columns} dataSource={data} />
+            <Modal
+                title="新建分类"
+                visible={visible}
+                onOk={add}
+                onCancel={() => {
+                    setVisible(false)
+                }}
+            >
+                <Form
+                    layout={{
+                        labelCol: { span: 8 },
+                        wrapperCol: { span: 16 },
+                    }}
+                    name="basic"
+                >
+                    <Form.Item
+                        label="类名"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input your username!' }]}
+                    >
+                        <Input value={cate.name} onChange={e => {
+                            setCate(() => {
+                                return {
+                                    ...cate,
+                                    name: e.target.value
+                                }
+                            })
+                        }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="权重"
+                        name="weight"
+                        style={{ textAlign: 'left' }}
+                        rules={[{ required: true, message: 'Please input your password!' }]}
+                    >
+                        <InputNumber min={1}
+                            style={{ width: '90px' }}
+                            defaultValue={1}
+                            value={cate.weight}
+                            onChange={(value) => {
+                                setCate(() => {
+                                    return {
+                                        ...cate,
+                                        weight: value
+                                    }
+                                })
+                            }} />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <div style={{ paddingBottom: '10px', textAlign: 'left' }}>
+                <Button type='primary'
+                    onClick={() => {
+                        setVisible(true)
+                        setCate(initCate)
+                    }}>新建分类</Button>
+            </div>
+            <Table columns={columns} dataSource={data.map((item) => {
+                return {
+                    key: item.id,
+                    name: item.name,
+                    weight: item.weight
+                }
+            })} />
+
         </CustomLayout>
     )
 

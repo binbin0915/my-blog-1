@@ -120,9 +120,13 @@ const CustomLayout = (props) => {
                             padding: 24,
                             margin: 0,
                             minHeight: 280,
+                            overflowY: "auto"
                         }}
                     >
-                        {props.children}
+                        <div className={`${props.className}`}>
+                            {props.children}
+                        </div>
+
                     </Content>
                 </Layout>
             </Layout>

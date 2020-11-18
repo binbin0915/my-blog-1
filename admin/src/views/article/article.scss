@@ -1,0 +1,26 @@
+.article-Drawer{
+    .article-box{
+        text-align: initial;
+        // .react-monaco-editor-container,
+        // .monaco-editor{
+        //     width: 100%!important;
+        // }
+    }
+    
+}
+.article-list-c{
+    .title-ccc{
+        max-width: 200px;
+        overflow:hidden;
+        display: block;
+        text-overflow: ellipsis;
+        /*-webkit-text-overflow:ellipsis;*/
+        white-space: nowrap;
+    }
+    table{
+        text-align: center;
+        thead th{
+            text-align: center;
+        }
+    }
+}
