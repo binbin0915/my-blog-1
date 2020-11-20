@@ -16,11 +16,13 @@
             .p-box{
                 padding-left: 10px;
                 position: relative;
+                width:100%;
                 div.tit {
                     font-size: 20px;
                     font-weight: 800;
-                    padding: 10px;
-                    padding-left: 0;
+                    margin: 10px;
+                    margin-left: 0;
+                    width: 500px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
@@ -49,7 +51,7 @@
                     position: absolute;
                     bottom: 10px;
                     right: 16px;
-                    font-size: 14px;
+                    font-size: 12px;
                     color: #666;
                 }
             }  
@@ -57,7 +59,40 @@
         }
     }
      
-
+    .jianjie{
+        .xx{
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            overflow: hidden;
+            margin-top: 10px;
+            border: 1px solid #dfdfdf;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .p-1{
+            padding-top: 10px;
+            color: #1890ff;
+            font-size: 16px;
+        }
+        .p-2{
+            color: #999;
+            padding: 20px;
+            text-indent: 2em;
+            font-size: 12px;
+        }
+        .bottom{
+            text-align: center;
+            span{
+                cursor: pointer;
+               
+            }
+        }
+    }
 
     .fenlei{
         &.fixed{
@@ -68,11 +103,6 @@
         .ant-tag{
             margin: 5px;
             cursor: pointer;
-            &:hover{
-                border: 1px solid #007fff;
-                background-color: #007fff;
-                color: #fff;
-            }
         }
     }
 }

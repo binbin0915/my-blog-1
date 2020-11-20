@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 import { Row } from 'antd';
-import Layout from '@/components/layout'
+import Layout from '@/src/components/layout'
 
 import "./index.less"
-import "@/styles/markdown.less"
+import "@/src/styles/markdown.less"
 const ArticleDetail = () => {
 
     const str = `

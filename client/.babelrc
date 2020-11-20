@@ -11,12 +11,8 @@
     [
       "module-resolver", {
         "alias": {
+          "@/src": "./src",
           "@/pages": "./page",
-          "@/components": "./components",
-          "@/constants": "./constants",
-          "@/styles": "./styles",
-          "@/store": "./store",
-          "@/utils": "./utils"
         }
       }
     ]

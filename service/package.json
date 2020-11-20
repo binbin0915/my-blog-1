@@ -1,0 +1,49 @@
+{
+    "name": "koa-demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "env-cmd -e dev -f ./.env-cmdrc.json nodemon index.js",
+        "pm2:dev": "env-cmd -e dev -f ./.env-cmdrc.json pm2 start pm2.config.json",
+        "pm2:qa": "env-cmd -e qa -f ./.env-cmdrc.json pm2 start pm2.config.json",
+        "pm2:prod": "env-cmd -e prod -f ./.env-cmdrc.json pm2 start pm2.config.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/xz1024/koa-app"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.20.0",
+        "bcryptjs": "^2.4.3",
+        "cache-manager": "^3.3.0",
+        "cross-env": "^7.0.2",
+        "dayjs": "^1.9.6",
+        "ejs": "^3.1.3",
+        "env-cmd": "^10.1.0",
+        "globby": "^11.0.1",
+        "jsonwebtoken": "^8.5.1",
+        "koa": "^2.13.0",
+        "koa-bodyparser": "^4.3.0",
+        "koa-router": "^9.1.0",
+        "koa-static": "^5.0.0",
+        "koa-views": "^6.3.0",
+        "lodash": "^4.17.20",
+        "log4js": "^6.3.0",
+        "module-alias": "^2.2.2",
+        "mysql2": "^2.2.5",
+        "require-directory": "^2.1.1",
+        "sequelize": "^6.3.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    },
+    "_moduleAliases": {
+        "@root": ".",
+        "@": "src"
+    }
+}

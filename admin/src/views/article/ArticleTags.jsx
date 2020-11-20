@@ -103,7 +103,6 @@ const ArticleTags = () => {
     ];
     async function list () {
         setLoading(true)
-
         try {
             let res = await tagList();
             if (res) {
@@ -133,8 +132,6 @@ const ArticleTags = () => {
         } catch (err) {
 
         }
-
-
     }
     useEffect(() => {
         list()

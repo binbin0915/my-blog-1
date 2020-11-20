@@ -4,25 +4,18 @@ import HeadSetUp from '../sethead/HeadSetUp'
 import Footer from '../footer/Footer'
 import GoTop from '../move/GoTop'
 import './index.less'
-
-
-const UserLayout = ({
-    className,
-    title = '前端老狗',
-    children,
-    goTop,
-}) => {
-
+const UserLayout = (props) => {
     return (
-        <div className={`layout ${className}`}>
-            {goTop !== undefined ? <GoTop /> : null}
-            <HeadSetUp title={title} />
-            <TopNav />
+        <div className={`layout ${props.className}`}>
+            {props.goTop !== undefined ? <GoTop /> : null}
+            <HeadSetUp title={props.title} />
+            <TopNav ca={props.ca} />
             <div className="main-wrapper">
-                {children}
+                {props.children}
             </div>
             <Footer />
         </div >
     )
 }
+
 export default UserLayout

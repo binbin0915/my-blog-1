@@ -3,13 +3,16 @@ import Link from '../link/Link'
 import { useEffect, useState } from 'react';
 import Router from 'next/router'
 import { Input } from 'antd';
+import { categoryList } from '@/src/api'
 
 const { Search } = Input;
 
 const TopNav = (props) => {
     const [scrolled, setScrolled] = useState(0);
     const [showFenLei, setShowFenLei] = useState(false)
+    const [ca, setCa] = useState([])
     useEffect(() => {
+        // calist()
         const route = Router.route
         setShowFenLei(route === '/' || route === '/home')
         window.addEventListener('scroll', (event) => {
@@ -28,7 +31,10 @@ const TopNav = (props) => {
             }
         })
     }, [])
-
+    async function calist () {
+        let ca = await categoryList()
+        setCa(ca.rows)
+    };
     const onSearch = value => console.log(value);
     return (
         <>
@@ -55,9 +61,9 @@ const TopNav = (props) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link activeClassName='active' href='/links'>
+                                <Link activeClassName='active' href='/books'>
                                     <a className='nav-link'>
-                                        <p>博文推荐</p>
+                                        <p>好书推荐</p>
                                     </a>
                                 </Link>
                             </li>
@@ -86,14 +92,15 @@ const TopNav = (props) => {
                             <div className="ww ww2">
                                 <ul>
                                     <li className='ac'>全部分类</li>
-                                    <li>js</li>
-                                    <li>css</li>
-                                    <li>git</li>
-                                    <li>react</li>
-                                    <li>浏览器</li>
+                                    {
+                                        props.ca.rows.sort((a, b) => a.weight - b.weight).map(d => {
+                                            return (
+                                                <li key={d.id} >{d.name}</li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
-
                         </div>
                         : null
                 }
@@ -103,5 +110,6 @@ const TopNav = (props) => {
         </>
     )
 }
+
 
 export default TopNav

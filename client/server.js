@@ -6,12 +6,25 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = process.env.PORT || 80;
 const path = require("path")
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 app.prepare()
     .then(() => {
         const server = express()
         if (!dev) {
             server.use(compression()) //gzip
         }
+        server.use('/api',
+            createProxyMiddleware({
+                target: 'http://localhost:4000',
+                pathRewrite: {
+                    '^/api': '/'
+                },
+                changeOrigin: true
+            })
+        );
+
+
         server.get('*', (req, res) => {
             return handle(req, res)
         })

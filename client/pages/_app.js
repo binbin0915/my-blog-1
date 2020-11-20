@@ -1,33 +1,37 @@
 import App, { Container } from 'next/app'
 import 'antd/dist/antd.css'
-import '@/styles/globals.less'
-// import '../styles/theme.less'
+import '@/src/styles/globals.less'
 import getConfig from 'next/config'
-// const { NEXT_APP_BASE_URL, NEXT_APP_RUN_ENV } = getConfig().publicRuntimeConfig
-function MyApp ({ Component, pageProps }) {
-  return (
-    <>
-      {/* {
-        NEXT_APP_RUN_ENV !== 'prod' ?
-          <div style={{
-            position: 'fixed', left: '10px', bottom: '110px',
-            zIndex: 9999, background: '#eee', lineHeight: '20px',
-            padding: '10px'
-          }}>
-            测试：
-            <br />
-            NEXT_APP_RUN_ENV： {NEXT_APP_RUN_ENV}
-            <br />
-            NEXT_APP_BASE_URL {NEXT_APP_BASE_URL}
+import Router from 'next/router'
+import { tagList, categoryList, publishList } from '@/src/api'
 
-          </div>
-          : null
-      } */}
-      <Component {...pageProps} />
+Router.events.on('routeChangeComplete', () => {
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 0);
+});
+Router.events.on('routeChangeStart', (...args) => {
+    console.log('1.routeChangeStart->路由开始变化,参数为:', ...args)
+})
 
-    </>
-  )
+function MyApp (props) {
+    const { Component, pageProps, ca, tags, list } = props
+    return (
+        <Component {...pageProps} ca={ca} tags={tags} list={list} />
+
+    )
 }
 
-
+MyApp.getInitialProps = async ({ Component, ctx }) => {
+    const rr = await Promise.all([
+        categoryList(),
+        tagList(),
+        publishList({ page: 1, size: 10 })
+    ]);
+    let pageProps = {}
+    if (Component.getInitialProps) {
+        pageProps = await Component.getInitialProps({ ctx })
+    }
+    return { ca: rr[0], tags: rr[1], list: rr[2], pageProps };
+};
 export default MyApp

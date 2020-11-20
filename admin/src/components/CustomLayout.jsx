@@ -91,10 +91,10 @@ const CustomLayout = (props) => {
                                 trigger="hover"
                                 content={
                                     <Menu>
-                                        <Menu.Item>
+                                        <Menu.Item key='1'>
                                             <Link to='/user/info'>个人中心</Link>
                                         </Menu.Item>
-                                        <Menu.Item>
+                                        <Menu.Item key='2'>
                                             <span onClick={() => {
                                                 removeInfo();
                                                 dispatch({ type: "REMOVE_USER_INFO" })
@@ -126,7 +126,6 @@ const CustomLayout = (props) => {
                         <div className={`${props.className}`}>
                             {props.children}
                         </div>
-
                     </Content>
                 </Layout>
             </Layout>

@@ -64,6 +64,13 @@ export function articleUpdata (data) {
         data,
     })
 }
+export function articleDel (data) {
+    return request({
+        url: '/article/del',
+        method: 'post',
+        data,
+    })
+}
 /**
  * category
  */
