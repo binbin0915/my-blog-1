@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import Layout from '@/src/components/layout'
 import { EditOutlined } from '@ant-design/icons';
 import { archives } from '@/src/api'
@@ -38,7 +39,7 @@ const Archives = (props) => {
                                                                                 {
                                                                                     item2.child.map((item3, index3) => {
                                                                                         return (
-                                                                                            <li className="li-3" key={index3}>
+                                                                                            <li className="li-3" key={index3} onClick={() => Router.push(`/article/${item3.id}`)}>
                                                                                                 <span className='date'>{`${item3.month}-${item3.day}`}</span>
                                                                                                 <span className='ti'>{item3.title}</span>
                                                                                             </li>

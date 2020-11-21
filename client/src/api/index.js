@@ -11,6 +11,13 @@ export function publishList (data) {
         data,
     })
 }
+export function read (data) {
+    return request({
+        url: '/article/read',
+        method: 'post',
+        data,
+    })
+}
 export function archives (data) {
     return request({
         url: '/article/archives',
@@ -18,7 +25,13 @@ export function archives (data) {
         data,
     })
 }
-
+export function getArticleDetail (data) {
+    return request({
+        url: '/article/detail',
+        method: 'post',
+        data,
+    })
+}
 
 /**
  * category

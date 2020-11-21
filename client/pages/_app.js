@@ -7,7 +7,7 @@ import { tagList, categoryList, publishList } from '@/src/api'
 
 Router.events.on('routeChangeComplete', () => {
     setTimeout(() => {
-        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
     }, 0);
 });
 Router.events.on('routeChangeStart', (...args) => {

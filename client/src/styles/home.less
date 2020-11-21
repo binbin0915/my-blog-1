@@ -6,7 +6,9 @@
             padding: 10px;
             background: #fff;
             display: flex;
-
+            cursor: pointer;
+            border: 1px solid transparent;
+           
             .ldd-img{
                 width: 220px;
                 height: 135px;
@@ -40,12 +42,22 @@
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
                 }
-                .tag{
+                .read{
+                    position: absolute;
+                    bottom: 30px;
+                    font-size: 12px;
+                    right: 20px;
+
+                }
+                .ca-tag-div{
                     position: absolute;
                     bottom: 10px;
                     left: 10px;
                     font-size: 14px;
                     color: #666;
+                    .ca{
+                        margin-right:10px;
+                    }
                 }
                 .times{
                     position: absolute;
@@ -55,6 +67,15 @@
                     color: #666;
                 }
             }  
+            &:hover{
+                box-shadow: 0 0 50px -5px #ddd;
+                border: 1px solid #fdfdfd;
+                .p-box{
+                    div.tit {
+                        color:#007fff ;
+                    }
+                }
+            }
 
         }
     }

@@ -37,7 +37,7 @@ const GoTop = () => {
                 }}
                 style={{
                     fontSize: '46px',
-
+                    color: '#555'
                 }}
                 className='go-top-plugins cursor tc'
             />
