@@ -69,6 +69,10 @@ const AboutUs = () => {
                             </section>
                             <section>
                                 <h2>Me</h2>
+                                {/* <p className='p-1'>姓名：连小壮</p>
+                                <p className='p-1'>性别：男</p>
+                                <p className='p-1'>籍贯：河北</p>
+                                <p className='p-1'>邮箱：lianxiaozhuang@126.com</p> */}
                                 <p className='p-1'>本人前端菜狗一枚，正在疯狂赶火车中 ··· ···</p>
 
                             </section>

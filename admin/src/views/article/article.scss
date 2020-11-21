@@ -1,10 +1,6 @@
 .article-Drawer{
     .article-box{
         text-align: initial;
-        // .react-monaco-editor-container,
-        // .monaco-editor{
-        //     width: 100%!important;
-        // }
         border: 1px solid #ddd;
     }
     
@@ -15,7 +11,6 @@
         overflow:hidden;
         display: block;
         text-overflow: ellipsis;
-        /*-webkit-text-overflow:ellipsis;*/
         white-space: nowrap;
     }
     table{

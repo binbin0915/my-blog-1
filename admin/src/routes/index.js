@@ -2,18 +2,13 @@ import env from '@/config/env'
 import routesConfig, { whiteList } from './conf';
 import queryString from 'query-string';
 import AllComponents from '../views';
-import React, { useEffect } from 'react';
-import { Route, Redirect, Link } from 'react-router-dom';
-import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
+import React from 'react';
+import { Route, Redirect, Link, Switch } from 'react-router-dom';
 import { Menu, Dropdown, Button } from 'antd';
 import { getInfo } from '@/utils/auth'
 import { fetchUserInfo } from '@/store/action'
-import Draggable from 'react-draggable'
 export default function ({ store }) {
 
-    useEffect(() => {
-        // console.log('useEffect')
-    }, [])
     function componentPermissionFn (component, r) {
         function isLogin () {
             let info = getInfo();
@@ -37,34 +32,13 @@ export default function ({ store }) {
                 store.dispatch(fetchUserInfo())
             }
         }
-
-
         return component;
     }
-    const menu = (
-        <Menu>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-                    1st menu item
-            </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-                    2nd menu item
-            </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-                    3rd menu item
-            </a>
-            </Menu.Item>
-        </Menu>
-    );
+
     return (
         <>
             {
                 env.runEnv === 'dev' && (
-
                     <Dropdown
                         overlay={
                             <Menu>
@@ -79,12 +53,9 @@ export default function ({ store }) {
                         placement="bottomLeft">
                         <Button style={{ position: 'fixed', zIndex: '9999999', left: "200px" }}>测试</Button>
                     </Dropdown>
-
-
                 )
             }
-
-            <CacheSwitch>
+            <Switch>
                 {
                     routesConfig.map(r => {
                         const route = r => {
@@ -118,21 +89,13 @@ export default function ({ store }) {
 
                                 }
                             }
-                            return r.cache ?
-                                <CacheRoute
-                                    {...routeParams}
-                                    className={`CacheRouteOuterBox ${r.name}`}
-                                    saveScrollPosition={true}
-                                />
-                                :
-                                <Route {...routeParams} />
+                            return <Route {...routeParams} />
                         }
                         return r.component ? route(r) : r.subs.map(r => route(r))
                     })
-
                 }
                 <Route render={() => <Redirect to="/404" />} />
-            </CacheSwitch>
+            </Switch>
         </>
     )
 }

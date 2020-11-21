@@ -19,7 +19,7 @@ const Login = ({ history }) => {
                 if (res.token) {
                     setInfo(JSON.stringify(res))
                     message.success('登录成功！', 1, () => {
-                        history.push('/')
+                        history.push('/article/category')
                     })
 
                 }

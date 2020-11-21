@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, NavLink, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Popover, message } from 'antd';
+import { withRouter, NavLink, Link } from 'react-router-dom';
+import { Layout, Menu, Popover, message } from 'antd';
 import { UserOutlined, LaptopOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { removeInfo } from '@/utils/auth'
 import { useEffect } from 'react';
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 const CustomLayout = (props) => {

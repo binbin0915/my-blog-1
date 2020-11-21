@@ -33,8 +33,8 @@ const ArticleDetail = (props) => {
                                 <div className="tit tc">
                                     {props.article.title}
                                 </div>
-                                <p className="fa">发布于 {dayjs(props.article.publish_time).format('YYYY-MM-DD HH-mm-ss')}
-                             • 阅读量 {props.article.read_nums || 0}</p>
+                                <p className="fa">发布于 {dayjs(props.article.publish_time).format('YYYY-MM-DD HH:mm:ss')}
+                                &nbsp;&nbsp;  • &nbsp; 阅读量  {props.article.read_nums || 0}</p>
                             </div>
                             <div
                                 className="markdown mark-div"

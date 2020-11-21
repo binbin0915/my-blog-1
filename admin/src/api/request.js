@@ -1,11 +1,7 @@
-import store from '@/store/index';
 import axios from '@/config/axios';
 import { setInfo, removeInfo } from '@/utils/auth';
-import { setUserInfo, setUnusualFlag } from '@/store/action';
 import { message } from 'antd';
 const request = function (params) {
-    let state = store.getState();
-    let storeInfo = state.userInfoReducer.info;
 
     return new Promise((resolve, reject) => {
         axios(params).then((response) => {

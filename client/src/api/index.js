@@ -25,6 +25,13 @@ export function archives (data) {
         data,
     })
 }
+export function booklist (data) {
+    return request({
+        url: '/book/list',
+        method: 'post',
+        data,
+    })
+}
 export function getArticleDetail (data) {
     return request({
         url: '/article/detail',

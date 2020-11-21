@@ -1,34 +1,42 @@
 import React, { useState } from 'react';
 import { Row } from 'antd';
 import Layout from '@/src/components/layout'
-import { Document, Page } from 'react-pdf';
+import { Card, Tooltip } from 'antd';
+const { Meta } = Card;
 import "./index.less"
-const Books = () => {
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
-
-    function onDocumentLoadSuccess ({ numPages }) {
-        setNumPages(numPages);
-    }
-
+import { booklist } from '@/src/api'
+const Books = (props) => {
     return (
         <Layout goTop className='Links-wrapper'>
-            <Row className="ww">
-                <div>
-                    {/* <Document
-                        file="https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/pdf/1.pdf"
-                        onLoadSuccess={onDocumentLoadSuccess}
-                    >
-                        <Page pageNumber={pageNumber} />
-                    </Document>
-                    <p>Page {pageNumber} of {numPages}</p> */}
-                    <a target='_blank' href="https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/pdf/1.pdf">pdf</a>
-                </div>
-
+            <Row className="ww clearfix">
+                {
+                    props?.res.map((item, index) => {
+                        return (
+                            <a className='book-a' target='_blank' href={item.url}>
+                                <Card
+                                    hoverable
+                                    style={{ width: 175 }}
+                                    cover={<img alt="封面加载失败" src={item.img} />}
+                                >
+                                    <Meta title={
+                                        <Tooltip placement="topLeft" title={`《 ${item.name} 》`}>
+                                            <span>{item.name}</span>
+                                        </Tooltip>
+                                    } />
+                                </Card>
+                            </a>
+                        )
+                    })
+                }
             </Row>
-
         </Layout>
     )
 }
+Books.getInitialProps = async () => {
+    let res = await booklist()
 
+    return {
+        res,
+    }
+}
 export default Books
