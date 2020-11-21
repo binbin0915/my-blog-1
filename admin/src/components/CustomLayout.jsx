@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, NavLink, Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Popover, message } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { removeInfo } from '@/utils/auth'
@@ -25,8 +25,16 @@ const CustomLayout = (props) => {
             ]
         },
         {
-            title: '用户管理',
+            title: '图书管理',
             key: "sub2",
+            icon: <FilePdfOutlined />,
+            sub: [
+                { to: '/book/list', key: '1', text: "列表" },
+            ]
+        },
+        {
+            title: '用户管理',
+            key: "sub3",
             icon: <UserOutlined />,
             sub: [
                 { to: '/user/info', key: '11', text: "个人中心" },
@@ -61,7 +69,7 @@ const CustomLayout = (props) => {
                         defaultOpenKeys={['sub1']}
                         selectedKeys={selectedKeys}
                         inlineCollapsed={false}
-                        openKeys={['sub1', 'sub2']}
+                        openKeys={['sub1', 'sub2', 'sub3']}
                         style={{ height: "calc(100vh - 50px)", borderRight: 0 }}
                     >
                         {

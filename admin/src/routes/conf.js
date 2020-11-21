@@ -16,6 +16,12 @@ export default [
             { path: '/article/category', title: '分类管理', name: "ArticleCategory", component: 'ArticleCategory' },
         ],
     },
+    {
+        path: '/book',
+        subs: [
+            { path: '/book/list', title: '书籍列表', name: "BookList", component: 'BookList' },
+        ],
+    },
     { path: '/404', title: '404', name: "404", component: 'App404' },
 
 ]

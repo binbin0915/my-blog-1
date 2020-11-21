@@ -72,6 +72,41 @@ export function articleDel (data) {
     })
 }
 /**
+ * book
+ * 
+ */
+
+export function bookList (data) {
+    return request({
+        url: '/book/list',
+        method: 'post',
+        data,
+    })
+}
+
+export function bookAdd (data) {
+    return request({
+        url: '/book/add',
+        method: 'post',
+        data,
+    })
+}
+
+export function bookUpdata (data) {
+    return request({
+        url: '/book/updata',
+        method: 'post',
+        data,
+    })
+}
+export function bookDel (data) {
+    return request({
+        url: '/book/del',
+        method: 'post',
+        data,
+    })
+}
+/**
  * category
  */
 export function categoryList (data) {
