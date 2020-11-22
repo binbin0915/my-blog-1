@@ -58,7 +58,7 @@ const ArticleList = () => {
             key: 'url',
             render: (text, record) => {
                 return (
-                    <Input value={text} style={{ width: '150px' }} onChange={(e) => {
+                    <Input value={text} style={{ width: '250px' }} onChange={(e) => {
                         let v = e.target.value
                         let temp = data.slice();
                         let f = temp.find(d => d.id === record.key);
@@ -77,7 +77,7 @@ const ArticleList = () => {
             render: (text, record) => {
                 return (
 
-                    <Input value={text} style={{ width: '150px' }} onChange={(e) => {
+                    <Input value={text} style={{ width: '250px' }} onChange={(e) => {
                         let v = e.target.value
                         let temp = data.slice();
                         let f = temp.find(d => d.id === record.key);

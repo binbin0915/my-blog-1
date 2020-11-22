@@ -147,6 +147,7 @@ export function tagList (data) {
         data,
     })
 }
+
 export function tagAdd (data) {
     return request({
         url: '/tags/add',

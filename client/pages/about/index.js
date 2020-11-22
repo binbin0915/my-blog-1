@@ -1,43 +1,43 @@
 
 import { Row, Card, Col } from 'antd';
 import Layout from '@/src/components/layout'
-import * as THREE from '@/src/assets/three/build/three.module.js'
+// import * as THREE from '@/src/assets/three/build/three.module.js'
 import "./index.less"
 import { useEffect } from 'react';
 
-const AboutUs = () => {
+const AboutUs = (props) => {
     useEffect(() => {
         // Our Javascript will go here.
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, 474 / 400, 0.1, 474);
+        // var scene = new THREE.Scene();
+        // var camera = new THREE.PerspectiveCamera(75, 474 / 400, 0.1, 474);
 
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(474, 400);
-        renderer.setClearColor('rgba(256,256,250,0.2)', 1.0);
-        document.getElementById('three-div').appendChild(renderer.domElement);
+        // var renderer = new THREE.WebGLRenderer();
+        // renderer.setSize(474, 400);
+        // renderer.setClearColor('rgba(256,256,250,0.2)', 1.0);
+        // document.getElementById('three-div').appendChild(renderer.domElement);
 
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshBasicMaterial({
-            color: 0x00ff00
-        });
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        // var geometry = new THREE.BoxGeometry(1, 1, 1);
+        // var material = new THREE.MeshBasicMaterial({
+        //     color: 0x00ff00
+        // });
+        // var cube = new THREE.Mesh(geometry, material);
+        // scene.add(cube);
 
-        camera.position.z = 5;
+        // camera.position.z = 5;
 
-        var render = function () {
-            requestAnimationFrame(render);
+        // var render = function () {
+        //     requestAnimationFrame(render);
 
-            cube.rotation.x += 0.1;
-            // cube.rotation.y += 0.1;
+        //     cube.rotation.x += 0.1;
+        //     // cube.rotation.y += 0.1;
 
-            renderer.render(scene, camera);
-        };
+        //     renderer.render(scene, camera);
+        // };
 
-        render();
+        // render();
     }, [])
     return (
-        <Layout goTop className='about-us-wrapper'>
+        <Layout goTop ca={props.ca} className='about-us-wrapper'>
             <div className="inn ww">
                 <Card
                     size="small" title="关于网站和我"

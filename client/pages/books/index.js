@@ -7,7 +7,7 @@ import "./index.less"
 import { booklist } from '@/src/api'
 const Books = (props) => {
     return (
-        <Layout goTop className='Links-wrapper'>
+        <Layout goTop ca={props.ca} className='Links-wrapper'>
             <Row className="ww clearfix">
                 {
                     props?.res.map((item, index) => {

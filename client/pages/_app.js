@@ -17,7 +17,7 @@ Router.events.on('routeChangeStart', (...args) => {
 function MyApp (props) {
     const { Component, pageProps, ca, tags, list } = props
     return (
-        <Component {...pageProps} ca={ca} tags={tags} list={list} />
+        <Component {...pageProps} ca={ca?.rows || []} tags={tags?.rows || []} list={list} />
 
     )
 }

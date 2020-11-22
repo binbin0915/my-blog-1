@@ -18,7 +18,7 @@ const ArticleDetail = (props) => {
         readFn()
     }, [])
     return (
-        <Layout goTop >
+        <Layout goTop ca={props.ca} >
             <div className="ww article-detail-wrapper">
 
                 {
@@ -28,7 +28,7 @@ const ArticleDetail = (props) => {
                                 {
                                     props.article.covery_img ?
                                         <img className='toutu' src={props.article.covery_img} alt="" />
-                                        : ""
+                                        : ''
                                 }
                                 <div className="tit tc">
                                     {props.article.title}

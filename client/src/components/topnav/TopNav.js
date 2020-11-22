@@ -1,18 +1,20 @@
 import './top.less'
 import Link from '../link/Link'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import Router from 'next/router'
 import { Input } from 'antd';
 import { categoryList } from '@/src/api'
 
 const { Search } = Input;
 
-const TopNav = (props) => {
+const TopNav = forwardRef((props, ref) => {
     const [scrolled, setScrolled] = useState(0);
     const [showFenLei, setShowFenLei] = useState(false)
-    const [ca, setCa] = useState([])
+    const [ca, setCa] = useState(() => {
+        let c = props.ca.sort((a, b) => a.weight - b.weight)
+        return [{ id: 0, name: '全部分类', ac: true }].concat(c)
+    })
     useEffect(() => {
-        // calist()
         const route = Router.route
         setShowFenLei(route === '/' || route === '/home')
         window.addEventListener('scroll', (event) => {
@@ -31,10 +33,23 @@ const TopNav = (props) => {
             }
         })
     }, [])
-    async function calist () {
-        let ca = await categoryList()
-        setCa(ca.rows)
-    };
+    useImperativeHandle(ref, () => ({
+        clearAc () {
+            let temp = ca.map(d => {
+                return Object.assign({}, d, { ac: false })
+            });
+            setCa(temp)
+        }
+    }))
+    function clickFn (id, isAc) {
+        let temp = ca.map(d => {
+            return Object.assign({}, d, { ac: d.id === id })
+        });
+        setCa(temp)
+        if (!isAc) {
+            props.caClick(id)
+        }
+    }
     const onSearch = value => console.log(value);
     return (
         <>
@@ -91,11 +106,10 @@ const TopNav = (props) => {
                         <div className="inner2">
                             <div className="ww ww2">
                                 <ul>
-                                    <li className='ac'>全部分类</li>
                                     {
-                                        props.ca.rows.sort((a, b) => a.weight - b.weight).map(d => {
+                                        ca.map(d => {
                                             return (
-                                                <li key={d.id} >{d.name}</li>
+                                                <li className={d.ac ? 'ac' : ''} onClick={() => clickFn(d.id, d.ac)} key={d.id} >{d.name}</li>
                                             )
                                         })
                                     }
@@ -109,7 +123,7 @@ const TopNav = (props) => {
             <div style={{ height: showFenLei ? '112px' : '62px' }}></div>
         </>
     )
-}
+})
 
 
 export default TopNav

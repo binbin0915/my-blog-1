@@ -11,6 +11,7 @@ const Archives = (props) => {
         <Layout
             className='Archives-c'
             goTop
+            ca={props.ca}
         >
             <div className="ww">
                 <>
@@ -66,9 +67,7 @@ const Archives = (props) => {
                                 extra={<a href="/">More</a>}
                                 style={{ height: 300, }}
                             >
-                                <p>Card content</p>
-                                <p>Card content</p>
-                                <p>Card content</p>
+                                <p>敬请期待。。。</p>
                             </Card>
                         </Col>
                     </Row>

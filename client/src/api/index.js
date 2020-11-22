@@ -61,3 +61,10 @@ export function tagList (data) {
         data,
     })
 }
+export function tagArticle (data) {
+    return request({
+        url: '/tags/tagArticle',
+        method: 'post',
+        data,
+    })
+}

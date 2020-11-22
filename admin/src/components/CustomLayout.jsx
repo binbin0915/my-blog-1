@@ -29,7 +29,7 @@ const CustomLayout = (props) => {
             key: "sub2",
             icon: <FilePdfOutlined />,
             sub: [
-                { to: '/book/list', key: '1', text: "列表" },
+                { to: '/book/list', key: '21', text: "列表" },
             ]
         },
         {
@@ -37,7 +37,7 @@ const CustomLayout = (props) => {
             key: "sub3",
             icon: <UserOutlined />,
             sub: [
-                { to: '/user/info', key: '11', text: "个人中心" },
+                { to: '/user/info', key: '31', text: "个人中心" },
                 { to: '/user/permissionMgt', key: '12', text: "权限管理" },
             ]
         },
