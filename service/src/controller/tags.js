@@ -2,6 +2,9 @@
 const {
     Tags
 } = require('@/models/tags');
+const {
+    ArticleTag
+} = require('@/models/article_tag');
 const { Op, CIDR } = require("sequelize");
 
 module.exports = {
@@ -14,6 +17,16 @@ module.exports = {
                 count: rows.length,
                 rows
             },
+            request: `${ctx.method} ${ctx.path}`
+        };
+        ctx.status = 200
+    },
+    async tag_article (ctx, next) {
+        const rows = await ArticleTag.findAll();
+        ctx.body = {
+            msg: "OK",
+            code: "0000",
+            data: rows,
             request: `${ctx.method} ${ctx.path}`
         };
         ctx.status = 200

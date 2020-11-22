@@ -1,6 +1,8 @@
 const { User } = require('@/models/user')
 const { Tags } = require('@/models/tags')
 const { Article } = require('@/models/article')
+const { ArticleTag } = require('@/models/article_tag')
+const { Book } = require('@/models/book')
 const { Category } = require('@/models/category')
 const { db } = require('@/core/db')
 const { Sequelize, Model } = require('sequelize')
@@ -74,6 +76,27 @@ function init () {
     }, {
         sequelize: db,
         tableName: 'article'
+    })
+    ArticleTag.init({
+        article_id: Sequelize.STRING,
+        tag_id: Sequelize.STRING,
+    }, {
+        sequelize: db,
+        tableName: 'article_tag'
+    })
+
+    Book.init({
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: Sequelize.STRING,
+        url: Sequelize.TEXT,
+        img: Sequelize.STRING,
+    }, {
+        sequelize: db,
+        tableName: 'book'
     })
 
     Category.init({

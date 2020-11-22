@@ -1,15 +1,13 @@
 
-
 const { Model } = require('sequelize')
 
-
 // define
-class Tags extends Model { }
+class Book extends Model { }
 
 
 //User.sync({ force: true });
 module.exports = {
-    Tags
+    Book
 }
 
 // 数据迁移 SQL 更新 风险

@@ -20,7 +20,7 @@ module.exports = () => async (ctx, next) => {
         ctx.status = 200
     } else {
         ctx.f = f
-        next()
+        await next()
     }
 
 };

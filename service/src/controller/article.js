@@ -1,6 +1,7 @@
 const {
     Article
 } = require('@/models/article');
+const { ArticleTag } = require('@/models/article_tag')
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 const dayjs = require('dayjs')
@@ -9,17 +10,40 @@ module.exports = {
         /**
          * status 0 未发布 , 1发布, -1 删除
          */
+        const { id } = JSON.parse(ctx.request.body);
         const res = await Article.findOne({
             where: {
-                id: 1
+                id
             },
         });
         ctx.body = {
             msg: "OK",
             code: "0000",
-            data: res,
+            data: res ? res : null,
             request: `${ctx.method} ${ctx.path}`
         };
+
+        ctx.status = 200
+    },
+    async read (ctx, next) {
+        /**
+         * status 0 未发布 , 1发布, -1 删除
+         */
+        const { id } = JSON.parse(ctx.request.body);
+        const res = await Article.findOne({
+            where: {
+                id
+            },
+        });
+        res.read_nums = (Number(res.read_nums) || 0) + 1;
+        res.save()
+        ctx.body = {
+            msg: "OK",
+            code: "0000",
+            data: res ? res : null,
+            request: `${ctx.method} ${ctx.path}`
+        };
+
         ctx.status = 200
     },
     async list (ctx, next) {
@@ -33,7 +57,8 @@ module.exports = {
                     order: [[sequelize.literal('id'), 'DESC']],
                     [Op.or]: [
                         { status: '0' },
-                        { status: '1' }
+                        { status: '1' },
+
                     ]
                 },
             });
@@ -93,16 +118,21 @@ module.exports = {
         /**
          * status 0 未发布 , 1发布, -1 删除
          */
-        const { page, size } = JSON.parse(ctx.request.body);
+        const { page, size, filter } = JSON.parse(ctx.request.body);
         if (!page && !size) {
             const rows = await Article.findAll({
                 order: [[sequelize.literal('publish_time'), 'DESC']],
                 where: {
-                    [Op.or]: [
+                    [Op.and]: [
                         { published: '1' }
-                    ]
+                    ].concat(
+                        filter && filter.ca && filter.ca != 0 ? [{ category_id: filter.ca }] : []
+                    )
                 },
             });
+            rows.forEach(d => {
+                d.tag_ids = (d.tag_ids || '').split(',').filter(Boolean)
+            })
             ctx.body = {
                 msg: "OK",
                 code: "0000",
@@ -114,10 +144,10 @@ module.exports = {
                             covery_img: d.covery_img,
                             summary: d.summary,
                             title: d.title,
-                            tag_ids: d.tag_ids || '',
+                            tag_ids: d.tag_ids,
                             category_id: d.category_id,
-                            publish_time: d.publish_time
-
+                            publish_time: d.publish_time,
+                            read_nums: d.read_nums
                         }
                     })
                 },
@@ -127,31 +157,70 @@ module.exports = {
         } else {
             let reg = /\d/
             if (reg.test(page) || reg.test(size)) {
-                const { count, rows } = await Article.findAndCountAll({
-                    order: [[sequelize.literal('publish_time'), 'DESC']],
-                    where: {
-                        [Op.or]: [
-                            { published: '1' }
-                        ]
-                    },
-                    offset: (page - 1) * size,
-                    limit: size
+                let res;
+                if (filter && filter.ca && filter.ca != 0) {
+                    res = await Article.findAndCountAll({
+                        order: [[sequelize.literal('publish_time'), 'DESC']],
+                        where: {
+                            [Op.and]: [
+                                { published: '1' },
+                                { category_id: filter.ca }
+                            ],
+                        },
+                        offset: (page - 1) * size,
+                        limit: size
+                    })
+                } else if (filter && filter.tag) {
+                    let articleIds = await ArticleTag.findAll({
+                        where: {
+                            tag_id: filter.tag
+                        }
+                    });
+                    let ids = articleIds.map(d => d.article_id)
+
+                    res = await Article.findAndCountAll({
+                        order: [[sequelize.literal('publish_time'), 'DESC']],
+                        where: {
+                            [Op.and]: [
+                                { published: '1' },
+                                {
+                                    id: ids
+                                }
+                            ],
+                        },
+                        offset: (page - 1) * size,
+                        limit: size
+                    })
+                } else {
+                    res = await Article.findAndCountAll({
+                        order: [[sequelize.literal('publish_time'), 'DESC']],
+                        where: {
+                            [Op.and]: [
+                                { published: '1' },
+                            ],
+                        },
+                        offset: (page - 1) * size,
+                        limit: size
+                    })
+                }
+                res.rows.forEach(d => {
+                    d.tag_ids = (d.tag_ids || '').split(',').filter(Boolean)
                 })
                 ctx.body = {
                     msg: "OK",
                     code: "0000",
                     data: {
-                        count,
-                        rows: rows.map(d => {
+                        count: res.count,
+                        rows: res.rows.map(d => {
                             return {
                                 id: d.id,
                                 covery_img: d.covery_img,
                                 summary: d.summary,
                                 title: d.title,
-                                tag_ids: d.tag_ids || '',
+                                tag_ids: d.tag_ids,
                                 category_id: d.category_id,
-                                publish_time: d.publish_time
-
+                                publish_time: d.publish_time,
+                                read_nums: d.read_nums
                             }
                         })
                     },
@@ -223,26 +292,35 @@ module.exports = {
             s.category_id = article.category_id;
             s.b1 = article.b1;
             s.b2 = article.b2;
-            Article.create(s)
+            let res = await Article.create(s)
+
+            if (article.published) {
+                let bulkArr = article.tag_ids.map(d => {
+                    return {
+                        article_id: res.id,
+                        tag_id: d
+                    }
+                })
+                await ArticleTag.bulkCreate(bulkArr)
+            }
             ctx.body = {
                 msg: '创建成功',
                 code: '0000',
-
+                isOk: true
             }
             ctx.status = 200
         }
     },
     async publish (ctx, next) {
-        let article = ctx.request.body
-        if (!article.title) {
-            ctx.body = {
-                msg: '标题不能为空',
-                code: '0000',
-            }
-            ctx.status = 200
-        } else {
-            Article.create(article)
+        /**
+         * 
+         */
+
+        ctx.body = {
+            msg: '标题不能为空',
+            code: '0000',
         }
+        ctx.status = 200
 
     },
     async updata (ctx, next) {
@@ -260,9 +338,34 @@ module.exports = {
             ctx.status = 200
         } else {
             if (f.published == '0' && article.published == '1') {
-                article.publish_time = new Date
+                article.publish_time = new Date;
+
+                await ArticleTag.destroy({
+                    where: {
+                        article_id: article.id
+                    }
+                });
+                //bulkCreate
+                let bulkArr = article.tag_ids.map(d => {
+                    return {
+                        article_id: article.id,
+                        tag_id: d
+                    }
+                })
+                await ArticleTag.bulkCreate(bulkArr)
             }
-            article.tag_ids = article.tag_ids.join(',')
+            if (article.published == '0') {
+                await ArticleTag.destroy({
+                    where: {
+                        article_id: article.id
+                    }
+                });
+            }
+
+
+
+            article.tag_ids = article.tag_ids.join(',');
+
             await Article.update(article, {
                 where: {
                     id: article.id

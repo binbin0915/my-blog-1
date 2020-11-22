@@ -1,16 +1,6 @@
-const bcrypt = require('bcryptjs')
 
-const {
-    sequelize
-} = require('@/core/db')
+const { Model } = require('sequelize')
 
-
-const {
-    Sequelize,
-    Model
-} = require('sequelize')
-
-// define
 class Article extends Model { }
 
 
