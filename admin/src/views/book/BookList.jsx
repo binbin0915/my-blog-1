@@ -17,9 +17,6 @@ const ArticleList = () => {
         let res = await bookUpdata(record);
         if (res.isOk) {
             message.success('更新成功')
-
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -27,8 +24,6 @@ const ArticleList = () => {
         let res = await bookDel({ id: record.key })
         if (res.isOk) {
             message.success('删除成功！')
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -138,8 +133,6 @@ const ArticleList = () => {
                 message.success('创建成功')
                 list()
 
-            } else {
-                message.error(res.msg)
             }
             setVisible(false)
         } catch (err) {

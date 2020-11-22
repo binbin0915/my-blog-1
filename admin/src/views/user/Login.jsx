@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-import { Form, Input, Button, Checkbox, Card, message } from 'antd';
+import React, { useState } from 'react'
+import { Form, Input, Button, Card, message } from 'antd';
 import { login } from '@/api'
 import '@/assets/style/user.scss'
 import { setInfo } from '@/utils/auth'
@@ -21,13 +21,12 @@ const Login = ({ history }) => {
                     message.success('登录成功！', 1, () => {
                         history.push('/article/category')
                     })
-
                 }
             }
         }
-
     }
     const onFinish = values => {
+
         if (!values.username) {
             setIsU(false)
             return;
@@ -36,16 +35,14 @@ const Login = ({ history }) => {
             setIsPa(false)
             return;
         }
-
         toLogin(values)
-
     };
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
 
-    const [username, setUserName] = useState('')
-    const [password, setPassWord] = useState('')
+    const [username, setUserName] = useState('admin')
+    const [password, setPassWord] = useState('admin')
     const [isU, setIsU] = useState(true)
     const [isPa, setIsPa] = useState(true)
     return (
@@ -55,7 +52,6 @@ const Login = ({ history }) => {
                     {...layout}
                     name="basic"
                     initialValues={{ remember: true }}
-                    onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     className='user-form'
                 >
@@ -66,7 +62,7 @@ const Login = ({ history }) => {
                         help={!isU ? "用户名必须4-16位的字母或者数字" : ""}
                     //rules={[{ required: true, message: 'Please input your username!' }]}
                     >
-                        <Input value={username} onChange={(e) => {
+                        <Input defaultValue={username} value={username} onChange={(e) => {
                             let v = e.target.value;
                             setIsU(reg.test(v))
                             setUserName(v)
@@ -81,14 +77,18 @@ const Login = ({ history }) => {
                     //rules={[{ required: true, message: '密码不为空切为4-16位的字母或者数字' }]}
                     >
                         <Input.Password
-                            value={password} onChange={(e) => {
+                            defaultValue={password}
+                            value={password}
+                            onChange={(e) => {
                                 let v = e.target.value;
                                 setIsPa(reg.test(v))
                                 setPassWord(v)
                             }}
                         />
                     </Form.Item>
-                    <Button type="primary" htmlType="submit">  登录 </Button>
+                    <Button type="primary" onClick={() => {
+                        onFinish({ username, password })
+                    }}>  登录 </Button>
                 </Form>
                 <br />
                 <br />

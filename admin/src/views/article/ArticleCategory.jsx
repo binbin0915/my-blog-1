@@ -18,8 +18,6 @@ const ArticleList = () => {
         if (res.isOk) {
             message.success('更新成功')
 
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -27,8 +25,6 @@ const ArticleList = () => {
         let res = await categoryDel({ id: record.key })
         if (res.isOk) {
             message.success('删除成功！')
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -120,8 +116,6 @@ const ArticleList = () => {
                 message.success('创建成功')
                 list()
                 setVisible(false)
-            } else {
-                message.error(res.msg)
             }
         } catch (err) {
 

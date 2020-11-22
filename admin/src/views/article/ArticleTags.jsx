@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Modal, Space, Input, Button, message, Form, Popconfirm, Spin } from 'antd';
-import { InputNumber } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import InputColor from 'react-input-color';
 import { tagAdd, tagDel, tagList, tagUpadata } from '@/api'
@@ -19,8 +18,6 @@ const ArticleTags = () => {
         if (res.isOk) {
             message.success('更新成功')
 
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -28,8 +25,6 @@ const ArticleTags = () => {
         let res = await tagDel({ id: record.key })
         if (res.isOk) {
             message.success('删除成功！')
-        } else {
-            message.error(res.msg)
         }
         list()
     }
@@ -126,8 +121,6 @@ const ArticleTags = () => {
                 message.success('创建成功')
                 list()
                 setVisible(false)
-            } else {
-                message.error(res.msg)
             }
         } catch (err) {
 

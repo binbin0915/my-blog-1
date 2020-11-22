@@ -19,6 +19,9 @@ const request = function (params) {
                     message.error('登录信息失效！', 2, () => {
                         window.location.href = '/user/login'
                     })
+                } else if (code === '0002') {
+                    resolve(false);
+                    message.error('权限不足，请联系管理员！', 2)
                 } else {
                     resolve(response);
                 }

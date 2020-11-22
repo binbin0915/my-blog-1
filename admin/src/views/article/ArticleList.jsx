@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Table, Tag, Space, Input, message } from 'antd';
-import { Drawer, Button, Form, Checkbox, Pagination, Popconfirm, Spin } from 'antd';
+import { Drawer, Button, Form, Pagination, Popconfirm, Spin } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
 import './article.scss'
@@ -89,8 +89,6 @@ const ArticleList = () => {
             if (res.isOk) {
                 message.success('删除成功', 1);
                 getArticle(page, size)
-            } else {
-                message.error(res.msg || '未知错误')
             }
         }, [])
     const taglist = useCallback(
