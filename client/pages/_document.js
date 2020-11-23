@@ -9,7 +9,7 @@ class MyDocument extends Document {
     render () {
         return (
             <Html lang="zh-CN">
-                <Head />
+                <Head> </Head>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `var _hmt = _hmt || [];

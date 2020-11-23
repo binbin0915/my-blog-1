@@ -6,9 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "env-cmd -e dev -f ./.env-cmdrc.json nodemon index.js",
-        "pm2:dev": "env-cmd -e dev -f ./.env-cmdrc.json pm2 start pm2.config.json",
-        "pm2:qa": "env-cmd -e qa -f ./.env-cmdrc.json pm2 start pm2.config.json",
-        "pm2:prod": "env-cmd -e prod -f ./.env-cmdrc.json pm2 start pm2.config.json"
+        "pm2:dev": "env-cmd -e dev -f ./.env-cmdrc.json pm2 start pm2.config.js",
+        "pm2:qa": "env-cmd -e qa -f ./.env-cmdrc.json pm2 start pm2.config.js",
+        "pm2:prod": "env-cmd -e prod -f ./.env-cmdrc.json pm2 start pm2.config.js"
     },
     "repository": {
         "type": "git",
