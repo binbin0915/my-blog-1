@@ -12,7 +12,8 @@ const db = new Sequelize(dbName, user, password, {
     dialect: 'mysql',
     host,
     port,
-    logging: console.log,
+    //logging: console.log,
+    logging: false,
 
     timezone: '+08:00',
     define: {
@@ -34,6 +35,31 @@ const db = new Sequelize(dbName, user, password, {
     }
 })
 
+//真删除
+const db2 = new Sequelize(dbName, user, password, {
+    dialect: 'mysql',
+    host,
+    port,
+    //logging: console.log,
+    logging: false,
+
+    timezone: '+08:00',
+    define: {
+        //create_time  update_time delete_time
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+        underscored: true,
+        freezeTableName: true,
+        scopes: {
+            bh: {
+                attributes: {
+                    exclude: ['updated_at', 'created_at']
+                }
+            }
+        }
+    }
+})
 db.sync({
     force: false
 })
@@ -66,5 +92,6 @@ Model.prototype.toJSON = function () {
 }
 
 module.exports = {
-    db
+    db,
+    db2
 }

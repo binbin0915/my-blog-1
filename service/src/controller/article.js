@@ -337,14 +337,16 @@ module.exports = {
             }
             ctx.status = 200
         } else {
-            if (f.published == '0' && article.published == '1') {
-                article.publish_time = new Date;
+            await ArticleTag.destroy({
+                where: {
+                    article_id: article.id
+                }
+            });
 
-                await ArticleTag.destroy({
-                    where: {
-                        article_id: article.id
-                    }
-                });
+            if (article.published == '1') {
+                if (f.published == '0') {
+                    article.publish_time = new Date;
+                }
                 //bulkCreate
                 let bulkArr = article.tag_ids.map(d => {
                     return {
@@ -354,18 +356,10 @@ module.exports = {
                 })
                 await ArticleTag.bulkCreate(bulkArr)
             }
-            if (article.published == '0') {
-                await ArticleTag.destroy({
-                    where: {
-                        article_id: article.id
-                    }
-                });
-            }
 
 
 
             article.tag_ids = article.tag_ids.join(',');
-
             await Article.update(article, {
                 where: {
                     id: article.id
@@ -375,7 +369,6 @@ module.exports = {
                 msg: '更新成功',
                 code: '0000',
                 data: { isOk: true }
-
             }
             ctx.status = 200
         }
@@ -403,8 +396,12 @@ module.exports = {
                 return
 
             }
+            await ArticleTag.destroy({
+                where: {
+                    article_id: co.id
+                }
+            });
             await Article.destroy({
-                truncate: true,
                 where: {
                     id: co.id
                 }

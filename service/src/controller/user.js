@@ -34,7 +34,10 @@ module.exports = {
 
 
                 } else {
-                    await User.create(p)
+                    await User.create({
+                        username: p.username,
+                        password: p.password
+                    })
 
                     msg = '用户创建成功',
                         data = {

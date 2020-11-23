@@ -4,7 +4,7 @@ const { Article } = require('@/models/article')
 const { ArticleTag } = require('@/models/article_tag')
 const { Book } = require('@/models/book')
 const { Category } = require('@/models/category')
-const { db } = require('@/core/db')
+const { db, db2 } = require('@/core/db')
 const { Sequelize, Model } = require('sequelize')
 const bcrypt = require('bcryptjs')
 function init () {
@@ -81,7 +81,7 @@ function init () {
         article_id: Sequelize.STRING,
         tag_id: Sequelize.STRING,
     }, {
-        sequelize: db,
+        sequelize: db2,
         tableName: 'article_tag'
     })
 
