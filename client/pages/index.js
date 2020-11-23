@@ -31,10 +31,8 @@ function Home (props) {
                 }
             })
 
-            console.log('seted-tags', tags)
             setTags(newTagsArr)
         }
-        console.log('ar_tags', res)
     })
     const plist = async () => {
         loading = true;
@@ -61,7 +59,6 @@ function Home (props) {
     }
     useEffect(() => {
         tagArticleFn()
-        console.log('props?.tags', props.tags)
         let ub = document.getElementById('ul-bottom');
         function handler () {
             let sh = ub.offsetTop;
@@ -109,7 +106,6 @@ function Home (props) {
         )
     }, [])
     const caClick = async (id) => {
-        console.log('ca-click-id', id)
         document.documentElement.scrollTop = 0;
         page = 1;
         filter = {
@@ -131,7 +127,6 @@ function Home (props) {
         plist()
     }
     const tagClick = async (id) => {
-        console.log('ca-click-id', id)
         document.documentElement.scrollTop = 0;
         page = 1;
         filter = {
@@ -142,7 +137,6 @@ function Home (props) {
         navRef.current.clearAc()
         plist()
     }
-    console.log('count', count)
     return (
         <Layout
             className='home-c'
@@ -202,7 +196,7 @@ function Home (props) {
                             size="small" title="标签"
                             className='fenlei'
                             id='fenlei'
-                            style={{ height: 300, marginTop: '20px' }}
+                            style={{ height: 'auto', minHeight: '300px', marginTop: '20px' }}
                         >
                             {
                                 tags.map(d => {
@@ -216,9 +210,20 @@ function Home (props) {
                                                     })
                                                 })
                                                 setTags(temp)
-
                                                 tagClick(d.id)
                                             }}
+                                            // onMouseOver={(e) => {
+                                            //     e.target.style.border = `1px solid ${d.color}`
+                                            //     e.target.style.backgroundColor = d.color
+                                            //     e.target.style.color = '#fff'
+                                            // }}
+                                            // onMouseLeave={(e) => {
+                                            //     if (!e.target?.classList.contains('ac')) {
+                                            //         e.target.style.backgroundColor = '#fff'
+                                            //         e.target.style.border = `1px solid #eee`
+                                            //         e.target.style.color = '#333'
+                                            //     }
+                                            // }}
                                             className={d.ac ? 'ac' : ''}
                                             key={d.id}
                                             color={d.ac ? d.color : ''}
