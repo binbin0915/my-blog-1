@@ -7,6 +7,25 @@ import './article.scss'
 import { articleList, articleAdd, articleDel, tagList, categoryList, articleUpdata } from '@/api'
 import dayjs from 'dayjs'
 import { Select, Switch } from 'antd';
+import Draggable from 'react-draggable';
+import './markdown.scss'
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+    },
+    pedantic: false,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false
+});
 const cloneDeep = require('lodash.clonedeep');
 
 const { TextArea } = Input;
@@ -22,7 +41,6 @@ const initArticle = {
     category_id: ''
 }
 
-const set = new Set();
 const ArticleList = () => {
     const [form] = Form.useForm()
     const [data, setData] = useState([]);
@@ -251,174 +269,205 @@ const ArticleList = () => {
     }, [])
 
     return (
-        <CustomLayout className='article-list-c'>
-            <Drawer
-                className='article-Drawer'
-                title={isAdd ? '新建文章' : '编辑文章'}
-                footer={
-                    <div>
-                        <Button type="primary" onClick={() => { isAdd ? save() : updata(article, 'detail') }}>
-                            {isAdd ? "保存" : "更新"}
-                        </Button>
-                    </div>
-                }
-                placement="right"
-                closable={false}
-                onClose={onClose}
-                width={1030}
-                visible={visible}
-            >
-                <Spin tip="Loading..." spinning={loading2}>
-                    <Form
-                        layout={{ labelCol: { span: 2 }, wrapperCol: { span: 20 } }}
-                        form={form}
-                        name="basic"
-                        style={{ paddingLeft: '30px' }}
-                    >
-                        <Form.Item
-                            label="标题"
-                            name="title"
-                            style={{ textAlign: 'left' }}
+        <>
+            <CustomLayout className='article-list-c'>
+                <Drawer
+                    className='article-Drawer'
+                    title={isAdd ? '新建文章' : '编辑文章'}
+                    footer={
+                        <div>
+                            <Button type="primary" onClick={() => { isAdd ? save() : updata(article, 'detail') }}>
+                                {isAdd ? "保存" : "更新"}
+                            </Button>
+                        </div>
+                    }
+                    placement="right"
+                    closable={false}
+                    onClose={onClose}
+                    width={'100%'}
+                    visible={visible}
+                >
+                    <Spin tip="Loading..." spinning={loading2}>
+                        <Form
+                            layout={{ labelCol: { span: 2 }, wrapperCol: { span: 20 } }}
+                            form={form}
+                            name="basic"
+                            style={{ paddingLeft: '30px' }}
                         >
-                            <Input
-                                value={article.title}
-                                style={{ width: '300px' }}
-                                onChange={(e) => setArticle(article, { title: e.target.value })}
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="摘要"
-                            name="summary"
-                            style={{ textAlign: 'left' }}
-                        >
-                            <TextArea
-                                style={{ width: "600px" }}
-                                rows={4}
-                                value={article.summary}
-                                onChange={(e) => setArticle(article, { summary: e.target.value })}
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="分类"
-                            name="category_id"
-                            style={{ textAlign: 'left' }}
-                        >
-                            <Select
-                                value={article.category_id + ""}
-                                style={{ width: 120 }}
-                                onChange={(value) => { setArticle(article, { category_id: value + '' }) }}>
-                                {ca.map(d => <Option key={d.id} value={d.id + ""}>{d.name}</Option>)}
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            label="标签"
-                            name="tag_ids"
-                            style={{ textAlign: 'left' }}
-                        >
-                            <Select
-                                mode="multiple"
-                                style={{ width: '300px' }}
-                                placeholder="select one tag"
-                                optionLabelProp="label"
-                                value={article.tag_ids.filter(Boolean)}
-                                onChange={(v) => { console.log('v', v); setArticle(article, { tag_ids: v }) }}
+                            <Form.Item
+                                label="标题"
+                                name="title"
+                                style={{ textAlign: 'left' }}
                             >
-                                {
-                                    tag.map(d => (
-                                        <Option key={d.id} value={d.id + ""} label={d.name}>
-                                            <div className="demo-option-label-item" >
-                                                <span role="img" aria-label="China">
-                                                    {d.name}
-                                                </span>
-                                            </div>
-                                        </Option>
-                                    ))
-                                }
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            label="发布"
-                            name="published"
-                            style={{ textAlign: 'left' }}
-                        >
-                            <Switch
-                                checked={article.published}
-                                checkedChildren="开启"
-                                unCheckedChildren="关闭"
-                                onChange={(checked) => { setArticle(article, { published: checked ? '1' : '0' }) }}
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="封面"
-                            name="covery_img"
-                            style={{ textAlign: 'left' }}
-                        >
-                            <div>
                                 <Input
+                                    value={article.title}
+                                    style={{ width: '300px' }}
+                                    onChange={(e) => setArticle(article, { title: e.target.value })}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="摘要"
+                                name="summary"
+                                style={{ textAlign: 'left' }}
+                            >
+                                <TextArea
                                     style={{ width: "600px" }}
-                                    value={article.covery_img}
-                                    onChange={(e) => setArticle(article, { covery_img: e.target.value })}
+                                    rows={4}
+                                    value={article.summary}
+                                    onChange={(e) => setArticle(article, { summary: e.target.value })}
                                 />
-                                <div style={{ textAlign: 'left', padding: '10px 0' }}>
-                                    <img style={{ maxWidth: "600px" }} src={article.covery_img} alt="" />
+                            </Form.Item>
+                            <Form.Item
+                                label="分类"
+                                name="category_id"
+                                style={{ textAlign: 'left' }}
+                            >
+                                <Select
+                                    value={article.category_id + ""}
+                                    style={{ width: 120 }}
+                                    onChange={(value) => { setArticle(article, { category_id: value + '' }) }}>
+                                    {ca.map(d => <Option key={d.id} value={d.id + ""}>{d.name}</Option>)}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="标签"
+                                name="tag_ids"
+                                style={{ textAlign: 'left' }}
+                            >
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: '300px' }}
+                                    placeholder="select one tag"
+                                    optionLabelProp="label"
+                                    value={article.tag_ids.filter(Boolean)}
+                                    onChange={(v) => { console.log('v', v); setArticle(article, { tag_ids: v }) }}
+                                >
+                                    {
+                                        tag.map(d => (
+                                            <Option key={d.id} value={d.id + ""} label={d.name}>
+                                                <div className="demo-option-label-item" >
+                                                    <span role="img" aria-label="China">
+                                                        {d.name}
+                                                    </span>
+                                                </div>
+                                            </Option>
+                                        ))
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="发布"
+                                name="published"
+                                style={{ textAlign: 'left' }}
+                            >
+                                <Switch
+                                    checked={article.published}
+                                    checkedChildren="开启"
+                                    unCheckedChildren="关闭"
+                                    onChange={(checked) => { setArticle(article, { published: checked ? '1' : '0' }) }}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="封面"
+                                name="covery_img"
+                                style={{ textAlign: 'left' }}
+                            >
+                                <div>
+                                    <Input
+                                        style={{ width: "600px" }}
+                                        value={article.covery_img}
+                                        onChange={(e) => setArticle(article, { covery_img: e.target.value })}
+                                    />
+                                    <div style={{ textAlign: 'left', padding: '10px 0' }}>
+                                        <img style={{ maxWidth: "600px" }} src={article.covery_img} alt="" />
+                                    </div>
                                 </div>
-                            </div>
-                        </Form.Item>
-                        <Form.Item
-                            label="内容"
-                            name="content"
-                        >
-                            <div className="article-box">
-                                <MonacoEditor
-                                    width="890"
-                                    height={(document.documentElement.clientHeight || 800) - 200}
-                                    language="javascript"
-                                    style={{ height: '900px' }}
-                                    //  theme="vs-dark"
-                                    value={article.content}
-                                    options={{ selectOnLineNumbers: true }}
-                                    onChange={(value) => { setArticle(article, { content: value }) }}
-                                    editorDidMount={editorDidMount}
-                                />
-                            </div>
-                        </Form.Item>
-                    </Form>
-                </Spin>
-            </Drawer>
+                            </Form.Item>
+                            <Form.Item
+                                label="内容"
+                                name="content"
+                            >
+                                <div className="article-box">
+                                    <MonacoEditor
+                                        // width="900"
+                                        width={
+                                            document.documentElement.clientWidth ?
+                                                document.documentElement.clientWidth * 0.8
+                                                : 900
+                                        }
+                                        height='600'
+                                        height={(document.documentElement.clientHeight || 800) - 200}
+                                        language="javascript"
+                                        // style={{ height: '900px' }}
+                                        //  theme="vs-dark"
+                                        value={article.content}
+                                        options={{ selectOnLineNumbers: true }}
+                                        onChange={(value) => { setArticle(article, { content: value }) }}
+                                        editorDidMount={editorDidMount}
+                                    />
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    </Spin>
+                </Drawer>
 
-            <div style={{ textAlign: 'left', paddingBottom: '10px' }}>
-                <Button type="primary" onClick={showDrawer}>
-                    新建文章
+                <div style={{ textAlign: 'left', paddingBottom: '10px' }}>
+                    <Button type="primary" onClick={showDrawer}>
+                        新建文章
                 </Button>
-            </div>
-            <Spin tip="Loading..." spinning={loading}>
-
-                <Table
-                    columns={columns}
-                    dataSource={data.map((item, index) => {
-                        return {
-                            key: item.id,
-                            title: item.title,
-                            published: item.published,
-                            category: item.category_id,
-                            tag_ids: item.tag_ids,
-                            publish_time: item.publish_time,
-                        }
-                    })}
-                    pagination={false}
-                />
-                <div style={{ padding: '10px' }}>
-                    <Pagination
-                        current={page}
-                        total={count}
-                        onChange={(page) => {
-                            setPage(page);
-                            getArticle(page, size)
-                        }}
-                    />
                 </div>
-            </Spin>
-        </CustomLayout >
+                <Spin tip="Loading..." spinning={loading}>
+
+                    <Table
+                        columns={columns}
+                        dataSource={data.map((item, index) => {
+                            return {
+                                key: item.id,
+                                title: item.title,
+                                published: item.published,
+                                category: item.category_id,
+                                tag_ids: item.tag_ids,
+                                publish_time: item.publish_time,
+                            }
+                        })}
+                        pagination={false}
+                    />
+                    <div style={{ padding: '10px' }}>
+                        <Pagination
+                            current={page}
+                            total={count}
+                            onChange={(page) => {
+                                setPage(page);
+                                getArticle(page, size)
+                            }}
+                        />
+                    </div>
+                </Spin>
+
+            </CustomLayout >
+            <Draggable
+                // axis="x"
+                handle=".handle"
+                defaultPosition={{ x: 0, y: 0 }}
+                position={null}
+                grid={[25, 25]}
+                scale={1}
+                style={{ zIndex: '99999' }}
+
+            // onStart={this.handleStart}
+            // onDrag={this.handleDrag}
+            // onStop={this.handleStop}
+            >
+                <div className='markdown-views-box handle' style={{ display: visible ? 'flex' : 'none' }}>
+                    <div className='mv-ti'>文章内容预览（<span>本区域可以拖动</span>）</div>
+                    <div className="content-box">
+                        <div className="markdown-body"
+                            dangerouslySetInnerHTML={{ __html: marked(article.content) }}>
+                        </div>
+                    </div>
+                </div>
+            </Draggable>
+        </>
     )
 
 }

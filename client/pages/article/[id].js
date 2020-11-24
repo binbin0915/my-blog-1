@@ -80,8 +80,7 @@ export async function getServerSideProps (ctx) {
             smartLists: true,
             smartypants: false,
             xhtml: false
-        }
-        );
+        });
         article.content = marked(article.content)
     }
     return {
