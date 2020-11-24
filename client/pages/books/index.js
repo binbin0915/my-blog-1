@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row } from 'antd';
 import Layout from '@/src/components/layout'
 import { Card, Tooltip } from 'antd';
@@ -7,8 +7,12 @@ import "./index.less"
 import { booklist } from '@/src/api'
 const Books = (props) => {
     return (
-        <Layout goTop ca={props.ca} className='Links-wrapper'>
-            <Row className="ww clearfix">
+        <Layout
+            goTop
+            ca={props.ca}
+            tags={props.tags}
+            className='Links-wrapper'>
+            <Row className="ww clearfix book-c">
                 {
                     props?.res.map((item, index) => {
                         return (
@@ -34,7 +38,6 @@ const Books = (props) => {
 }
 Books.getInitialProps = async () => {
     let res = await booklist()
-
     return {
         res,
     }

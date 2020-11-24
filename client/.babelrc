@@ -12,7 +12,7 @@
       "module-resolver", {
         "alias": {
           "@/src": "./src",
-          "@/pages": "./page",
+          "@/pages": "./pages"
         }
       }
     ]

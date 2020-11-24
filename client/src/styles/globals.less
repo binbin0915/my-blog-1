@@ -90,24 +90,154 @@ a {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .ww{
-    width:1080px!important;
+   
     margin:0 auto;
     display:block;
-   position: relative;
-   z-index: 0;
+    position: relative;
+    z-index: 0;
+    // border: 1px solid #212121;
+
 }
-// @media screen and (max-width: 1200px) { /*当屏幕尺寸小于10s00px时，应用下面的CSS样式*/
-//     .ww{
-//         width:800px!important;
-        
-//     }       
-// }
-// @media screen and (max-width: 900px) { /*当屏幕尺寸小于10s00px时，应用下面的CSS样式*/
-//     .ww{
-//         width:600px!important;
-        
-//     }       
-// }
+.home-ul-div{ float: left;}
+.home-r-div{
+    float: left;
+    margin-left: 20px;
+}
+.guidang-left{ float: left;}
+.guidang-right{
+    float: left;
+    margin-left: 20px;
+}
+ 
+
+@media screen and (max-width: 767px) { /*ipad*/
+    .ww{ width:100% ;  }       
+    .home-ul-div{ float: none;padding: 20px;  }
+    .home-r-div{  display: none;  }
+    .guidang-left{  width:100%;  }
+    .guidang-right{  display: none;margin-left: 0;}
+    .ab-ar{float: none;}
+    .ab-pic-r{float: none;margin-left: 0;
+        .container{  left: -120px;  }
+    }
+
+    .home-c .article-ul .article-li{  display: flex; }
+    .home-c .article-ul .article-li .p-box {  flex: 1; }
+    .home-c .article-li .ldd-img {width: 220px;height: 160px;}
+    .top-nav-search-div{
+       display: none;
+    }
+   .logo-div{  padding-left: 20px; }
+   .top-ul1{display: none;}
+   .go-top-plugins{
+        margin-left:0px;
+        left: initial;
+        right: 20px;
+    }
+    .Links-wrapper .book-a{
+        margin:20px 5px!important;
+    }
+}
+@media screen and (max-width: 414px) { /*ipad*/
+    .ww{ width:100% ;  }       
+    .home-ul-div{float: none;padding: 20px;   }
+    .home-r-div{  display: none;  }
+    .guidang-left{  width:100%;  }
+    .guidang-right{  display: none;}
+    .ab-ar{float: none;}
+    .ab-pic-r{float: none;margin-left: 0; }
+
+    .home-c .article-ul .article-li{  display: block; }
+    .home-c .article-ul .article-li .p-box {  flex: 1; }
+    .home-c .article-li .ldd-img {margin:0 auto;width:100%;height: auto;max-height: 260px;}
+    .home-c .article-li div.tit{margin-top: 10px;}
+    .home-c .article-li .dis.no{display: none;}
+    .top-nav-small-menue{display: block;}
+
+}
+@media screen and (min-width: 768px) {  
+    .ww{ width:800px ; }       
+    .home-ul-div{ width: 467px;  }
+    .home-r-div{  width: 310px;  }
+    .guidang-left{  width:100%;  }
+    .guidang-right{  display: none;}
+    .ab-ar{float: none;}
+    .ab-pic-r{float: none;margin-left: 0;
+       
+    }
+
+    .home-c .article-ul .article-li{  display: block; }
+    .home-c .article-li .ldd-img {width: 100%;height: 445*0.61px;}
+    .home-c .article-li .dis.no{display: none;}
+    .top-nav-search-div{
+        float: right;
+        margin:  14px 0px 0 0px;  
+   }
+   .logo-div{  padding-left: 20px; }
+   .top-nav-small-menue{display: none;}
+   .small-ul-div{ display: none!important; }
+   .go-top-plugins{
+        margin-left: 340px;left: 50%;
+    }
+}
+@media  screen and(min-width: 992px){
+    .ww{  width:920px; }
+    .home-ul-div{ width: 587px;  }
+    .home-r-div{  width: 310px;  }
+    .guidang-left{  width: 587px;  }
+    .guidang-right{  width: 310px;display: block;  }
+
+    .ab-ar{width: 400px;float: left;}
+    .ab-pic-r{width: 454px;float: left;margin-left: 20px;
+        .container{  left: -104px;  }
+    }
+
+    .home-c .article-ul .article-li{  display: flex; }
+    .home-c .article-ul .article-li .p-box {  flex: 1; }
+    .home-c .article-li .ldd-img {width: 220px;height: 160px;}
+    .home-c .article-li .dis.no{display: block;}
+    .top-nav-search-div{
+        float: right;
+        margin:  14px 0px 0 0px;  
+   }
+   .logo-div{  padding-left: 0px; }
+   .top-nav-small-menue{display: none;}
+   .small-ul-div{ display: none!important; }
+
+   .go-top-plugins{
+        margin-left: 400px;left: 50%;
+    }
+}
+@media  screen and(min-width: 1260px){
+    .ww{  width:1102px;  }
+    .home-ul-div{  width: 770px;  }
+    .home-r-div{  width: 310px;  }
+    .guidang-left{  width: 770px;   }
+    .guidang-right{  width: 310px;display: block;  }
+    .ab-ar{width: 400px;float: left;}
+    .ab-pic-r{
+        width: 635px;
+        float: left;
+        margin-left: 20px;
+        .container{left: 0px;}
+    }
+
+    .home-c .article-ul .article-li{  display: flex; }
+    .home-c .article-ul .article-li .p-box {  flex: 1; }
+    .home-c .article-li .ldd-img {width: 220px;height: 160px;}
+    .home-c .article-li .dis.no{display: block;}
+    .top-nav-search-div{
+         float: right;
+         margin:  14px 0px 0 0px;  
+    }
+   .logo-div{padding-left: 0px;}
+   .top-nav-small-menue{display: none;}
+   .small-ul-div{ display: none!important; }
+   .go-top-plugins{
+    margin-left: 490px;left: 50%;
+   }
+}
+ 
 .clearfix:after {
   content: '.';
   display: block;
@@ -374,3 +504,4 @@ body{
     --comment-editor-border-color: #d9d9d9; // 评论框所用编辑器边框颜色
     --comment-editor-btn-disable-bg: #f5f5f5; // 评论框所用编辑器按钮禁用背景色
 }
+ 

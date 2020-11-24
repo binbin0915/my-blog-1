@@ -1,10 +1,6 @@
 /* eslint-disable */
 const withLess = require('@zeit/next-less')
-const lessToJS = require('less-vars-to-js')
 const withCSS = require('@zeit/next-css');
-const fs = require('fs')
-const path = require('path')
-
 
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 

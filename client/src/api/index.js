@@ -11,6 +11,13 @@ export function publishList (data) {
         data,
     })
 }
+export function search (data) {
+    return request({
+        url: '/article/search',
+        method: 'post',
+        data,
+    })
+}
 export function read (data) {
     return request({
         url: '/article/read',

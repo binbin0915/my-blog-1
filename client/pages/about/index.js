@@ -1,51 +1,50 @@
 
-import { Row, Card, Col } from 'antd';
+import { Card, Modal } from 'antd';
 import Layout from '@/src/components/layout'
-// import * as THREE from '@/src/assets/three/build/three.module.js'
 import "./index.less"
-import { useEffect } from 'react';
-
+import { useState } from 'react';
 const AboutUs = (props) => {
-    useEffect(() => {
-        // Our Javascript will go here.
-        // var scene = new THREE.Scene();
-        // var camera = new THREE.PerspectiveCamera(75, 474 / 400, 0.1, 474);
+    const imgArr = [
+        {
+            cls: 'pic1',
+            title: '努努岛',
+            url: '/oss/pic/my/ca2e2ba6f1dcb7dfbc5aaccff4662bc.jpg'
+        },
+        {
+            cls: 'pic4',
+            title: '哈利法塔',
 
-        // var renderer = new THREE.WebGLRenderer();
-        // renderer.setSize(474, 400);
-        // renderer.setClearColor('rgba(256,256,250,0.2)', 1.0);
-        // document.getElementById('three-div').appendChild(renderer.domElement);
-
-        // var geometry = new THREE.BoxGeometry(1, 1, 1);
-        // var material = new THREE.MeshBasicMaterial({
-        //     color: 0x00ff00
-        // });
-        // var cube = new THREE.Mesh(geometry, material);
-        // scene.add(cube);
-
-        // camera.position.z = 5;
-
-        // var render = function () {
-        //     requestAnimationFrame(render);
-
-        //     cube.rotation.x += 0.1;
-        //     // cube.rotation.y += 0.1;
-
-        //     renderer.render(scene, camera);
-        // };
-
-        // render();
-    }, [])
+            url: '/oss/pic/my/259e6eaf90402cb9a0ac942ef41723f.jpg'
+        }
+        ,
+        {
+            cls: 'pic8',
+            title: '沙漠',
+            url: '/oss/pic/my/4eb20d9a9be88622697a16bd7dcdeb7.jpg'
+        }
+        ,
+        {
+            cls: 'pic10',
+            title: 'DuBai博物馆',
+            url: '/oss/pic/my/dda40d9ed2c112c366460f887aed6b3.jpg'
+        }
+    ]
+    const [showImg, setshowImg] = useState(false)
+    const [url, setUrl] = useState('')
+    const [imgtitle, setIT] = useState('')
     return (
-        <Layout goTop ca={props.ca} className='about-us-wrapper'>
+        <Layout
+            goTop
+            ca={props.ca}
+            tags={props.tags}
+            className='about-us-wrapper'>
             <div className="inn ww">
                 <Card
                     size="small" title="关于网站和我"
-                    // extra={<a href="/">More</a>}
                     style={{ minHeight: 'calc(100vh - 250px)', padding: '10px' }}
                 >
-                    <Row gutter={86}>
-                        <Col className="gutter-row" span={12}>
+                    <div className='about-div' gutter={86}>
+                        <div className="ab-ar" span={12}>
                             <section>
                                 <h2>Why</h2>
                                 <p className='p-1'>
@@ -65,7 +64,6 @@ const AboutUs = (props) => {
                             <section>
                                 <h2>And</h2>
                                 <p className='p-1'></p>
-
                             </section>
                             <section>
                                 <h2>Me</h2>
@@ -74,20 +72,43 @@ const AboutUs = (props) => {
                                 <p className='p-1'>籍贯：河北</p>
                                 <p className='p-1'>邮箱：lianxiaozhuang@126.com</p> */}
                                 <p className='p-1'>本人前端菜狗一枚，正在疯狂赶火车中 ··· ···</p>
-
                             </section>
-                        </Col>
-                        <Col className="gutter-row" span={12}>
-
-                            <div id="three-div">
-
+                        </div>
+                        <div className="ab-pic-r" span={12}>
+                            <div className="me-box container">
+                                {
+                                    imgArr.map((item, index) => {
+                                        return (
+                                            <img
+                                                key={index}
+                                                onClick={() => {
+                                                    setUrl(item.url)
+                                                    setIT(item.title)
+                                                    setshowImg(true)
+                                                }}
+                                                className={item.cls}
+                                                src={item.url}
+                                                alt="加载失败"
+                                            />
+                                        )
+                                    })
+                                }
                             </div>
-                        </Col>
-
-                    </Row>
-
+                        </div>
+                    </div>
                 </Card>
-
+                <Modal
+                    visible={showImg}
+                    footer={null}
+                    title={imgtitle}
+                    className='img-model-c'
+                    onCancel={() => {
+                        setUrl('')
+                        setIT('')
+                        setshowImg(false)
+                    }}
+                > <img src={url} alt="" />
+                </Modal>
             </div>
         </Layout>
     )

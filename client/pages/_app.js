@@ -4,6 +4,7 @@ import '@/src/styles/globals.less'
 import getConfig from 'next/config'
 import Router from 'next/router'
 import { tagList, categoryList, publishList } from '@/src/api'
+import { BackTop } from 'antd';
 
 Router.events.on('routeChangeComplete', () => {
     setTimeout(() => {
@@ -17,8 +18,10 @@ Router.events.on('routeChangeStart', (...args) => {
 function MyApp (props) {
     const { Component, pageProps, ca, tags, list } = props
     return (
-        <Component {...pageProps} ca={ca?.rows || []} tags={tags?.rows || []} list={list} />
-
+        <>
+            <BackTop />
+            <Component {...pageProps} ca={ca?.rows || []} tags={tags?.rows || []} list={list} />
+        </>
     )
 }
 

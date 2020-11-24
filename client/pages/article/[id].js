@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Layout from '@/src/components/layout'
-import "@/src/styles/markdown.less"
+import "@/src/styles/markdown2.less"
+
+// import "@/src/styles/markdown.less"
 import "./index.less"
 import { getArticleDetail, read } from '@/src/api'
 import dayjs from 'dayjs'
@@ -18,7 +20,11 @@ const ArticleDetail = (props) => {
         readFn()
     }, [])
     return (
-        <Layout goTop ca={props.ca} >
+        <Layout
+            goTop
+            ca={props.ca}
+            tags={props.tags}
+            title={props?.article?.title || ''}>
             <div className="ww article-detail-wrapper">
 
                 {
@@ -37,7 +43,7 @@ const ArticleDetail = (props) => {
                                 &nbsp;&nbsp;  • &nbsp; 阅读量  {props.article.read_nums || 0}</p>
                             </div>
                             <div
-                                className="markdown mark-div"
+                                className="markdown-body mark-div"
                                 dangerouslySetInnerHTML={{ __html: props.article.content }}
                             ></div>
                         </>
@@ -56,24 +62,10 @@ const ArticleDetail = (props) => {
     )
 }
 
-// ArticleDetail.getInitialProps = async (ctx) => {
-//     // const router = useRouter()
-//     // const { pid } = router.query
-//     const { id } = ctx.query;
-//     const article = await getArticleDetail({ id });
-//     return { article };
-// };
 
 export async function getServerSideProps (ctx) {
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
-    // const res = await fetch('https://.../posts')
-    // const posts = await res.json()
     const { id } = ctx.query;
     const article = await getArticleDetail({ id });
-    // By returning { props: posts }, the Blog component
-    // will receive `posts` as a prop at build time
-
     if (article.id && article.content) {
         marked.setOptions({
             renderer: new marked.Renderer(),

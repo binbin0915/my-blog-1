@@ -23,7 +23,15 @@ app.prepare()
                 changeOrigin: true
             })
         );
-
+        server.use('/oss/',
+            createProxyMiddleware({
+                target: 'https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/',
+                pathRewrite: {
+                    '^/oss': '/'
+                },
+                changeOrigin: true
+            })
+        );
 
         server.get('*', (req, res) => {
             return handle(req, res)
