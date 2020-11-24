@@ -6,6 +6,7 @@ const admin = require('@/middleware/admin')
 router.post('/article/detail', article.detail);
 router.post('/article/read', article.read);
 router.post('/article/list', article.list);
+router.post('/article/search', article.search);
 router.post('/article/archives', article.archives);
 router.post('/article/publishList', article.publishList);
 

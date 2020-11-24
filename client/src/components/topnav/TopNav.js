@@ -111,8 +111,11 @@ const TopNav = forwardRef((props, ref) => {
                 }}
             >
                 {searching ? <div className='tc'> <Spin size="large" /></div> :
-                    searchResArr.length ? searchResArr.map((item, index) => LiDate(item, props))
-                        : <NoData />
+                    searchResArr.length ? searchResArr.map((item, index) => {
+                        return LiDate(item, props, () => {
+                            setSf(false)
+                        })
+                    }) : <NoData />
                 }
             </Modal>
             <div

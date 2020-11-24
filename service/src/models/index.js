@@ -5,7 +5,7 @@ const { ArticleTag } = require('@/models/article_tag')
 const { Book } = require('@/models/book')
 const { Category } = require('@/models/category')
 const { db, db2 } = require('@/core/db')
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize } = require('sequelize')
 const bcrypt = require('bcryptjs')
 function init () {
 

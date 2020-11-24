@@ -114,6 +114,48 @@ module.exports = {
         }
 
     },
+    async search (ctx, next) {
+        /**
+         * status 0 未发布 , 1发布, -1 删除
+         */
+        const { keyword } = JSON.parse(ctx.request.body);
+        if (!keyword) {
+
+            ctx.body = {
+                msg: "搜索词不能为空！",
+                code: "0000",
+                data: null,
+                request: `${ctx.method} ${ctx.path}`
+            };
+            ctx.status = 400
+        } else {
+
+            const res = await Article.findAll({
+                //DESC 降序
+                //ASC 升序
+                order: [[sequelize.literal('id'), 'DESC']],
+                where: {
+                    title: {
+                        [Op.like]: '%' + keyword + '%',
+                    }
+
+                },
+
+            })
+            res.forEach(d => {
+                d.tag_ids = (d.tag_ids || '').split(',').filter(Boolean)
+            })
+            ctx.body = {
+                msg: "OK",
+                code: "0000",
+                data: res,
+                request: `${ctx.method} ${ctx.path}`
+            };
+            ctx.status = 200
+
+        }
+
+    },
     async publishList (ctx, next) {
         /**
          * status 0 未发布 , 1发布, -1 删除

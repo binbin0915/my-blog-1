@@ -12,10 +12,13 @@ import '@/src/styles/home.less'
 let loading = false, finished = false;
 let page = 1, size = 10, filter = {};
 
-export const LiDate = (item, props) => {
+export const LiDate = (item, props, clickFn) => {
     let fca = props.ca.find(d => d.id == item.category_id)
     return (
-        <li className='article-li' key={item.id} onClick={() => Router.push(`/article/${item.id}`)}>
+        <li className='article-li' key={item.id} onClick={() => {
+            clickFn && clickFn();
+            Router.push(`/article/${item.id}`)
+        }}>
             { item.covery_img && <img className="ldd-img" src={item.covery_img} />}
             <div className="p-box">
                 <div className="tit">{item.title}</div>
