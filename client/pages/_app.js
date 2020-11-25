@@ -2,7 +2,6 @@ import 'antd/dist/antd.css'
 import '@/src/styles/globals.less'
 import Router from 'next/router'
 import { tagList, categoryList, publishList, sysInfo } from '@/src/api'
-import { withRouter } from 'next/router'
 import { BackTop } from 'antd';
 
 Router.events.on('routeChangeComplete', () => {
@@ -41,4 +40,4 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     }
     return { ca: rr[0], tags: rr[1], list: rr[2], sysinfo: rr[3], pageProps };
 };
-export default withRouter(MyApp)
+export default MyApp

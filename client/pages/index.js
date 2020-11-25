@@ -40,7 +40,6 @@ export const LiDate = (item, props, clickFn) => {
                         </div>
                         <div className="times">{dayjs(item.publish_time).format(`YYYY-MM-DD    HH:mm:ss`)}</div>
                     </div>
-
                 </div>
             </div>
         </li>
@@ -71,7 +70,7 @@ function Home (props) {
             setTags(newTagsArr)
         }
     })
-    const plist = async (page) => {
+    const plist = async (page, init) => {
         loading = true;
         try {
             let res = await publishList({
@@ -81,11 +80,12 @@ function Home (props) {
             })
             setCount(res.count)
             if (res.rows) {
-                let newData = data.concat(res.rows);
+
+                let newData = init ? res.rows : data.concat(res.rows);
                 setData(newData);
+                console.log('newData', newData)
                 if (newData.length >= res.count) {
                     setFinished(() => true)
-
                 }
             }
             loading = false
@@ -97,7 +97,6 @@ function Home (props) {
     useEffect(() => {
         tagArticleFn()
         let ub = document.getElementById('ul-bottom');
-
         function handler () {
             let sh = ub.offsetTop;
             let cw = document.documentElement.clientHeight;
@@ -125,10 +124,9 @@ function Home (props) {
         filter = { ca: id }
         setPage(1)
         setFinished(false)
-        setData([])
         let temp = tags.map(k => Object.assign({}, k, { ac: false }))
         setTags(temp);
-        plist(1)
+        plist(1, 'init')
 
     }
     const tagClick = async (id) => {
@@ -136,9 +134,8 @@ function Home (props) {
         filter = { tag: id }
         setPage(1)
         setFinished(false)
-        setData([])
         navRef.current.clearAc()
-        plist(1)
+        plist(1, 'init')
     }
     return (
         <Layout
