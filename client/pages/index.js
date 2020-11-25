@@ -214,10 +214,18 @@ function Home (props) {
                                 `
                         }}>
                         </div>
+                        {JSON.stringify(props.res)}
                     </div>
                 </div>
             </div>
         </Layout >
     )
+}
+
+Home.getInitialProps = async () => {
+    let res = await publishList({ page: 1, size: 10 })
+    return {
+        list: res || { rows: [], count: 0 }
+    }
 }
 export default Home
