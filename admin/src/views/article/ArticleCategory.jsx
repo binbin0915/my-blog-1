@@ -17,7 +17,8 @@ const ArticleList = () => {
         let res = await categoryUpadata(record);
         if (res.isOk) {
             message.success('更新成功')
-
+        } else {
+            message.error(res.msg || '')
         }
         list()
     }
@@ -41,6 +42,24 @@ const ArticleList = () => {
                         let f = temp.find(d => d.id === record.key);
                         if (f) {
                             f.name = v
+                        }
+                        setData(temp)
+                    }} />
+                )
+            }
+        },
+        {
+            title: 'label',
+            dataIndex: 'label',
+            key: 'label',
+            render: (text, record) => {
+                return (
+                    <Input value={text} style={{ width: '150px' }} onChange={(e) => {
+                        let v = e.target.value
+                        let temp = data.slice();
+                        let f = temp.find(d => d.id === record.key);
+                        if (f) {
+                            f.label = v
                         }
                         setData(temp)
                     }} />
@@ -160,7 +179,20 @@ const ArticleList = () => {
                             })
                         }} />
                     </Form.Item>
-
+                    <Form.Item
+                        label="label"
+                        name="label"
+                        rules={[{ required: true, message: 'Please input your label!' }]}
+                    >
+                        <Input value={cate.label} defaultValue='' onChange={e => {
+                            setCate(() => {
+                                return {
+                                    ...cate,
+                                    label: e.target.value
+                                }
+                            })
+                        }} />
+                    </Form.Item>
                     <Form.Item
                         label="权重"
                         name="weight"
@@ -196,7 +228,8 @@ const ArticleList = () => {
                         return {
                             key: item.id,
                             name: item.name,
-                            weight: item.weight
+                            weight: item.weight,
+                            label: item.label
                         }
                     })} />
             </Spin>

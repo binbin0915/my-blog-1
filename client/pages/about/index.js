@@ -37,6 +37,7 @@ const AboutUs = (props) => {
             goTop
             ca={props.ca}
             tags={props.tags}
+            sysinfo={props.sysinfo || {}}
             className='about-us-wrapper'>
             <div className="inn ww">
                 <Card
@@ -54,8 +55,8 @@ const AboutUs = (props) => {
                             </section>
                             <section>
                                 <h2>How</h2>
-                                <p className='p-1'>前端：nextjs、antd (<a target="_blank" href='www.xz1024.top'>www.xz1024.top</a>)</p>
-                                <p className='p-1'>后台：react、 antd (<a target="_blank" href='admin.xz1024.top'>admin.xz1024.top</a>)</p>
+                                <p className='p-1'>前端：nextjs、antd (<a target="_blank" href='http://www.xz1024.top'>www.xz1024.top</a>)</p>
+                                <p className='p-1'>后台：react、 antd (<a target="_blank" href='http://admin.xz1024.top'>admin.xz1024.top</a>)</p>
                                 <p className='p-1'>服务：node、koa2、sequelize、 mysql、pm2</p>
                                 <p className='p-1'>
                                     源码：<a target="_blank" href="https://github.com/xz1024/my-blog.git">https://github.com/xz1024/my-blog.git</a>
@@ -67,10 +68,6 @@ const AboutUs = (props) => {
                             </section>
                             <section>
                                 <h2>Me</h2>
-                                {/* <p className='p-1'>姓名：连小壮</p>
-                                <p className='p-1'>性别：男</p>
-                                <p className='p-1'>籍贯：河北</p>
-                                <p className='p-1'>邮箱：lianxiaozhuang@126.com</p> */}
                                 <p className='p-1'>本人前端菜狗一枚，正在疯狂赶火车中 ··· ···</p>
                             </section>
                         </div>

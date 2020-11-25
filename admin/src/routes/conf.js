@@ -22,6 +22,12 @@ export default [
             { path: '/book/list', title: '书籍列表', name: "BookList", component: 'BookList' },
         ],
     },
+    {
+        path: '/sys',
+        subs: [
+            { path: '/sys/set', title: '系统设置', name: "SysSet", component: 'SysSet' },
+        ],
+    },
     { path: '/404', title: '404', name: "404", component: 'App404' },
 
 ]

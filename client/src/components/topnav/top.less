@@ -23,15 +23,19 @@
   }
   .top-nav-small-menue{
     position: absolute;
-    right: 10px;
-    top: 10px;
-}
+    right: 0px;
+    top: 0px;
+    width: 62px;
+    height: 62px;
+    text-align: center;
+   justify-content: center;
+   align-items: center;
+    }
 .small-ul-div{
     position: absolute;
     top: 62px;
-    height: 300px;
-    background-color: #fafafa;
-    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+    background-color: #007fff;
     width: 100%;
     z-index: 9999;
     display: none;
@@ -43,7 +47,7 @@
     li{
         padding:0 50px;
         text-align: center;
-        line-height: 50px;
+        line-height: 40px;
         max-width: 400px;
         margin: 0 auto;
 
@@ -52,13 +56,15 @@
           position: relative;
           p{
             font-size: 16px;
-            color: #71777c;
+            color: #fff;
             text-align: center;
             display: inline;
+            font-weight: 300;
           }
           &:hover,&.active{
             p{
-              color: #007fff;
+              font-weight: 800;
+              font-size: 22px;
             }
           }
         }
@@ -113,9 +119,31 @@
     z-index: 1000;
     transform: translateY(-63px);
 
-    &.visible {
-      transform: translateY(0);
+   
+    .inner2{
+       &::after{
+        position: absolute;
+        content: '';
+        display: block;
+        width: 100%;
+        left: 0;
+        height: 1px;
+        background: #ddd;
+        transform: scaleY(0.5);
+       }
     }
+    &.visible {
+        transform: translateY(0);
+        .inner2::after{
+            position: absolute;
+            content: '';
+            display: block;
+            width: 100%;
+            left: 0;
+            height: 0;
+            background: none;
+           }
+      }
   }
  
   .w1{
@@ -126,20 +154,17 @@
        
   }
   .logo{
-    width: 40px;
+    width: 80px;
     height: 40px;
     float: left;
     margin-top: 10px;
   }
-  .logo3{
-    width: 46px;
-    height: 46px;
-  }
+ 
   .top-ul1 {
     height: 60px;
     line-height: 60px;
     overflow: hidden;
-    margin-left: 40px;
+    margin-left: 28px;
     background: #fff;
     li{
        float: left;

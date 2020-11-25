@@ -5,6 +5,7 @@ const App404 = lazyLoad(React.lazy(() => import(/* webpackChunkName: "App404" */
 const Regist = lazyLoad(React.lazy(() => import(/* webpackChunkName: "user" */`./user/Regist`)))
 const Login = lazyLoad(React.lazy(() => import(/* webpackChunkName: "user" */`./user/Login`)))
 const Info = lazyLoad(React.lazy(() => import(/* webpackChunkName: "user" */`./user/Info`)))
+const SysSet = lazyLoad(React.lazy(() => import(/* webpackChunkName: "user" */`./system/SystemSet`)))
 const PermissionMgt = lazyLoad(React.lazy(() => import(/* webpackChunkName: "user" */`./user/PermissionMgt`)))
 const ArticleList = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./article/ArticleList`)))
 const BookList = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./book/BookList`)))
@@ -16,6 +17,7 @@ export default {
     Login,
     Regist,
     Info,
+    SysSet,
     PermissionMgt,
     ArticleList,
     BookList,

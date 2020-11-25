@@ -9,9 +9,8 @@ import { GithubOutlined, MailOutlined, } from '@ant-design/icons'
 import { deepCopy } from '@/src/utils/tools'
 import '@/src/styles/home.less'
 
-let loading = false, finished = false;
-let page = 1, size = 10, filter = {};
-
+let loading = false;
+let size = 10, filter = {};
 export const LiDate = (item, props, clickFn) => {
     let fca = props.ca.find(d => d.id == item.category_id)
     return (
@@ -48,12 +47,13 @@ export const LiDate = (item, props, clickFn) => {
     )
 }
 
-
 function Home (props) {
     const navRef = useRef(null)
     const [data, setData] = useState(props.list.rows)
     const [tags, setTags] = useState(props?.tags || [])
     const [count, setCount] = useState(props.list.count);
+    const [finished, setFinished] = useState(props.list.rows.length >= props.list.count);
+    const [page, setPage] = useState(1);
     const tagArticleFn = useCallback(async () => {
         let res = await tagArticle();
         if (res.length) {
@@ -71,7 +71,7 @@ function Home (props) {
             setTags(newTagsArr)
         }
     })
-    const plist = async () => {
+    const plist = async (page) => {
         loading = true;
         try {
             let res = await publishList({
@@ -81,36 +81,37 @@ function Home (props) {
             })
             setCount(res.count)
             if (res.rows) {
-                setData((oldData) => {
-                    let newData = oldData.concat(res.rows);
-                    if (newData.length >= res.count) {
-                        finished = true
-                    }
-                    return newData
-                })
+                let newData = data.concat(res.rows);
+                setData(newData);
+                if (newData.length >= res.count) {
+                    setFinished(() => true)
+
+                }
             }
             loading = false
         } catch (error) {
             loading = false
         }
     }
+
     useEffect(() => {
         tagArticleFn()
         let ub = document.getElementById('ul-bottom');
+
         function handler () {
             let sh = ub.offsetTop;
             let cw = document.documentElement.clientHeight;
-            let scrollTop = document.documentElement.scrollTop ||
+            let scrollTop =
+                document.documentElement.scrollTop ||
                 window.pageYOffset ||
                 window.scrollY ||
                 document.body.scrollTop;
-
             let d = sh - cw - scrollTop;
             if (d < 0) {
                 if (loading) return;
                 if (finished) return;
-                page++
-                plist()
+                setPage(page + 1)
+                plist(page + 1)
             }
         }
         document.addEventListener('scroll', handler)
@@ -120,32 +121,35 @@ function Home (props) {
     }, [])
 
     const caClick = async (id) => {
-        document.documentElement.scrollTop = 0;
-        page = 1;
+        document.documentElement.scrollTop = window.pageYOffset = 0
         filter = { ca: id }
-        finished = false
+        setPage(1)
+        setFinished(false)
         setData([])
         let temp = tags.map(k => Object.assign({}, k, { ac: false }))
         setTags(temp);
-        plist()
+        plist(1)
+
     }
     const tagClick = async (id) => {
-        document.documentElement.scrollTop = 0;
-        page = 1;
+        document.documentElement.scrollTop = window.pageYOffset = 0
         filter = { tag: id }
-        finished = false
+        setPage(1)
+        setFinished(false)
         setData([])
         navRef.current.clearAc()
-        plist()
+        plist(1)
     }
     return (
         <Layout
             className='home-c'
+            nofooter
             goTop
             ca={props.ca}
             tags={tags}
             caClick={(id) => { caClick(id) }}
             ref={navRef}
+            sysinfo={props.sysinfo || {}}
         >
             <div className="ww clearfix"  >
                 <div className="home-ul-div" span={18}>
@@ -163,49 +167,58 @@ function Home (props) {
                         className="jianjie"
                     >
                         <div className="xx">
-                            <img src="/oss/xz1024/img/common/av.jpg" alt="" />
+                            <img src={props.sysinfo.av || `https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/av.jpg`} alt="" />
                         </div>
-                        <p className='p-1 tc'>小壮</p>
-                        <p className="p-2"> 个人技术博客，日常学习，总结，欢迎一起交流！ </p>
+                        <p className='p-1 tc'>{props.sysinfo.name || ''}</p>
+                        <p className="p-2"> {props.sysinfo.discribe || '个人技术博客，日常学习，总结，欢迎一起交流！'} </p>
                         <div className="bottom">
-                            <a target="_blank" href="https://github.com/xz1024">
+                            <a target="_blank" href={props.sysinfo.github || "https://github.com/xz1024"}>
                                 <GithubOutlined style={{ fontSize: '20px', color: '#666' }} />
                             </a>
                                     &nbsp;
                                     &nbsp;
-                                    <Tooltip title="lianxiaozhuang@126.com" color={'#1890ff'}  >
+                                    <Tooltip title={props.sysinfo.email || 'lianxiaozhuang@126.com'} color={'#1890ff'}  >
                                 <MailOutlined style={{ fontSize: '20px', color: '#666' }} />
                             </Tooltip>
                         </div>
                     </Card>
-                    <Card
-                        size="small" title="标签"
-                        className='fenlei'
-                        id='fenlei'
-                        style={{ height: 'auto', minHeight: '300px', marginTop: '20px' }}
-                    >
-                        {
-                            tags.map(d => {
-                                return (
-                                    <Tag
-                                        onClick={() => {
-                                            if (d.ac) return;
-                                            let temp = tags.map(k => {
-                                                return Object.assign({}, k, {
-                                                    ac: d.id === k.id
+                    <div id="biaoqian" className='biaoqian'>
+                        <Card
+                            size="small" title="标签"
+                            style={{ height: 'auto', minHeight: '300px', marginTop: '20px' }}
+                        >
+                            {
+                                tags.map(d => {
+                                    return (
+                                        <Tag
+                                            onClick={() => {
+                                                if (d.ac) return;
+                                                let temp = tags.map(k => {
+                                                    return Object.assign({}, k, {
+                                                        ac: d.id === k.id
+                                                    })
                                                 })
-                                            })
-                                            setTags(temp)
-                                            tagClick(d.id)
-                                        }}
-                                        className={d.ac ? 'ac' : ''}
-                                        key={d.id}
-                                        color={d.ac ? d.color : ''}
-                                    >{d.name} [{d.num || 0}] </Tag>
-                                )
-                            })
-                        }
-                    </Card>
+                                                setTags(temp)
+                                                tagClick(d.id)
+                                            }}
+                                            className={d.ac ? 'ac' : ''}
+                                            key={d.id}
+                                            color={d.ac ? d.color : ''}
+                                        >{d.name} [{d.num || 0}] </Tag>
+                                    )
+                                })
+                            }
+                        </Card>
+                        <div className="p-footer" dangerouslySetInnerHTML={{
+                            __html: props.sysinfo.footer ||
+                                `
+                            <p>Copyright© 2020 前端技术博客</p> 
+                            <p>Designed & Powerd by lianxiaozhuang </p>
+                            <p><a href='https://www.baidu.com' target="_blank">京ICP备000000号</a></p>
+                            `
+                        }}>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Layout >

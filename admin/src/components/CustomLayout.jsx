@@ -41,6 +41,14 @@ const CustomLayout = (props) => {
                 { to: '/user/permissionMgt', key: '12', text: "权限管理" },
             ]
         },
+        {
+            title: '系统设置',
+            key: "sub4",
+            icon: <UserOutlined />,
+            sub: [
+                { to: '/sys/set', key: '41', text: "基本设置" },
+            ]
+        },
     ]
     useEffect(() => {
         const { path } = props.history.config;
@@ -69,7 +77,7 @@ const CustomLayout = (props) => {
                         defaultOpenKeys={['sub1']}
                         selectedKeys={selectedKeys}
                         inlineCollapsed={false}
-                        openKeys={['sub1', 'sub2', 'sub3']}
+                        openKeys={['sub1', 'sub2', 'sub3', 'sub4']}
                         style={{ height: "calc(100vh - 50px)", borderRight: 0 }}
                     >
                         {

@@ -169,3 +169,21 @@ export function tagUpadata (data) {
         data,
     })
 }
+/**
+ * sysInfo, updataSysInfo 
+ */
+
+export function sysInfo (data) {
+    return request({
+        url: '/sysinfo/info',
+        method: 'post',
+        data,
+    })
+}
+export function updataSysInfo (data) {
+    return request({
+        url: '/sysinfo/updata',
+        method: 'post',
+        data,
+    })
+}

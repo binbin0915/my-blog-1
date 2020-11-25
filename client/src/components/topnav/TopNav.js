@@ -1,6 +1,6 @@
 import './top.less'
 import Link from '../link/Link'
-import { useEffect, useState, useImperativeHandle, forwardRef } from 'react';
+import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
 import Router from 'next/router'
 import { Input, message, Modal, Spin } from 'antd';
 import { MenuUnfoldOutlined, CloseOutlined } from '@ant-design/icons'
@@ -26,14 +26,13 @@ const TopNav = forwardRef((props, ref) => {
 
     useEffect(() => {
         const route = Router.route
-        let fl = document.getElementById('fenlei');
+        let fl = document.getElementById('biaoqian');
         setShowFenLei(route === '/' || route === '/home');
         let beforeY =
             document.documentElement.scrollTop ||
             window.pageYOffset ||
             window.scrollY ||
             document.body.scrollTop;
-
         const handler = throttle(() => {
             let y =
                 document.documentElement.scrollTop ||
@@ -43,7 +42,6 @@ const TopNav = forwardRef((props, ref) => {
 
             setAffix(y > 0);
             setV(false)
-
             setAffixVisible(beforeY > y);
             setTimeout(() => {
                 beforeY = y;
@@ -67,6 +65,12 @@ const TopNav = forwardRef((props, ref) => {
                 return Object.assign({}, d, { ac: false })
             });
             setCa(temp)
+        },
+        setAc (id) {
+            let temp = ca.map(d => {
+                return Object.assign({}, d, { ac: d.id == id ? true : false })
+            });
+            setCa(temp)
         }
     }))
     function clickFn (id, isAc) {
@@ -78,7 +82,6 @@ const TopNav = forwardRef((props, ref) => {
             props.caClick(id)
         }
     }
-
     async function onSearch (keyword) {
         setK(keyword)
         if (!keyword) {
@@ -98,12 +101,28 @@ const TopNav = forwardRef((props, ref) => {
             setSearching(false)
         }
     }
+
+    const RightTopBtnIco = () => {
+        const BtnProps = {
+            style: { color: '#007fff', fontSize: '30px' },
+        }
+        return (
+            <div className="top-nav-small-menue"
+                onClick={(e) => {
+                    e.stopPropagation()
+                    setV((pre) => !pre)
+                }}>
+                {visible ? <CloseOutlined {...BtnProps} /> : <MenuUnfoldOutlined {...BtnProps} />}
+            </div>
+        )
+    }
     return (
         <>
             <Modal
                 title={`搜索“ ${keyword} ”的文章结果`}
                 visible={showSearchFlag}
                 footer={null}
+                centered
                 className='search-model-c'
                 onCancel={() => {
                     setSf(false)
@@ -126,8 +145,7 @@ const TopNav = forwardRef((props, ref) => {
                 <div className="inner">
                     <div className="ww w1">
                         <div className="logo-div" onClick={() => Router.push('/')}>
-                            <img src={'/img/common/logo2.png'} className="logo cursor" />
-                            <img src={'/img/common/logo3.png'} className="logo logo3 cursor" />
+                            <img src={props.sysinfo?.logo || `https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/logo4.png`} className="logo cursor" />
                         </div>
                         <ul className='fl top-ul1'>
                             <li>
@@ -163,32 +181,19 @@ const TopNav = forwardRef((props, ref) => {
                         <div className="top-nav-search-div">
                             <Search
                                 placeholder="搜索文章"
-                                allowClear
+                                // allowClear
                                 onSearch={onSearch}
                             />
                         </div>
-
-                        {!visible ? <MenuUnfoldOutlined
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                setV((pre) => !pre)
-                            }}
-                            className='top-nav-small-menue'
-                            style={{ color: '#007fff', fontSize: '36px' }} />
-                            : <CloseOutlined
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    setV((pre) => !pre)
-                                }}
-                                className='top-nav-small-menue'
-                                style={{ color: '#007fff', fontSize: '36px' }}
-                            />}
+                        <RightTopBtnIco />
                     </div>
                     <ul className={`small-ul-div ${visible ? 'show' : ''}`}>
                         <li>
                             <Search
                                 placeholder="搜索文章"
-                                allowClear
+                                // allowClear
+                                size='large'
+                                style={{ paddingBottom: '20px' }}
                                 onSearch={onSearch}
                             />
                         </li>
@@ -226,7 +231,7 @@ const TopNav = forwardRef((props, ref) => {
                 </div>
                 <div className="inner2" id='top-ca-div' style={{ display: showFenLei ? '' : 'none' }}>
                     <div className="ww ww2 clearfix">
-                        <ul className='top-ca-ul'  >
+                        <ul className='top-ca-ul srcoll-y'>
                             {ca.map(d => (
                                 <li
                                     key={d.id}

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import Layout from '@/src/components/layout'
-import "@/src/styles/markdown2.less"
-
-// import "@/src/styles/markdown.less"
+import "@/src/styles/markdown.less"
 import "./index.less"
 import { getArticleDetail, read } from '@/src/api'
 import dayjs from 'dayjs'
@@ -24,9 +22,9 @@ const ArticleDetail = (props) => {
             goTop
             ca={props.ca}
             tags={props.tags}
+            sysinfo={props.sysinfo || {}}
             title={props?.article?.title || ''}>
             <div className="ww article-detail-wrapper">
-
                 {
                     props?.article?.id ?
                         <>
@@ -57,8 +55,6 @@ const ArticleDetail = (props) => {
                 }
             </div>
         </Layout>
-
-
     )
 }
 

@@ -10,9 +10,9 @@ const HeadSetUp = (props) => (
         <meta httpEquiv="Content-Type" content="text/html;charset=utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content="always" name="referrer" />
-        <meta name="description" content="连小壮的个人网站，个人博客（www.xz1024.top），学习总结前端技术" />
-        <meta name="keyword" content="前端,JavaScript,js,Vue.js,react,React.js,连小壮" data-react-helmet="true"></meta>
-        <link rel="shortcut icon" href="/favicon.ico"></link>
+        <meta name="description" content={props.sysinfo.meta_description || "连小壮的个人网站，个人博客（www.xz1024.top），学习总结前端技术"} />
+        <meta name="keyword" content={props.sysinfo.meta_keyword || "前端,JavaScript,js,Vue.js,react,React.js,连小壮"} data-react-helmet="true"></meta>
+        <link rel="shortcut icon" href={props.sysinfo.ico || "https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/favicon.ico"}></link>
     </Head>
 )
 

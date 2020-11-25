@@ -11,6 +11,7 @@ const Books = (props) => {
             goTop
             ca={props.ca}
             tags={props.tags}
+            sysinfo={props.sysinfo || {}}
             className='Links-wrapper'>
             <Row className="ww clearfix book-c">
                 {

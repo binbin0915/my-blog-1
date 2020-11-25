@@ -12,6 +12,7 @@ const Archives = (props) => {
             className='Archives-c'
             goTop
             ca={props.ca}
+            sysinfo={props.sysinfo || {}}
             tags={props.tags}
         >
             <div className="ww clearfix">
