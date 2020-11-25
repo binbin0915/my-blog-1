@@ -88,7 +88,7 @@
     },
     "scripts": {
         "start": "env-cmd -e dev -f ./.env-cmdrc.json node scripts/start.js",
-        "build": "env-cmd -e prod -f ./.env-cmdrc.json node scripts/build.js",
+        "build:prod": "env-cmd -e prod -f ./.env-cmdrc.json node scripts/build.js",
         "build:report": "env-cmd -e prod:report -f ./.env-cmdrc.json node scripts/build.js",
         "build:test": "env-cmd -e test -f ./.env-cmdrc.json node scripts/build.js",
         "build:qa": "env-cmd -e qa -f ./.env-cmdrc.json node scripts/build.js",

@@ -1,4 +1,3 @@
-
 import { Card, Modal } from 'antd';
 import Layout from '@/src/components/layout'
 import "./index.less"
@@ -45,8 +44,8 @@ const AboutUs = (props) => {
                     style={{ minHeight: 'calc(100vh - 250px)', padding: '10px' }}
                 >
                     <div className='about-div' gutter={86}>
-                        <div className="ab-ar" span={12}>
-                            <section>
+                        <div className="ab-ar" span={12} dangerouslySetInnerHTML={{ __html: props.sysinfo?.aboutme }}>
+                            {/* <section>
                                 <h2>Why</h2>
                                 <p className='p-1'>
                                     一直想有机会搭建一个属于自己的网站，奈与时间和个人技术原因，直到今年终于完成。
@@ -64,12 +63,14 @@ const AboutUs = (props) => {
                             </section>
                             <section>
                                 <h2>And</h2>
-                                <p className='p-1'></p>
+                                <p className='p-1'>
+                                    本网站非商用，自由转载；如需联系，见首页邮箱。
+                                </p>
                             </section>
                             <section>
                                 <h2>Me</h2>
                                 <p className='p-1'>本人前端菜狗一枚，正在疯狂赶火车中 ··· ···</p>
-                            </section>
+                            </section> */}
                         </div>
                         <div className="ab-pic-r" span={12}>
                             <div className="me-box container">

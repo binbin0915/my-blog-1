@@ -80,12 +80,11 @@ function Home (props) {
             })
             setCount(res.count)
             if (res.rows) {
-
                 let newData = init ? res.rows : data.concat(res.rows);
+                console.log(newData)
                 setData(newData);
-                console.log('newData', newData)
                 if (newData.length >= res.count) {
-                    setFinished(() => true)
+                    setFinished(true)
                 }
             }
             loading = false
@@ -95,9 +94,12 @@ function Home (props) {
     }
 
     useEffect(() => {
+        filter = {}
         tagArticleFn()
-        let ub = document.getElementById('ul-bottom');
+    }, [])
+    useEffect(() => {
         function handler () {
+            let ub = document.getElementById('ul-bottom');
             let sh = ub.offsetTop;
             let cw = document.documentElement.clientHeight;
             let scrollTop =
@@ -117,7 +119,7 @@ function Home (props) {
         return () => {
             document.removeEventListener('scroll', handler)
         }
-    }, [])
+    })
 
     const caClick = async (id) => {
         document.documentElement.scrollTop = window.pageYOffset = 0
@@ -127,7 +129,6 @@ function Home (props) {
         let temp = tags.map(k => Object.assign({}, k, { ac: false }))
         setTags(temp);
         plist(1, 'init')
-
     }
     const tagClick = async (id) => {
         document.documentElement.scrollTop = window.pageYOffset = 0
@@ -172,9 +173,9 @@ function Home (props) {
                             <a target="_blank" href={props.sysinfo.github || "https://github.com/xz1024"}>
                                 <GithubOutlined style={{ fontSize: '20px', color: '#666' }} />
                             </a>
-                                    &nbsp;
-                                    &nbsp;
-                                    <Tooltip title={props.sysinfo.email || 'lianxiaozhuang@126.com'} color={'#1890ff'}  >
+                            &nbsp;
+                            &nbsp;
+                            <Tooltip title={props.sysinfo.email || 'lianxiaozhuang@126.com'} color={'#1890ff'}  >
                                 <MailOutlined style={{ fontSize: '20px', color: '#666' }} />
                             </Tooltip>
                         </div>
@@ -191,9 +192,7 @@ function Home (props) {
                                             onClick={() => {
                                                 if (d.ac) return;
                                                 let temp = tags.map(k => {
-                                                    return Object.assign({}, k, {
-                                                        ac: d.id === k.id
-                                                    })
+                                                    return Object.assign({}, k, { ac: d.id === k.id })
                                                 })
                                                 setTags(temp)
                                                 tagClick(d.id)
@@ -209,10 +208,10 @@ function Home (props) {
                         <div className="p-footer" dangerouslySetInnerHTML={{
                             __html: props.sysinfo.footer ||
                                 `
-                            <p>Copyright© 2020 前端技术博客</p> 
-                            <p>Designed & Powerd by lianxiaozhuang </p>
-                            <p><a href='https://www.baidu.com' target="_blank">京ICP备000000号</a></p>
-                            `
+                                <p>Copyright© 2020 前端技术博客</p> 
+                                <p>Designed & Powerd by lianxiaozhuang </p>
+                                <p><a href='https://www.baidu.com' target="_blank">京ICP备000000号</a></p>
+                                `
                         }}>
                         </div>
                     </div>

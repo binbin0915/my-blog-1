@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import Layout from '@/src/components/layout'
 import { EditOutlined } from '@ant-design/icons';
-import { archives } from '@/src/api'
+import { archives, recentArticle } from '@/src/api'
 import { Card } from 'antd';
 import './index.less'
-
 const Archives = (props) => {
+    const [data, setData] = useState([])
+
+    async function recentArticleFn () {
+        let res = await recentArticle();
+        if (res) {
+            setData(res.slice(0, 6))
+        }
+    }
+    useEffect(() => {
+        recentArticleFn()
+    }, [])
     return (
         <Layout
             className='Archives-c'
@@ -16,7 +26,6 @@ const Archives = (props) => {
             tags={props.tags}
         >
             <div className="ww clearfix">
-
                 <div className="guidang-left" span={18}>
                     <div className="gui-box">
                         <div className="top border-bottom-1px tc">
@@ -64,11 +73,23 @@ const Archives = (props) => {
                 </div>
                 <div className="guidang-right" span={6}>
                     <Card
-                        size="small" title="推荐"
-                        extra={<a href="/">More</a>}
+                        size="small" title="最近修改"
+                        // extra={<a href="/">More</a>}
                         style={{ height: 300, }}
                     >
-                        <p>敬请期待。。。</p>
+                        <ul className="ul-1">
+                            {
+                                data.map((item, index) => {
+                                    return (
+                                        <li key={index} onClick={() => Router.push(`/article/${item.id}`)}>
+                                            <span>{item.updated_at}</span>
+                                            {item.title}
+                                        </li>
+                                    )
+                                })
+                            }
+
+                        </ul>
                     </Card>
                 </div>
 

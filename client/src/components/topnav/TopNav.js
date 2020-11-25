@@ -165,7 +165,7 @@ const TopNav = forwardRef((props, ref) => {
                             <li>
                                 <Link activeClassName='active' href='/books'>
                                     <a className='nav-link'>
-                                        <p>好书推荐</p>
+                                        <p>藏书</p>
                                     </a>
                                 </Link>
                             </li>

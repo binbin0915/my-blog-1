@@ -22,7 +22,7 @@ const SysSet = (props) => {
 
         let res = await sysInfo()
         if (res) {
-            setInfo(res[0])
+            setInfo(res[0] || {})
         }
     }
 
@@ -146,12 +146,25 @@ const SysSet = (props) => {
                     </Form.Item>
                     <Form.Item label="底部footer信息">
                         <Input.TextArea value={info.footer}
-                            style={{ height: '200px' }}
+                            style={{ height: '80px' }}
                             onChange={(e) => {
                                 setInfo((info) => {
                                     return {
                                         ...info,
                                         footer: e.target.value
+                                    }
+                                })
+                            }}
+                        />
+                    </Form.Item>
+                    <Form.Item label="关于页面描述">
+                        <Input.TextArea value={info.aboutme}
+                            style={{ height: '200px' }}
+                            onChange={(e) => {
+                                setInfo((info) => {
+                                    return {
+                                        ...info,
+                                        aboutme: e.target.value
                                     }
                                 })
                             }}

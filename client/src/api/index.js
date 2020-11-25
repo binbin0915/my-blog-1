@@ -3,10 +3,17 @@ import request from './request'
 /**
  * article
  */
-
+//recentArticle
 export function publishList (data) {
     return request({
         url: '/article/publishList',
+        method: 'post',
+        data,
+    })
+}
+export function recentArticle (data) {
+    return request({
+        url: '/article/recentArticle',
         method: 'post',
         data,
     })
