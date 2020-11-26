@@ -1,7 +1,11 @@
 .regist-c{
     width: 100%;
     height: 100vh;
-    background: #ddd;
+    background: linear-gradient(to bottom left, #76b2eb, #4383eb) ;
+    &.login-c{
+    background: linear-gradient(to bottom right, #50eebf, #4383eb) ;
+
+    }
     .content{
         width: 500px;
         border: 1px solid #ddd;

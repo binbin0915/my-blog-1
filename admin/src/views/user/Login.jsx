@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Button, Card, message } from 'antd';
 import { login } from '@/api'
 import '@/assets/style/user.scss'
@@ -44,9 +44,23 @@ const Login = ({ history }) => {
     const [username, setUserName] = useState('admin')
     const [password, setPassWord] = useState('admin')
     const [isU, setIsU] = useState(true)
-    const [isPa, setIsPa] = useState(true)
+    const [isPa, setIsPa] = useState(true);
+    useEffect(() => {
+        let handle = (e) => {
+            let event = e || window.event;
+            let key = event.which || event.keyCode || event.charCode;
+            if (key == 13) {
+                onFinish({ username, password })
+            }
+
+        }
+        document.addEventListener('keydown', handle)
+        return () => {
+            document.removeEventListener('keydown', handle)
+        }
+    })
     return (
-        <div className='regist-c'>
+        <div className='regist-c login-c'>
             <Card className='content' title="用户登录" bordered={false}  >
                 <Form
                     {...layout}

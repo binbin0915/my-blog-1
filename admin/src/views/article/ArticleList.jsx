@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Table, Space, Input, message, Modal } from 'antd';
+import { Table, Space, Input, message, Modal, Row, Col } from 'antd';
 import { Drawer, Button, Form, Pagination, Popconfirm, Spin } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
@@ -58,6 +58,15 @@ const ArticleList = () => {
     const [showArticleDetailModal, setShowArticleDetailModal] = useState(false)
     const [articleDetail, setArticleDetail] = useState({})
     const size = 10;
+    //搜索过滤
+
+    const [filter, setFilter] = useState(() => {
+        return {
+            title: '',
+            ca: '',
+            published: 'all'
+        }
+    })
     const onClose = useCallback(() => {
         console.log('onClose')
         form.resetFields()
@@ -69,7 +78,7 @@ const ArticleList = () => {
         async (page, size) => {
             try {
                 setLoading(true)
-                let res = await articleList({ page, size });
+                let res = await articleList({ page, size, filter });
                 if (res.rows) {
                     setCount(res.count);
                     setData(res.rows)
@@ -80,7 +89,7 @@ const ArticleList = () => {
                 setLoading(false)
             }
 
-        }, [article, page, size])
+        }, [article, page, size, filter])
     const save = useCallback(
         async () => {
             if (!article.title) {
@@ -287,7 +296,6 @@ const ArticleList = () => {
         taglist();
         caList()
     }, [])
-
     return (
         <>
             <CustomLayout className='article-list-c'>
@@ -430,12 +438,84 @@ const ArticleList = () => {
                         </Form>
                     </Spin>
                 </Drawer>
-
-                <div style={{ textAlign: 'left', paddingBottom: '10px' }}>
-                    <Button type="primary" onClick={showDrawer}>
-                        新建文章
+                <Row style={{ marginBottom: '20px' }}>
+                    <Col span={4} style={{ textAlign: "left" }}>
+                        <Button type="primary" onClick={showDrawer}>
+                            新建文章
                     </Button>
-                </div>
+                    </Col>
+                    <Col span={20} style={{ textAlign: "right" }}>
+                        <Form
+                            layout={'inline'}
+                        // form={form}
+                        // initialValues={{ layout: formLayout }}
+                        // onValuesChange={onFormLayoutChange}
+                        >
+
+                            <Form.Item label="文章名">
+                                <Input value={filter.title} allowClear
+                                    onChange={(e) => {
+                                        console.log(e.target.value)
+                                        setFilter((filter) => {
+                                            return {
+                                                ...filter,
+                                                title: e.target.value
+                                            }
+                                        })
+                                    }} placeholder="输入文章名搜索" />
+                            </Form.Item>
+                            <Form.Item label="分类">
+                                <Select
+                                    value={filter.ca}
+                                    style={{ textAlign: 'center', width: 120 }}
+                                    onChange={(e) => {
+                                        let temp = {
+                                            ...filter,
+                                            ca: e
+                                        }
+                                        console.log(temp)
+                                        setFilter(temp)
+                                    }}>
+                                    <Option key={'d.id'} value={''}>全部</Option>
+                                    {ca.map(d => <Option key={d.id} value={d.id}>{d.name}</Option>)}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item label="发布状态">
+                                <Select
+                                    value={filter.published}
+                                    style={{ textAlign: 'center', width: 120 }}
+                                    onChange={(e) => {
+                                        let temp = {
+                                            ...filter,
+                                            published: e
+                                        }
+                                        console.log(temp)
+                                        setFilter(temp)
+                                    }}>
+                                    <Option key={'all'} value={'all'}>全部</Option>
+                                    <Option key={'1'} value={'1'}>已发布</Option>
+                                    <Option key={'0'} value={'0'}>未发布</Option>
+                                </Select>
+                            </Form.Item>
+                            <Form.Item >
+                                <Button type="primary" onClick={() => getArticle(1, size)}>搜索</Button>
+                                &nbsp;
+                                &nbsp;
+                                &nbsp;
+                                <Button onClick={() => {
+                                    setFilter({
+                                        title: '',
+                                        ca: '',
+                                        published: 'all'
+                                    })
+                                }}>重置</Button>
+                            </Form.Item>
+                        </Form>
+
+                    </Col>
+                </Row>
+
+
                 <Spin tip="Loading..." spinning={loading}>
 
                     <Table
@@ -473,7 +553,6 @@ const ArticleList = () => {
                 grid={[25, 25]}
                 scale={1}
                 style={{ zIndex: '99999' }}
-
             // onStart={this.handleStart}
             // onDrag={this.handleDrag}
             // onStop={this.handleStop}
@@ -495,31 +574,24 @@ const ArticleList = () => {
                 width='1000px'
                 centered
                 destroyOnClose
-                onOk={() => {
-
-                }}
                 onCancel={() => {
                     setShowArticleDetailModal(false)
                     setArticleDetail({})
                 }}
             >
                 <div className='article-detail-views-8ui' style={{ height: "calc(100vh - 200px)", overflowY: 'auto' }}>
-
                     <div className="top-div tc" style={{ paddingTop: '30px' }}>
-                        {
-                            articleDetail.covery_img ?
-                                <img className='toutu' src={articleDetail.covery_img} alt="" />
-                                : ''
-                        }
+                        {articleDetail.covery_img ? <img className='toutu' src={articleDetail.covery_img} alt="" /> : ''}
                         <div className="tit tc">
                             {articleDetail.title}
                         </div>
                         <p className="fa">发布于 {dayjs(articleDetail.publish_time).format('YYYY-MM-DD HH:mm:ss')}
-            &nbsp;&nbsp;  • &nbsp; 阅读量  {articleDetail.read_nums || 0}</p>
+                        &nbsp;&nbsp;  • &nbsp; 阅读量  {articleDetail.read_nums || 0}</p>
                     </div>
+                    {
+                        articleDetail.summary ? <p style={{ padding: '20px' }}>{articleDetail.summary}</p> : null
+                    }
                     <div
-
-
                         className="markdown-body"
                         dangerouslySetInnerHTML={{
                             __html: marked(articleDetail.content || '')
@@ -527,7 +599,6 @@ const ArticleList = () => {
                     >
                     </div>
                 </div>
-
             </Modal>
         </>
     )

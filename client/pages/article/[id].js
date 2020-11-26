@@ -40,6 +40,9 @@ const ArticleDetail = (props) => {
                                 <p className="fa">发布于 {dayjs(props.article.publish_time).format('YYYY-MM-DD HH:mm:ss')}
                                 &nbsp;&nbsp;  • &nbsp; 阅读量  {props.article.read_nums || 0}</p>
                             </div>
+                            {
+                                props.article.summary ? <div className='summary-div-d'><p>{props.article.summary}</p> </div> : null
+                            }
                             <div
                                 className="markdown-body mark-div"
                                 dangerouslySetInnerHTML={{ __html: props.article.content }}

@@ -5,7 +5,7 @@ import AllComponents from '../views';
 import React from 'react';
 import { Route, Redirect, Link, Switch } from 'react-router-dom';
 import { Menu, Dropdown, Button } from 'antd';
-import { getInfo } from '@/utils/auth'
+import { getInfo, setInfo } from '@/utils/auth'
 import { fetchUserInfo } from '@/store/action'
 export default function ({ store }) {
 
@@ -24,6 +24,7 @@ export default function ({ store }) {
             if (whiteList.includes(r.name)) {
                 return component;
             } else {
+
                 return <Redirect to="/user/login" />
             }
         } else {
@@ -31,6 +32,7 @@ export default function ({ store }) {
             if (!info.token) {
                 store.dispatch(fetchUserInfo())
             }
+            setInfo(getInfo())
         }
         return component;
     }

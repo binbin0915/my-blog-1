@@ -11,4 +11,5 @@ export default {
     isAndroid,
     baseUrl,
     runEnv,
+    tokenEffectiveTime: 60 * 30
 }

@@ -1,15 +1,14 @@
- 
+import storageUtil from './storage'
 const key = '_key';
- 
-export function getInfo() {
-  return localStorage.getItem(key)
+
+export function getInfo () {
+    return storageUtil.get(key) || '{}';
 }
 
-export function setInfo(value) {
-  localStorage.setItem(key,value)
+export function setInfo (value) {
+    return storageUtil.set(key, value);
 }
 
-export function removeInfo() {
-  localStorage.removeItem(key)
+export function removeInfo () {
+    return storageUtil.set(key, '{}');
 }
- 
