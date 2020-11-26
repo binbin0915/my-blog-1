@@ -22,27 +22,31 @@ module.exports = {
         let ca = JSON.parse(ctx.request.body)
         let s = {};
 
-        if (!ca.name) {
+        if (!ca.name || !ca.label) {
             ctx.body = {
-                msg: '名字不能为空',
+                msg: '名字和label不能为空',
                 code: '0000',
             }
             ctx.status = 400
         } else {
             const f = await Category.findOne({
                 where: {
-                    name: ca.name
+                    [Op.or]: [
+                        { name: ca.name },
+                        { label: ca.label },
+                    ]
                 }
             })
 
             if (f) {
                 ctx.body = {
-                    msg: '名字已经存在',
+                    msg: '名字或者label已经存在',
                     code: '0000',
                 }
                 ctx.status = 200
             } else {
                 s.name = ca.name;
+                s.label = ca.label;
                 s.weight = ca.weight || '1';
                 await Category.create(s)
                 ctx.body = {
@@ -87,35 +91,42 @@ module.exports = {
     async updata (ctx, next) {
         let co = JSON.parse(ctx.request.body)
 
-        if (!co.key || !co.name) {
+        if (!co.key || !co.name || !co.label) {
             ctx.body = {
-                msg: "参数错误"
+                msg: "参数错误",
+                code: '0000'
             }
-            ctx.status = 400
+            ctx.status = 200
         } else {
-            let f = await Category.findOne({
+
+            let existName = await Category.findAll({
                 where: {
-                    id: co.key
+                    [Op.or]: [
+                        { name: co.name },
+                        { label: co.label },
+                    ],
+                    id: {
+                        [Op.not]: co.key,
+                    }
+
+
                 }
             })
-            let existName = await Category.findOne({
-                where: {
-                    name: co.name
-                },
-                [Op.not]: [{
-                    id: co.key
-                }]
-
-            })
-            if (existName && existName.id !== co.key) {
+            if (existName.length) {
                 ctx.body = {
-                    msg: '分类名字已经存在'
+                    msg: '分类名字或者label已经存在'
                     ,
                     code: '0000'
                 }
                 ctx.status = 200
                 return
             }
+
+            let f = await Category.findOne({
+                where: {
+                    id: co.key
+                }
+            })
             if (!f) {
                 ctx.body = {
                     msg: "分类不存在"
@@ -124,6 +135,7 @@ module.exports = {
             } else {
 
                 f.name = co.name
+                f.label = co.label
                 f.weight = co.weight
                 f.save()
                 ctx.body = {

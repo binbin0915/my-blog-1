@@ -3,6 +3,7 @@ const { Tags } = require('@/models/tags')
 const { Article } = require('@/models/article')
 const { ArticleTag } = require('@/models/article_tag')
 const { Book } = require('@/models/book')
+const { Sysinfo } = require('@/models/sysinfo')
 const { Category } = require('@/models/category')
 const { db, db2 } = require('@/core/db')
 const { Sequelize } = require('sequelize')
@@ -97,6 +98,31 @@ function init () {
     }, {
         sequelize: db,
         tableName: 'book'
+    })
+    Sysinfo.init({
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        logo: Sequelize.STRING,
+        ico: Sequelize.TEXT,
+        meta_keyword: Sequelize.TEXT,
+        meta_description: Sequelize.TEXT,
+        av: Sequelize.STRING,
+        name: Sequelize.STRING,
+        discribe: Sequelize.STRING,
+        github: Sequelize.STRING,
+        email: Sequelize.STRING,
+        footer: Sequelize.TEXT,
+        aboutme: Sequelize.TEXT,
+        b2: Sequelize.STRING,
+        b3: Sequelize.STRING,
+        b4: Sequelize.STRING,
+        b5: Sequelize.STRING,
+    }, {
+        sequelize: db,
+        tableName: 'sysinfo'
     })
 
     Category.init({

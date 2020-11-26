@@ -50,7 +50,19 @@ module.exports = {
         /**
          * status 0 未发布 , 1发布, -1 删除
          */
-        const { page, size } = JSON.parse(ctx.request.body);
+        const { page, size, filter } = JSON.parse(ctx.request.body);
+        let whereObj = {}
+        if (filter.title) {
+            whereObj.title = {
+                [Op.like]: '%' + filter.title + '%',
+            }
+        }
+        if (filter.ca) {
+            whereObj.category_id = filter.ca
+        }
+        if (filter.published == '0' || filter.published == '1') {
+            whereObj.published = filter.published
+        }
         if (!page && !size) {
             const rows = await Article.findAll({
                 where: {
@@ -59,7 +71,8 @@ module.exports = {
                         { status: '0' },
                         { status: '1' },
 
-                    ]
+                    ],
+                    ...whereObj
                 },
             });
             rows.forEach(d => {
@@ -87,6 +100,8 @@ module.exports = {
                             { status: '0' },
                             { status: '1' }
                         ],
+                        ...whereObj
+
                     },
                     offset: (page - 1) * size,
                     limit: size
@@ -114,7 +129,30 @@ module.exports = {
         }
 
     },
-    async search (ctx, next) {
+    async recentArticle (ctx, next) {
+        const rows = await Article.findAll({
+            order: [[sequelize.literal('updated_at'), 'DESC']],
+            where: {
+                [Op.and]: [
+                    { published: '1' }
+                ]
+            },
+            offset: 0,
+            limit: 10
+        });
+        let res = rows.map(d => ({
+            id: d.id,
+            title: d.title,
+            updated_at: dayjs(d.updated_at).format('MM-DD HH:mm')
+        }))
+        ctx.body = {
+            msg: 'OK',
+            data: res,
+            code: '0000'
+        }
+        ctx.status = 200
+    },
+    async searchAll (ctx, next) {
         /**
          * status 0 未发布 , 1发布, -1 删除
          */
@@ -138,9 +176,47 @@ module.exports = {
                     title: {
                         [Op.like]: '%' + keyword + '%',
                     }
-
                 },
 
+            })
+            res.forEach(d => {
+                d.tag_ids = (d.tag_ids || '').split(',').filter(Boolean)
+            })
+            ctx.body = {
+                msg: "OK",
+                code: "0000",
+                data: res,
+                request: `${ctx.method} ${ctx.path}`
+            };
+            ctx.status = 200
+
+        }
+
+    },
+    async search (ctx, next) {
+        /**
+         * published 1 发布，0 未发布
+         */
+        const { keyword } = JSON.parse(ctx.request.body);
+        if (!keyword) {
+
+            ctx.body = {
+                msg: "搜索词不能为空！",
+                code: "0000",
+                data: null,
+                request: `${ctx.method} ${ctx.path}`
+            };
+            ctx.status = 400
+        } else {
+
+            const res = await Article.findAll({
+                //DESC 降序
+                //ASC 升序
+                order: [[sequelize.literal('id'), 'DESC']],
+                where: {
+                    title: { [Op.like]: '%' + keyword + '%', },
+                    published: 1
+                },
             })
             res.forEach(d => {
                 d.tag_ids = (d.tag_ids || '').split(',').filter(Boolean)
