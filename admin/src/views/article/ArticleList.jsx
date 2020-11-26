@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Table, Space, Input, message } from 'antd';
+import { Table, Space, Input, message, Modal } from 'antd';
 import { Drawer, Button, Form, Pagination, Popconfirm, Spin } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
 import './article.scss'
-import { articleList, articleAdd, articleDel, tagList, categoryList, articleUpdata } from '@/api'
+import { articleList, articleAdd, articleDel, tagList, categoryList, articleUpdata, getArticleDetail } from '@/api'
 import dayjs from 'dayjs'
 import { Select, Switch } from 'antd';
 import Draggable from 'react-draggable';
@@ -52,7 +52,11 @@ const ArticleList = () => {
     const [article, setArticleFn] = useState(initArticle)
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false)
-    const [loading2, setLoading2] = useState(false)
+    const [loading2, setLoading2] = useState(false);
+
+    //
+    const [showArticleDetailModal, setShowArticleDetailModal] = useState(false)
+    const [articleDetail, setArticleDetail] = useState({})
     const size = 10;
     const onClose = useCallback(() => {
         console.log('onClose')
@@ -143,7 +147,23 @@ const ArticleList = () => {
             title: '标题',
             dataIndex: 'title',
             key: 'title',
-            render: text => <a className='title-ccc'>{text}</a>,
+            render: (text, record) => {
+                return (
+                    <a
+                        onClick={async () => {
+                            setShowArticleDetailModal(true);
+                            let res = await getArticleDetail({ id: record.key })
+                            if (res.id) {
+                                setArticleDetail(res)
+                                console.log(res)
+                            } else {
+                                message.error(res.msg || '未知错误!')
+                            }
+                        }}
+                        className='title-ccc'>{text}
+                    </a>
+                )
+            },
         },
         {
             title: '发布状态',
@@ -414,7 +434,7 @@ const ArticleList = () => {
                 <div style={{ textAlign: 'left', paddingBottom: '10px' }}>
                     <Button type="primary" onClick={showDrawer}>
                         新建文章
-                </Button>
+                    </Button>
                 </div>
                 <Spin tip="Loading..." spinning={loading}>
 
@@ -467,6 +487,48 @@ const ArticleList = () => {
                     </div>
                 </div>
             </Draggable>
+            {/* 点击标题浏览文章详情 */}
+            <Modal
+                title={articleDetail.title}
+                visible={showArticleDetailModal}
+                footer={null}
+                width='1000px'
+                centered
+                destroyOnClose
+                onOk={() => {
+
+                }}
+                onCancel={() => {
+                    setShowArticleDetailModal(false)
+                    setArticleDetail({})
+                }}
+            >
+                <div className='article-detail-views-8ui' style={{ height: "calc(100vh - 200px)", overflowY: 'auto' }}>
+
+                    <div className="top-div tc" style={{ paddingTop: '30px' }}>
+                        {
+                            articleDetail.covery_img ?
+                                <img className='toutu' src={articleDetail.covery_img} alt="" />
+                                : ''
+                        }
+                        <div className="tit tc">
+                            {articleDetail.title}
+                        </div>
+                        <p className="fa">发布于 {dayjs(articleDetail.publish_time).format('YYYY-MM-DD HH:mm:ss')}
+            &nbsp;&nbsp;  • &nbsp; 阅读量  {articleDetail.read_nums || 0}</p>
+                    </div>
+                    <div
+
+
+                        className="markdown-body"
+                        dangerouslySetInnerHTML={{
+                            __html: marked(articleDetail.content || '')
+                        }}
+                    >
+                    </div>
+                </div>
+
+            </Modal>
         </>
     )
 

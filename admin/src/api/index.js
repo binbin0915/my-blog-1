@@ -42,6 +42,13 @@ export function articleList (data) {
         data,
     })
 }
+export function getArticleDetail (data) {
+    return request({
+        url: '/article/detail',
+        method: 'post',
+        data,
+    })
+}
 
 export function articleAdd (data) {
     return request({

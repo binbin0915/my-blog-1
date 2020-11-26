@@ -76,3 +76,29 @@
         overflow-y: auto;
     }
 }
+.article-detail-views-8ui{
+    .toutu{
+        max-width: 560px;
+        width: 100%;
+        margin: 0 auto;
+        display: block;
+        height: auto;
+    }
+    .top-div {
+        padding-bottom: 20px;
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }    
+    .tit{
+        font-size: 32px;
+        padding: 10px;
+        padding-top: 30px;
+        font-weight: 800;
+    }
+    .fa{
+        font-size: 15px;
+        color: #666;
+        padding-top: 10px;
+    }
+}
