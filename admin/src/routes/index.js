@@ -2,7 +2,7 @@ import env from '@/config/env'
 import routesConfig, { whiteList } from './conf';
 import queryString from 'query-string';
 import AllComponents from '../views';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect, Link, Switch } from 'react-router-dom';
 import { Menu, Dropdown, Button } from 'antd';
 import { getInfo, setInfo } from '@/utils/auth'
@@ -32,11 +32,18 @@ export default function ({ store }) {
             if (!info.token) {
                 store.dispatch(fetchUserInfo())
             }
-            setInfo(getInfo())
         }
         return component;
     }
-
+    useEffect(() => {
+        let timer = null;
+        document.addEventListener('click', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                setInfo(getInfo())
+            }, 3000)
+        })
+    }, [])
     return (
         <>
             {
