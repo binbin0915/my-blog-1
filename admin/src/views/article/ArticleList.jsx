@@ -389,7 +389,7 @@ const ArticleList = () => {
                                 style={{ textAlign: 'left' }}
                             >
                                 <Switch
-                                    checked={article.published}
+                                    checked={article.published == '1'}
                                     checkedChildren="开启"
                                     unCheckedChildren="关闭"
                                     onChange={(checked) => { setArticle(article, { published: checked ? '1' : '0' }) }}
