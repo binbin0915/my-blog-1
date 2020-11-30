@@ -12,6 +12,7 @@ export default [
         path: '/article',
         subs: [
             { path: '/article/list', title: '文章列表', name: "ArticleList", component: 'ArticleList' },
+            { path: '/article/edit', title: '文章编辑', name: "ArticleEdit", component: 'ArticleEdit' },
             { path: '/article/tags', title: '标签管理', name: "ArticleTags", component: 'ArticleTags' },
             { path: '/article/category', title: '分类管理', name: "ArticleCategory", component: 'ArticleCategory' },
         ],

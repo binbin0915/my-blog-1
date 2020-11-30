@@ -1,16 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Table, Space, Input, message, Modal, Row, Col } from 'antd';
-import { Drawer, Button, Form, Pagination, Popconfirm, Spin } from 'antd';
+import { Drawer, Button, Form, Pagination, Popconfirm, Spin, Popover } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
 import './article.scss'
-import { articleList, articleAdd, articleDel, tagList, categoryList, articleUpdata, getArticleDetail } from '@/api'
+import {
+    articleList, articleAdd, articleDel, tagList, categoryList,
+    articleUpdata, getArticleDetail
+} from '@/api'
 import dayjs from 'dayjs'
 import { Select, Switch } from 'antd';
 import Draggable from 'react-draggable';
 import './markdown.scss'
 import marked from 'marked'
 import hljs from "highlight.js";
+import cloneDeep from 'lodash.clonedeep'
 import 'highlight.js/styles/monokai-sublime.css';
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -26,7 +30,6 @@ marked.setOptions({
     smartypants: false,
     xhtml: false
 });
-const cloneDeep = require('lodash.clonedeep');
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -266,16 +269,25 @@ const ArticleList = () => {
                         let article = data.find(d => d.id == record.key)
                         updata(article, 'list')
                     }}>更新</Button>
-                    <Button type="dashed" onClick={() => {
-                        const f = data.find(d => d.id == record.key);
-                        let temp = cloneDeep(f);
-                        console.log('temp', temp)
-                        setIsAdd(false);
-                        setArticleFn(temp)
-                        form.setFieldsValue(temp)
-                        setVisible(true)
+                    <Popover
+                        content={
+                            <div>
+                                <p> <a target="_blank" href={`/article/edit?id=${record.key}`}>新窗口打开</a></p>
+                            </div>
+                        }
+                    >
+                        <Button type="dashed" onClick={() => {
+                            const f = data.find(d => d.id == record.key);
+                            let temp = cloneDeep(f);
+                            console.log('temp', temp)
+                            setIsAdd(false);
+                            setArticleFn(temp)
+                            form.setFieldsValue(temp)
+                            setVisible(true)
 
-                    }}>编辑</Button>
+                        }}>编辑</Button>
+                    </Popover>
+
                     <Popconfirm
                         title="Are you sure to delete this task?"
                         onConfirm={() => del(record.key)}

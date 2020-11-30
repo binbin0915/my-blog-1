@@ -73,7 +73,7 @@ const Archives = (props) => {
                 </div>
                 <div className="guidang-right" span={6}>
                     <Card
-                        size="small" title="最近修改"
+                        size="small" title="最近阅读"
                         // extra={<a href="/">More</a>}
                         style={{ height: 300, }}
                     >

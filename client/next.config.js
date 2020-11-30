@@ -5,7 +5,7 @@ const withCSS = require('@zeit/next-css');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const configs = {
-    assetPrefix: '/', //加前缀
+    assetPrefix: 'https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/dist/', //加前缀
     // basePath: '/', //node 
     // 编译文件的输出目录
     distDir: 'dist',
