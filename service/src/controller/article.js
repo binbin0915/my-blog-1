@@ -16,6 +16,10 @@ module.exports = {
                 id
             },
         });
+        if (res) {
+            res.tag_ids = res.tag_ids ? res.tag_ids.split(',') : []
+
+        }
         ctx.body = {
             msg: "OK",
             code: "0000",
