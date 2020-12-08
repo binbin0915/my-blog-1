@@ -12,7 +12,7 @@ const UserLayout = forwardRef((props, navRef) => {
             <div className="main-wrapper">
                 {props.children}
             </div>
-            {!props.nofooter && <Footer />}
+            {!props.nofooter && <Footer sysinfo={props.sysinfo} />}
         </div >
     )
 })
