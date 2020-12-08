@@ -12,8 +12,8 @@
 管理系统地址 [admin.xz1024.top](http://admin.xz1024.top)
 
 
-![网站首页](https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/readme1.png)
- 
-![后台](https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/readme3.png)
+![网站首页](https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/readme1.jpg)
+![藏书](https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/readme2.jpg)
+![后台](https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/readme3.jpg)
 
 
