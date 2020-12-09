@@ -60,15 +60,25 @@
     flex-direction: column;
 
     .mv-ti{
-        font-size:16px;
-        text-align: center;
-        font-weight: 800;
-        border-bottom: 1px dashed #ddd;
-        height: 40px;
-        line-height: 40px;
-        span{
-            color:#1890ff ;
+        position: relative;
+        p{
+            font-size:16px;
+            text-align: center;
+            font-weight: 800;
+            border-bottom: 1px dashed #ddd;
+            height: 40px;
+            line-height: 40px;
+            span{
+                color:#1890ff ;
+            }
         }
+        .close{
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            z-index: 9999;
+        }
+        
     }
     .content-box{
         flex: 1;

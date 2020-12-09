@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Table, Space, Input, message, Modal, Row, Col } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons';
+
 import { Drawer, Button, Form, Pagination, Popconfirm, Spin, Popover } from 'antd';
 import CustomLayout from '@/components/CustomLayout'
 import MonacoEditor from 'react-monaco-editor';
@@ -60,6 +62,9 @@ const ArticleList = () => {
     //
     const [showArticleDetailModal, setShowArticleDetailModal] = useState(false)
     const [articleDetail, setArticleDetail] = useState({})
+    const [showViewBox, setShowViewBox] = useState(false)
+
+
     const size = 10;
     //搜索过滤
 
@@ -319,6 +324,11 @@ const ArticleList = () => {
                             <Button type="primary" onClick={() => { isAdd ? save() : updata(article, 'detail') }}>
                                 {isAdd ? "保存" : "更新"}
                             </Button>
+                            &nbsp;
+                            &nbsp;
+                            <Button onClick={() => { setShowViewBox(true) }}>
+                                {"预览"}
+                            </Button>
                         </div>
                     }
                     placement="right"
@@ -557,27 +567,40 @@ const ArticleList = () => {
                 </Spin>
 
             </CustomLayout >
-            <Draggable
-                // axis="x"
-                handle=".handle"
-                defaultPosition={{ x: 0, y: 0 }}
-                position={null}
-                grid={[25, 25]}
-                scale={1}
-                style={{ zIndex: '99999' }}
-            // onStart={this.handleStart}
-            // onDrag={this.handleDrag}
-            // onStop={this.handleStop}
-            >
-                <div className='markdown-views-box handle' style={{ display: visible ? 'flex' : 'none' }}>
-                    <div className='mv-ti'>文章内容预览（<span>本区域可以拖动</span>）</div>
-                    <div className="content-box">
-                        <div className="markdown-body"
-                            dangerouslySetInnerHTML={{ __html: marked(article.content) }}>
+            {
+                showViewBox ?
+                    <Draggable
+                        // axis="x"
+                        handle=".handle"
+                        defaultPosition={{ x: 0, y: 0 }}
+                        position={null}
+                        grid={[25, 25]}
+                        scale={1}
+                        style={{ zIndex: '99999' }}
+                    // onStart={this.handleStart}
+                    // onDrag={this.handleDrag}
+                    // onStop={this.handleStop}
+                    >
+                        <div className='markdown-views-box handle' style={{ display: visible ? 'flex' : 'none' }}>
+                            <div className='mv-ti'>
+                                <p>
+                                    文章内容预览（<span>本区域可以拖动</span>）
+                        </p>
+                                <div className="close" onClick={() => {
+                                    setShowViewBox(false)
+                                }}>
+                                    <CloseCircleOutlined />
+                                </div>
+                            </div>
+                            <div className="content-box">
+                                <div className="markdown-body"
+                                    dangerouslySetInnerHTML={{ __html: marked(article.content) }}>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </Draggable>
+                    </Draggable>
+                    : null
+            }
             {/* 点击标题浏览文章详情 */}
             <Modal
                 title={articleDetail.title}
