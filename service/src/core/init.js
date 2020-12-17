@@ -2,18 +2,21 @@ const requireDirectory = require('require-directory')
 const Router = require('koa-router')
 const httpExp = require('@/middleware/httpExp');
 const logger = require('@/middleware/logger');
-
+const auth = require('@/middleware/auth')
 class InitManager {
     static initCore (app) {
         //入口方法
         InitManager.app = app;
         app.use(logger());
         app.use(httpExp());
+        app.use(auth())
+
         InitManager.loadConfig(app)
         InitManager.initModels(app)
 
         InitManager.initLoadRouters(app)
         InitManager.loadHttpException();
+
 
     }
 

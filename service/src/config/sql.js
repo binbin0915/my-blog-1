@@ -1,7 +1,7 @@
 module.exports = {
-    dbName: 'dbName',
-    host: '172.0.0.1',
+    dbName: 'my_blog',
+    host: '172.21.0.13',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'Lian@2022',
 }

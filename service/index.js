@@ -5,6 +5,10 @@ const bodyParser = require('koa-bodyparser');
 const InitManager = require('@/core/init')
 const PORT = process.env.PORT || 4000;
 const app = new Koa();
+// const easyMonitor = require('easy-monitor');
+// if (process.env.KOA_APP_RUN_ENV === 'dev') {
+//     easyMonitor('koa-app');
+// }
 
 // static
 app.use(require('koa-static')(__dirname + '/public'));
