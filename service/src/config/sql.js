@@ -1,7 +1,9 @@
+const conf = require('../../mysql') || {}
 module.exports = {
-    dbName: 'my_blog',
-    host: '172.21.0.13',
+    dbName: 'DB',
+    host: '172.0.0.1',
     port: 3306,
     user: 'root',
-    password: ' ',
+    password: '',
+    ...conf
 }
