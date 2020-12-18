@@ -40,7 +40,7 @@ app.prepare()
             if (err) throw err;
 
             console.log(' process.env.RUN_ENV: ', process.env.RUN_ENV)
-            console.log('> Ready on http://localhost ' + port + '\n');
+            console.log('> Ready on http://localhost:' + port + '\n');
         })
 
     })

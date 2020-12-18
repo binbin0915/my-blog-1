@@ -37,6 +37,7 @@
         "log4js": "^6.3.0",
         "module-alias": "^2.2.2",
         "mysql2": "^2.2.5",
+        "nodemailer": "^6.4.17",
         "require-directory": "^2.1.1",
         "sequelize": "^6.3.5"
     },

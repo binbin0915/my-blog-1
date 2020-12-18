@@ -1,4 +1,4 @@
-const conf = require('../../mysql') || {}
+const conf = require('../../sql') || {}
 module.exports = {
     dbName: 'DB',
     host: '172.0.0.1',

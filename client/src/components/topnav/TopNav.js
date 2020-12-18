@@ -170,6 +170,13 @@ const TopNav = forwardRef((props, ref) => {
                                 </Link>
                             </li>
                             <li>
+                                <Link activeClassName='active' href='/message'>
+                                    <a className='nav-link'>
+                                        <p>留言板</p>
+                                    </a>
+                                </Link>
+                            </li>
+                            <li>
                                 <Link activeClassName='active' href='/about'>
                                     <a className='nav-link prod-intro-a'>
                                         <p>关于</p>
