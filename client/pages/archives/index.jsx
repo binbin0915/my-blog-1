@@ -3,7 +3,7 @@ import Router from 'next/router'
 import Layout from '@/src/components/layout'
 import { EditOutlined } from '@ant-design/icons';
 import { archives, recentArticle } from '@/src/api'
-import { Card } from 'antd';
+import { Card, Carousel } from 'antd';
 import './index.less'
 const Archives = (props) => {
     const [data, setData] = useState([])
@@ -15,7 +15,7 @@ const Archives = (props) => {
         }
     }
     useEffect(() => {
-        recentArticleFn()
+        // recentArticleFn()
     }, [])
     return (
         <Layout
@@ -73,11 +73,24 @@ const Archives = (props) => {
                 </div>
                 <div className="guidang-right" span={6}>
                     <Card
-                        size="small" title="最近阅读"
+                        size="small" title="如果帮到了您，欢迎打赏！🤩"
                         // extra={<a href="/">More</a>}
-                        style={{ height: 300, }}
+                        style={{ height: 'auto', }}
                     >
-                        <ul className="ul-1">
+                        <div className='pay-img'>
+                            <Carousel autoplay>
+                                <div>
+                                    <img src="https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/common/zfbpaycode.jpg" alt="" />
+                                </div>
+                                <div>
+                                    <img src="https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/common/wxpaycode.jpg" alt="" />
+                                </div>
+
+                            </Carousel>
+
+
+                        </div>
+                        {/* <ul className="ul-1">
                             {
                                 data.map((item, index) => {
                                     return (
@@ -89,7 +102,7 @@ const Archives = (props) => {
                                 })
                             }
 
-                        </ul>
+                        </ul> */}
                     </Card>
                 </div>
 

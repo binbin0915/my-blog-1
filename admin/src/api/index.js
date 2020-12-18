@@ -194,3 +194,35 @@ export function updataSysInfo (data) {
         data,
     })
 }
+
+/**
+ * 留言管理
+ */
+export function MessageAdd (data) {
+    return request({
+        url: '/message/add',
+        method: 'post',
+        data,
+    })
+}
+export function MessageList (data) {
+    return request({
+        url: '/message/list',
+        method: 'post',
+        data,
+    })
+}
+export function MessageUpdata (data) {
+    return request({
+        url: '/message/updata',
+        method: 'post',
+        data,
+    })
+}
+export function MessageDel (data) {
+    return request({
+        url: '/message/del',
+        method: 'post',
+        data,
+    })
+}

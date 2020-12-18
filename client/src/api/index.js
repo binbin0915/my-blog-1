@@ -101,3 +101,18 @@ export function updataSysInfo (data) {
         data,
     })
 }
+
+export function MessageAdd (data) {
+    return request({
+        url: '/message/add',
+        method: 'post',
+        data,
+    })
+}
+export function MessageList (data) {
+    return request({
+        url: '/message/list',
+        method: 'post',
+        data,
+    })
+}

@@ -14,6 +14,7 @@ module.exports = {
                 'static'
             ],
             instances: 2,  // 启动2个实例
+            max_memory_restart: "100M",
             node_args: '--harmony',
             env: {
                 NODE_ENV: 'development',

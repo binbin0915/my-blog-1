@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter, NavLink, Link } from 'react-router-dom';
 import { Layout, Menu, Popover, message } from 'antd';
-import { UserOutlined, LaptopOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, FilePdfOutlined, FontSizeOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { removeInfo } from '@/utils/auth'
@@ -30,6 +30,14 @@ const CustomLayout = (props) => {
             icon: <FilePdfOutlined />,
             sub: [
                 { to: '/book/list', key: '21', text: "列表" },
+            ]
+        },
+        {
+            title: '留言管理',
+            key: "sub5",
+            icon: <FontSizeOutlined />,
+            sub: [
+                { to: '/message/list', key: '51', text: "留言列表" },
             ]
         },
         {
@@ -69,7 +77,7 @@ const CustomLayout = (props) => {
 
         <Layout style={{ height: '100vh' }}>
             <Layout>
-                <Sider width={260} className="site-layout-background" style={{ overflowY: 'auto', overflowX: 'hidden', }}>
+                <Sider width={180} className="site-layout-background" style={{ overflowY: 'auto', overflowX: 'hidden', }}>
                     <div style={{ height: '50px', background: "#001529", color: '#ddd', fontSize: '20px', textAlign: 'center', lineHeight: '50px' }}>后台管理</div>
                     <Menu
                         mode="inline"
@@ -77,18 +85,18 @@ const CustomLayout = (props) => {
                         defaultOpenKeys={['sub1']}
                         selectedKeys={selectedKeys}
                         inlineCollapsed={false}
-                        openKeys={['sub1', 'sub2', 'sub3', 'sub4']}
+                        openKeys={['sub1', 'sub2', 'sub3', 'sub4', 'sub5']}
                         style={{ height: "calc(100vh - 50px)", borderRight: 0 }}
                     >
                         {
                             m.map((item, index) => {
                                 return (
-                                    <SubMenu key={item.key} icon={item.icon} title={item.title}>
+                                    <SubMenu key={item.key} icon={item.icon} title={<b>{item.title}</b>}>
                                         {
                                             item.sub && item.sub.map((item2, index2) => {
                                                 return (
                                                     <Menu.Item key={item2.key}  >
-                                                        <NavLink className='nav-link' activeClassName='active' to={item2.to}>{item2.text}</NavLink>
+                                                        <NavLink style={{ paddingLeft: '16px' }} className='nav-link' activeClassName='active' to={item2.to}>{item2.text}</NavLink>
                                                     </Menu.Item>
                                                 )
                                             })

@@ -20,6 +20,9 @@ module.exports = () => async (ctx, next) => {
         //
         '/user/regist',
         '/user/login',
+        //
+        '/message/add',
+        '/message/list'
     ];
     let authList = [
         '/article/searchAll', '/article/add', '/article/updata', '/article/del',
@@ -28,6 +31,7 @@ module.exports = () => async (ctx, next) => {
         '/sysinfo/updata',
         '/tags/add', '/tags/del', '/tags/updata',
         '/user/getuserinfo', '/user/updatainfo',
+        '/message/updata', '/message/del'
     ];
     let adminList = [
         '/article/add', '/article/updata', '/article/del',
@@ -35,6 +39,7 @@ module.exports = () => async (ctx, next) => {
         '/category/add', '/category/del', '/category/updata',
         '/sysinfo/updata',
         '/tags/add', '/tags/del', '/tags/updata',
+        '/message/updata', '/message/del'
     ];
     if (whiteList.includes(originalUrl)) {
         await next();

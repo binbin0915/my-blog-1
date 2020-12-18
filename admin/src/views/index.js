@@ -10,6 +10,7 @@ const PermissionMgt = lazyLoad(React.lazy(() => import(/* webpackChunkName: "use
 const ArticleList = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./article/ArticleList`)))
 const ArticleEdit = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleEdit" */`./article/ArticleEdit`)))
 const BookList = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./book/BookList`)))
+const MessageList = lazyLoad(React.lazy(() => import(/* webpackChunkName: "MessageList" */`./message/MessageList`)))
 const ArticleTags = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./article/ArticleTags`)))
 const ArticleCategory = lazyLoad(React.lazy(() => import(/* webpackChunkName: "ArticleList" */`./article/ArticleCategory`)))
 
@@ -23,6 +24,7 @@ export default {
     ArticleList,
     ArticleEdit,
     BookList,
+    MessageList,
     ArticleTags,
     ArticleCategory,
 }

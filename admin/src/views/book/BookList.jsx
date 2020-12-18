@@ -7,7 +7,7 @@ const initCate = {
     url: '',
     img: ''
 }
-const ArticleList = () => {
+const BookList = () => {
     const [form] = Form.useForm()
     const [book, setBook] = useState(initCate)
     const [visible, setVisible] = useState(false)
@@ -231,4 +231,4 @@ const ArticleList = () => {
     )
 
 }
-export default ArticleList
+export default BookList

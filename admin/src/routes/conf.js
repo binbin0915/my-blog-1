@@ -24,6 +24,12 @@ export default [
         ],
     },
     {
+        path: '/message',
+        subs: [
+            { path: '/message/list', title: '留言列表', name: "MessageList", component: 'MessageList' },
+        ],
+    },
+    {
         path: '/sys',
         subs: [
             { path: '/sys/set', title: '系统设置', name: "SysSet", component: 'SysSet' },

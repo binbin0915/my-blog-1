@@ -116,6 +116,46 @@ const TopNav = forwardRef((props, ref) => {
             </div>
         )
     }
+    const NavListItem = () => (
+        <>
+            <li>
+                <Link activeClassName='active' href='/'>
+                    <a className='nav-link'>
+                        <p>首页</p>
+                    </a>
+                </Link>
+            </li>
+            <li>
+                <Link activeClassName='active' href='/archives'>
+                    <a className='nav-link'>
+                        <p>归档</p>
+                    </a>
+                </Link>
+            </li>
+
+            <li>
+                <Link activeClassName='active' href='/books'>
+                    <a className='nav-link'>
+                        <p>藏书</p>
+                    </a>
+                </Link>
+            </li>
+            <li>
+                <Link activeClassName='active' href='/message'>
+                    <a className='nav-link'>
+                        <p>留言板</p>
+                    </a>
+                </Link>
+            </li>
+            <li>
+                <Link activeClassName='active' href='/about'>
+                    <a className='nav-link prod-intro-a'>
+                        <p>关于</p>
+                    </a>
+                </Link>
+            </li>
+        </>
+    )
     return (
         <>
             <Modal
@@ -148,41 +188,7 @@ const TopNav = forwardRef((props, ref) => {
                             <img src={props.sysinfo?.logo || `https://lianxiaozhuang.oss-cn-beijing.aliyuncs.com/xz1024/img/system/logo4.png`} className="logo cursor" />
                         </div>
                         <ul className='fl top-ul1'>
-                            <li>
-                                <Link activeClassName='active' href='/'>
-                                    <a className='nav-link'>
-                                        <p>首页</p>
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link activeClassName='active' href='/archives'>
-                                    <a className='nav-link'>
-                                        <p>归档</p>
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link activeClassName='active' href='/books'>
-                                    <a className='nav-link'>
-                                        <p>藏书</p>
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link activeClassName='active' href='/message'>
-                                    <a className='nav-link'>
-                                        <p>留言板</p>
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link activeClassName='active' href='/about'>
-                                    <a className='nav-link prod-intro-a'>
-                                        <p>关于</p>
-                                    </a>
-                                </Link>
-                            </li>
+                            <NavListItem />
                         </ul>
 
                         <div className="top-nav-search-div">
@@ -204,35 +210,8 @@ const TopNav = forwardRef((props, ref) => {
                                 onSearch={onSearch}
                             />
                         </li>
-                        <li>
-                            <Link activeClassName='active' href='/'>
-                                <a className='nav-link'>
-                                    <p>首页</p>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link activeClassName='active' href='/archives'>
-                                <a className='nav-link'>
-                                    <p>归档</p>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link activeClassName='active' href='/books'>
-                                <a className='nav-link'>
-                                    <p>好书推荐</p>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link activeClassName='active' href='/about'>
-                                <a className='nav-link prod-intro-a'>
-                                    <p>关于</p>
-                                </a>
-                            </Link>
-                        </li>
 
+                        <NavListItem />
 
                     </ul>
                 </div>

@@ -3,6 +3,7 @@ const { Tags } = require('@/models/tags')
 const { Article } = require('@/models/article')
 const { ArticleTag } = require('@/models/article_tag')
 const { Book } = require('@/models/book')
+const { Message } = require('@/models/message')
 const { Sysinfo } = require('@/models/sysinfo')
 const { Category } = require('@/models/category')
 const { db, db2 } = require('@/core/db')
@@ -137,6 +138,26 @@ function init () {
     }, {
         sequelize: db,
         tableName: 'category'
+    })
+    Message.init({
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        content: Sequelize.TEXT,
+        reply: Sequelize.TEXT,
+        created_time: Sequelize.DATE,
+        repay_at: Sequelize.DATE,
+        ua: Sequelize.TEXT,
+        ip: Sequelize.STRING,
+        is_show: Sequelize.STRING,
+        article_id: Sequelize.STRING,
+    }, {
+        sequelize: db,
+        tableName: 'message'
     })
 }
 

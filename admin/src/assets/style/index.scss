@@ -27,3 +27,222 @@ background: #fff;
 .ant-layout-sider{
     background-color: #fff!important;
 }
+
+.clearfix:after {
+    content: '.';
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+  }
+  .clearfix {
+    zoom: 1;
+  }
+  
+  .fl {
+    float: left;
+  }
+  .fr {
+    float: right;
+  }
+  .tr {
+    text-align: right;
+  }
+  .tl {
+    text-align: left;
+  }
+  .tc {
+    text-align: center;
+  }
+  .fw {
+    font-weight: 800;
+  }
+  .pr {
+    position: relative;
+  }
+  .pa {
+    position: absolute;
+  }
+  .pf {
+    position: fixed;
+  }
+  .none,
+  .hide {
+    display: none !important;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .disable {
+    opacity: 0.4;
+  }
+  .db {
+    display: block;
+  }
+  .margin0auto {
+    display: block;
+    margin: 0 auto;
+  }
+   
+  .w100 {
+    width: 100% !important;
+  }
+  .ios-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-y {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .elipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  .flex1 {
+    flex: 1;
+  }
+  .flex-column {
+    flex-direction: column;
+  }
+  .flex-row {
+    flex-direction: row;
+  }
+  .flex-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .flex-between {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  .flex-around {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  .justify-between {
+    justify-content: space-between !important;
+  }
+  .justify-start {
+    justify-content: flex-start !important;
+  }
+  .justify-center {
+    justify-content: center !important;
+  }
+  .justify-end {
+    justify-content: flex-end !important;
+  }
+  .bg-color {
+    background: #eef0f4;
+  }
+  .btn {
+    &:active {
+        opacity: 0.75;
+    }
+  }
+  .margin-top-40{
+    margin-top: 40px;
+  }
+  .cursor{
+    cursor: pointer;
+  }
+  .w100 {
+      width: 100% !important;
+  }
+  .ios-scroll {
+      -webkit-overflow-scrolling: touch;
+  }
+  .scroll {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+  }
+  .scroll-x {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+  }
+  .scroll-y {
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+  }
+  $borderColor: #e1e3e8;
+  .border-bottom-1px {
+      position: relative;
+      &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          height: 1px;
+          background: $borderColor;
+          transform: scaleY(0.5);
+      }
+  }
+  .border-top-1px {
+      position: relative;
+      &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          top: 0;
+          left: 0;
+          background: $borderColor;
+          transform: scaleY(0.5);
+      }
+  }
+  .border-left-1px {
+      position: relative;
+      &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 0;
+          top: 0;
+          left: 0;
+          height: 100%;
+          border-left: 1px solid $borderColor;
+          transform: scaleX(0.5);
+      }
+  }
+  .border-right-1px {
+      position: relative;
+      &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 0;
+          height: 100%;
+          top: 0;
+          right: 0;
+          border-right: 1px solid $borderColor;
+          transform: scaleX(0.5);
+      }
+  }
+  
+  .elipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
