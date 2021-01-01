@@ -11,19 +11,19 @@ class InitManager {
         app.use(httpExp());
         app.use(auth())
 
-        InitManager.loadConfig(app)
+        // InitManager.loadConfig(app)
         InitManager.initModels(app)
 
         InitManager.initLoadRouters(app)
-        InitManager.loadHttpException();
+        // InitManager.loadHttpException();
 
 
     }
 
-    static loadConfig (app) {
-        const config = require('@/config/index')
-        app.config = config
-    }
+    // static loadConfig (app) {
+    //     const config = require('@/config/index')
+    //     app.config = config
+    // }
     static initModels (app) {
         const m = require('../models/index')
         m.init()
@@ -40,10 +40,10 @@ class InitManager {
         });
     }
 
-    static loadHttpException () {
-        const errors = require('./http-exception')
-        global.errs = errors
-    }
+    // static loadHttpException () {
+    //     const errors = require('./http-exception')
+    //     global.errs = errors
+    // }
 
 
 }
