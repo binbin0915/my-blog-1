@@ -6,9 +6,9 @@ const redis = require('../core/redis')
 module.exports = {
     async info(ctx, next) {
 
-        const { x_source } = ctx;
+        const { xsource } = ctx;
         let rows;
-        if (x_source === 'admin_system') {//后台管理系统不走redis
+        if (xsource === 'admin_system') {//后台管理系统不走redis
             rows = await Sysinfo.findAll();
         } else {//
             let SysinfoList = await redis.get('SysinfoList')

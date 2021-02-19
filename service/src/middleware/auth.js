@@ -41,9 +41,11 @@ module.exports = () => async (ctx, next) => {
         '/tags/add', '/tags/del', '/tags/updata',
         '/message/updata', '/message/del'
     ];
-    const { token, x_source } = ctx.header;
-    if (x_source) {
-        ctx.x_source = x_source
+    const { token, xsource } = ctx.header;
+    // ctx.logger.debug('auth获取header头的token:', token)
+    // ctx.logger.debug('auth获取header头的xsource:', xsource, '\n')
+    if (xsource) {
+        ctx.xsource = xsource
     }
     if (whiteList.includes(originalUrl)) {
         await next();

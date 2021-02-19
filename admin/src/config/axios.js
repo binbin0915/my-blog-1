@@ -9,7 +9,7 @@ const service = axios.create({
 });
 
 service.interceptors.request.use((config) => {
-    config.headers['x_source'] = 'admin_system'
+    config.headers['xsource'] = 'admin_system'
     config.headers.reqDate = +new Date();
     config.headers.version = '0.0.1';
     const info = getInfo() || '{}';

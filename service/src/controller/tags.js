@@ -10,9 +10,9 @@ const redis = require('../core/redis')
 
 module.exports = {
     async list(ctx, next) {
-        const { x_source } = ctx;
+        const { xsource } = ctx;
         let rows;
-        if (x_source === 'admin_system') {//后台管理系统不走redis
+        if (xsource === 'admin_system') {//后台管理系统不走redis
             rows = await Tags.findAll();
         } else {//
             let tagList = await redis.get('tagList')

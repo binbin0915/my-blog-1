@@ -1,6 +1,8 @@
 var log4js = require("log4js");
 log4js.configure(
     {
+        pm2: true,
+        disableClustering: true,    // 这里这里
         appenders: {
             file: {
                 type: 'file',

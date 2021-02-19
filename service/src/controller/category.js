@@ -6,9 +6,10 @@ const { Op, CIDR } = require("sequelize");
 const redis = require('../core/redis')
 module.exports = {
     async list(ctx, next) {
-        const { x_source } = ctx;
+        const { xsource } = ctx;
         let rows;
-        if (x_source === 'admin_system') {//后台管理系统不走redis
+        //ctx.logger.debug('categoryList的xsource值:', xsource, '\n')
+        if (xsource === 'admin_system') {//后台管理系统不走redis
             rows = await Category.findAll();
         } else {//
             let categoryList = await redis.get('categoryList')
