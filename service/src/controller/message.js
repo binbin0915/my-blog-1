@@ -8,7 +8,7 @@ const { sendMail,
     htmlFn } = require('@/utils/mail')
 module.exports = {
 
-    async list (ctx, next) {
+    async list(ctx, next) {
 
         const { page, size } = JSON.parse(ctx.request.body);
         if (!page && !size) {
@@ -58,7 +58,7 @@ module.exports = {
             }
         }
     },
-    async add (ctx, next) {
+    async add(ctx, next) {
         let message = JSON.parse(ctx.request.body)
         let s = {};
 
@@ -86,7 +86,7 @@ module.exports = {
         }
     },
 
-    async updata (ctx, next) {
+    async updata(ctx, next) {
         let message = JSON.parse(ctx.request.body);
         message = {
             ...message,
@@ -126,7 +126,7 @@ module.exports = {
         }
 
     },
-    async del (ctx, next) {
+    async del(ctx, next) {
         let co = JSON.parse(ctx.request.body)
         if (!co.id) {
             ctx.body = {

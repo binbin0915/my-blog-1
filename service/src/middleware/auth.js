@@ -41,11 +41,15 @@ module.exports = () => async (ctx, next) => {
         '/tags/add', '/tags/del', '/tags/updata',
         '/message/updata', '/message/del'
     ];
+    const { token, x_source } = ctx.header;
+    if (x_source) {
+        ctx.x_source = x_source
+    }
     if (whiteList.includes(originalUrl)) {
         await next();
         return
     }
-    const { token } = ctx.header
+
     const f = await User.findOne({
         where: {
             token

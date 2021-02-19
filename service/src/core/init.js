@@ -3,8 +3,9 @@ const Router = require('koa-router')
 const httpExp = require('@/middleware/httpExp');
 const logger = require('@/middleware/logger');
 const auth = require('@/middleware/auth')
+
 class InitManager {
-    static initCore (app) {
+    static initCore(app) {
         //入口方法
         InitManager.app = app;
         app.use(logger());
@@ -24,14 +25,14 @@ class InitManager {
     //     const config = require('@/config/index')
     //     app.config = config
     // }
-    static initModels (app) {
+    static initModels(app) {
         const m = require('../models/index')
         m.init()
     }
-    static initLoadRouters (app) {
+    static initLoadRouters(app) {
         //path config
         requireDirectory(module, `${process.cwd()}/src/routes`, {
-            visit: function whenLoadModule (obj) {
+            visit: function whenLoadModule(obj) {
                 if (obj instanceof Router) {
                     app.use(obj.routes());
                     app.use(obj.allowedMethods());

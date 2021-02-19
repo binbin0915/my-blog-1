@@ -29,5 +29,5 @@ app.use(
 InitManager.initCore(app)
 
 app.listen(PORT, () => {
-    //console.log(`Koa is runing in localhost:${PORT}`);
+    console.log(`Koa is runing in localhost:${PORT}`);
 });

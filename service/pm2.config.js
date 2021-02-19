@@ -1,30 +1,31 @@
 module.exports = {
     "apps": [
         {
-            "name": "koa-app",
-            "script": "./index.js",
-            "cwd": "./",
-            "args": "",
-            "interpreter": "",
-            "interpreter_args": "",
-            //"watch": true,
-            "ignore_watch": [
-                "node_modules",
-                "logs"
-            ],
-            "exec_mode": "cluster_mode",
-            "instances": 2,
-            "max_memory_restart": 8,
-            "node_args": '--harmony',
-            "error_file": "./logs/app-err.log",
-            "out_file": "./logs/app-out.log",
-            "merge_logs": true,
-            "log_date_format": "YYYY-MM-DD HH:mm:ss",
-            // "min_uptime": "60s",
-            // "max_restarts": 30,
-            // "autorestart": true,
-            // "cron_restart": "",
-            // "restart_delay": 60
+            name: "koa-app",
+            script: "./index.js",
+            cwd: './', // 当前工作路径
+            watch: false,
+            instances: 2,  // 启动2个实例
+            exec_mode: "cluster",
+            max_memory_restart: "100M",
+            env: {
+                NODE_ENV: 'development',
+                PORT: 4000
+            },
+            env_qa: {
+                NODE_ENV: 'production',
+                RUN_ENV: 'qa',
+                PORT: 4000
+            },
+            env_production: {
+                NODE_ENV: 'production',
+                RUN_ENV: 'prod',
+                PORT: 4000
+            },
+            out_file: './logs/out.log', // 普通日志路径
+            error_file: './logs/err.log', // 错误日志路径
+            merge_logs: true,
+            log_date_format: 'YYYY-MM-DD HH:mm:ss' // 设置日志的日期格式
         }
     ]
 }

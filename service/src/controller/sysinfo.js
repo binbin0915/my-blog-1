@@ -1,9 +1,25 @@
 const {
     Sysinfo
 } = require('@/models/sysinfo');
+const redis = require('../core/redis')
+
 module.exports = {
-    async info (ctx, next) {
-        const rows = await Sysinfo.findAll();
+    async info(ctx, next) {
+
+        const { x_source } = ctx;
+        let rows;
+        if (x_source === 'admin_system') {//后台管理系统不走redis
+            rows = await Sysinfo.findAll();
+        } else {//
+            let SysinfoList = await redis.get('SysinfoList')
+            if (SysinfoList) {
+                rows = JSON.parse(SysinfoList)
+            } else {
+                rows = await Sysinfo.findAll();
+                await redis.set('SysinfoList', JSON.stringify(rows))
+                redis.expire('SysinfoList', 60);//60秒自动过期
+            }
+        }
         ctx.body = {
             msg: "OK",
             code: "0000",
@@ -12,7 +28,7 @@ module.exports = {
         };
         ctx.status = 200
     },
-    async updata (ctx, next) {
+    async updata(ctx, next) {
         let p = JSON.parse(ctx.request.body);
         let f = await Sysinfo.findOne({
             where: {

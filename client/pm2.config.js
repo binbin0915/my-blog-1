@@ -4,18 +4,10 @@ module.exports = {
             name: 'next-app',
             script: './server.js',
             cwd: './', // 当前工作路径
-            // watch: [
-            //   'dist' // 监控变化的目录，一旦变化，自动重启
-            // ],
-            ignore_watch: [
-                // 从监控目录中排除
-                'node_modules',
-                'logs',
-                'static'
-            ],
+            watch: false,
             instances: 2,  // 启动2个实例
+            exec_mode: "cluster",
             max_memory_restart: "100M",
-            node_args: '--harmony',
             env: {
                 NODE_ENV: 'development',
                 PORT: 3000

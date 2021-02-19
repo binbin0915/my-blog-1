@@ -3,10 +3,24 @@ const {
     Category
 } = require('@/models/category');
 const { Op, CIDR } = require("sequelize");
-
+const redis = require('../core/redis')
 module.exports = {
-    async list (ctx, next) {
-        const rows = await Category.findAll();
+    async list(ctx, next) {
+        const { x_source } = ctx;
+        let rows;
+        if (x_source === 'admin_system') {//后台管理系统不走redis
+            rows = await Category.findAll();
+        } else {//
+            let categoryList = await redis.get('categoryList')
+            if (categoryList) {
+                rows = JSON.parse(categoryList)
+            } else {
+                rows = await Category.findAll();
+                await redis.set('categoryList', JSON.stringify(rows))
+                redis.expire('categoryList', 60);//60秒自动过期
+            }
+        }
+
         ctx.body = {
             msg: "OK",
             code: "0000",
@@ -18,7 +32,7 @@ module.exports = {
         };
         ctx.status = 200
     },
-    async add (ctx, next) {
+    async add(ctx, next) {
         let ca = JSON.parse(ctx.request.body)
         let s = {};
 
@@ -60,7 +74,7 @@ module.exports = {
 
         }
     },
-    async del (ctx, next) {
+    async del(ctx, next) {
         let co = JSON.parse(ctx.request.body)
         if (!co.id) {
             ctx.body = {
@@ -88,7 +102,7 @@ module.exports = {
         }
 
     },
-    async updata (ctx, next) {
+    async updata(ctx, next) {
         let co = JSON.parse(ctx.request.body)
 
         if (!co.key || !co.name || !co.label) {

@@ -6,10 +6,25 @@ const {
     ArticleTag
 } = require('@/models/article_tag');
 const { Op, CIDR } = require("sequelize");
+const redis = require('../core/redis')
 
 module.exports = {
-    async list (ctx, next) {
-        const rows = await Tags.findAll();
+    async list(ctx, next) {
+        const { x_source } = ctx;
+        let rows;
+        if (x_source === 'admin_system') {//后台管理系统不走redis
+            rows = await Tags.findAll();
+        } else {//
+            let tagList = await redis.get('tagList')
+            if (tagList) {
+                rows = JSON.parse(tagList)
+            } else {
+                rows = await Tags.findAll();
+                await redis.set('tagList', JSON.stringify(rows))
+                redis.expire('tagList', 60);//60秒自动过期
+
+            }
+        }
         ctx.body = {
             msg: "OK",
             code: "0000",
@@ -21,7 +36,7 @@ module.exports = {
         };
         ctx.status = 200
     },
-    async tag_article (ctx, next) {
+    async tag_article(ctx, next) {
         const rows = await ArticleTag.findAll();
         ctx.body = {
             msg: "OK",
@@ -31,7 +46,7 @@ module.exports = {
         };
         ctx.status = 200
     },
-    async add (ctx, next) {
+    async add(ctx, next) {
         let ca = JSON.parse(ctx.request.body)
         let s = {};
 
@@ -69,7 +84,7 @@ module.exports = {
 
         }
     },
-    async del (ctx, next) {
+    async del(ctx, next) {
         let co = JSON.parse(ctx.request.body)
         if (!co.id) {
             ctx.body = {
@@ -97,7 +112,7 @@ module.exports = {
         }
 
     },
-    async updata (ctx, next) {
+    async updata(ctx, next) {
         let co = JSON.parse(ctx.request.body)
 
         if (!co.key || !co.name) {
