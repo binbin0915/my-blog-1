@@ -6,7 +6,7 @@ const {
     port,
     user,
     password
-} = require('@/config/sql')
+} = require('@/config/index.js').mysql
 
 const db = new Sequelize(dbName, user, password, {
     dialect: 'mysql',

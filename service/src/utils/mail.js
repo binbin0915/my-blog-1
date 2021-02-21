@@ -2,7 +2,7 @@
 
 var nodemailer = require('nodemailer')
 var smtpTransport = require('nodemailer-smtp-transport');
-var mailConfig = require('../../mailConfig.js') || {}
+var mailConfig = require('@/config/index.js').email
 
 smtpTransport = nodemailer.createTransport(smtpTransport({
     host: 'smtp.qq.com',
