@@ -31,7 +31,7 @@ const AboutUs = (props) => {
         head.appendChild(s);
         MessageListFn(1)
     }, [])
-    async function MessageListFn (page) {
+    async function MessageListFn(page) {
         setPage(page)
         let res = await MessageList({
             page, size: 10,
@@ -77,10 +77,10 @@ const AboutUs = (props) => {
                                 <Input style={{ width: 400, maxWidth: '90%' }} />
                             </Form.Item>
                             <Form.Item name={['email']} label="邮箱" rules={[{ required: true, type: 'email', max: 50 }]}>
-                                <Input style={{ width: 400, maxWidth: '90%' }} />
+                                <Input placeholder={"请填真实邮箱第一时间收到回复"} style={{ width: 400, maxWidth: '90%' }} />
                             </Form.Item>
                             <Form.Item name={['content']} label="内容" rules={[{ required: true, type: 'string', max: 200 }]}>
-                                <Input.TextArea style={{ width: 400, height: 100, maxWidth: '90%' }} />
+                                <Input.TextArea placeholder={"不要输入表情"} style={{ width: 400, height: 100, maxWidth: '90%' }} />
                             </Form.Item>
                             <div className="tc">
                                 <Button type="primary" htmlType="submit">
